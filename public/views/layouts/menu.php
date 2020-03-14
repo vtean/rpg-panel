@@ -10,7 +10,7 @@
                 <ul class="list-style-none">
                     <li><a href=""><i class="fas fa-user-cog"></i></a></li>
                     <li><a href=""><i class="fas fa-bell"></i></a></li>
-                    <li><a href=""><i class="fas fa-sign-out-alt"></i></a></li>
+                    <li><a href="<?php echo BASE_URL . '/logout' ?>"><i class="fas fa-sign-out-alt"></i></a></li>
                 </ul>
             </div>
         </div>
