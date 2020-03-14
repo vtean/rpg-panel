@@ -387,7 +387,8 @@ img {
 }
 
 .login .login-group {
-  position: relative
+  position: relative;
+  margin-bottom: 2.5rem;
 }
 
 .login .login-span {
@@ -448,7 +449,10 @@ img {
   height: 50px;
   border-radius: 25px;
   outline: 0;
-  border: none
+  border: none;
+  margin: 0 auto;
+  position: relative;
+  display: block;
 }
 
 .login-focused {
@@ -463,6 +467,10 @@ img {
 
 .login-focused+.login-span:after {
   width: 100%!important
+}
+
+.login .invalid-feedback {
+  position: absolute;
 }
 
 /* Responsive things */
