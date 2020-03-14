@@ -86,7 +86,7 @@ img {
   position: fixed;
   top: 0;
   left: 0;
-  box-shadow: 0 0 6px 1px #00000060;
+  box-shadow: 0 0 10px 1px #00000060;
 }
 
 /* Logo */
@@ -276,8 +276,10 @@ img {
 
 .dv-footer i.fa-coffee {
   color: #0099ff;
-/* Login */
+}
 
+
+/* Login */
 .login {
   border-radius: 10px;
   border: none;
@@ -288,6 +290,7 @@ img {
 
 .login .login-icon {
   background: #fff;
+  color: #682f4d;
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -413,7 +416,7 @@ img {
 
 .login .username:before {
   content: "\f007";
-  font-family: "Font Awesome 5 Free", serif;
+  font-family: "Font Awesome 5 Pro";
   font-weight: 900;
   font-size: 16px;
   position: absolute;
@@ -427,7 +430,7 @@ img {
 
 .login .password:before {
   content: "\f084";
-  font-family: "Font Awesome 5 Free", serif;
+  font-family: "Font Awesome 5 Pro";
   font-weight: 900;
   font-size: 16px;
   position: absolute;
