@@ -12,6 +12,12 @@ session_start();
 // load the main config
 require_once 'config.php';
 
+// connect to the database
+require_once ROOT_PATH . '/system/Db/Connect.php';
+
+// load database queries
+require_once ROOT_PATH . '/system/Db/Db.php';
+
 // load the URL handler
 require_once ROOT_PATH . '/system/Url/UrlHandler.php';
 
