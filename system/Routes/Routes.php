@@ -13,4 +13,4 @@
 Route::set('', 'Main', 'index');
 
 // test page
-Route::set('test', 'Test', 'index');
+Route::set('login', 'Login', 'index');
