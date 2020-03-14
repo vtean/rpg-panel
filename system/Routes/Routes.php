@@ -12,5 +12,6 @@
 // main index
 Route::set('', 'Main', 'index');
 
-// test page
+// auth
 Route::set('login', 'Login', 'index');
+Route::set('logout', 'Logout', 'index');
