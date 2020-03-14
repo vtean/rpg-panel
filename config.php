@@ -22,7 +22,7 @@ define('DB_USER', '');
 define('ROOT_PATH', dirname(__FILE__));
 
 // define the base url
-define('BASE_URL', '');
+define('BASE_URL', 'http://localhost/panel');
 
 // define the site name
-define('SITE_NAME', 'RPG Panel');
+define('SITE_NAME', 'DreamVibe Panel');

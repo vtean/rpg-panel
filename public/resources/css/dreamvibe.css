@@ -1,0 +1,185 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * */
+/* Main css file goes here                         */
+/* (c) All rights reserved to DreamVibe Community  */
+/* * * * * * * * * * * * * * * * * * * * * * * * * */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* Background colors */
+  --body-bg: #272b3b;
+  --menu-bg: #22263595;
+  --menu-item-bg: #30354795;
+  --menu-icon-bg: #272b3b99;
+
+  /* Text colors */
+  --text-color: #fff;
+  --text-hover-color: #448aff;
+  --nav-title-color: #8e97bf;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+html {
+  font-size: 12px;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  width: 100%;
+  margin: 0;
+  background-color: var(--body-bg);
+  background-image: url(../img/panel-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: var(--text-color);
+}
+
+a,
+a:hover {
+  text-decoration: none;
+}
+
+a {
+  color: var(--text-color);
+  transition: all .2s ease-in-out;
+}
+
+a:hover {
+  color: var(--text-hover-color);
+}
+
+img {
+  max-width: 100%;
+}
+
+.list-style-none {
+  list-style: none;
+}
+
+/* Main menu */
+.dv-main-menu {
+  background-color: var(--menu-bg);
+  width: 270px;
+  min-height: 100vh;
+  padding: 10px;
+}
+/* Logo */
+.dv-main-menu .dv-logo {
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+/* User bar */
+.dv-main-menu .dv-user-bar .dv-user-welcome {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar,
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-welcome-text {
+  display: block;
+}
+
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-welcome-text {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls {
+  margin-top: 10px;
+}
+
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls ul {
+  padding: 0;
+  margin: 0;
+}
+
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls ul li {
+  display: inline-block;
+}
+
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls ul li a i {
+  font-size: 1.8rem;
+  margin: 0 7px;
+}
+
+/* Navbar */
+@media (min-width: 992px) {
+  #dreamvibe-navbar {
+    display: block !important;
+  }
+}
+
+.dv-main-menu .dv-navbar {
+  margin-top: 15px;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group:nth-child(1)
+{
+  margin-top: 0;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav {
+  margin: 0;
+  padding: 0;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav-title {
+  color: var(--nav-title-color);
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item {
+  display: block;
+  margin: 5px 0;
+  position: relative;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item .dv-nav-link {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+  background-color: var(--menu-item-bg);
+  border-radius: 5px;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item .dv-nav-link .dv-nav-icon {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 14px;
+  text-align: center;
+  background-color: var(--body-bg);
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 5px 10px 10px 5px;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item .dv-nav-link .dv-nav-text {
+  margin-left: 39px;
+}
+
+/* Main content */
+.dv-main-content {
+  width: calc(100% - 270px);
+}

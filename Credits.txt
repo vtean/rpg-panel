@@ -2,3 +2,30 @@ DreamVibe Community wants to say a big thank you to all these projects for makin
 You make our lives easier! We appreciate a lot your help! <3
 
 @ DreamVibe Community
+
+Google Fonts
+	Description: Fonts library
+	Location: CDN
+	Website: https://fonts.google.com/
+
+FontAwesome
+	Description: Icons for UI
+	Location: CDN
+	Version: 5.12.0
+	Website: https://fontawesome.com/
+	License: https://fontawesome.com/license/free
+
+jQuery
+	Description: Fast, small, and feature-rich JavaScript library
+	Location: CDN
+	Version: 3.4.1
+	Website: https://jquery.org
+	License: https://jquery.org/license
+
+Bootstrap
+	Description: Toolkit for developing with HTML, CSS, and JS
+	Note: We only use some bootstrap components (grid, collapse, dropdown, modal, tooltip)
+	Location: public/resources/3rd_party/bootstrap
+	Version: 4.4.1
+	Website: https://getbootstrap.com/
+	License: https://github.com/twbs/bootstrap/blob/v4.0.0/LICENSE
