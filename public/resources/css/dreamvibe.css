@@ -86,6 +86,7 @@ img {
   position: fixed;
   top: 0;
   left: 0;
+  box-shadow: 0 0 6px 1px #00000060;
 }
 
 /* Logo */
@@ -204,7 +205,7 @@ img {
 .dv-main-content {
   width: calc(100% - 270px);
   margin-left: 270px;
-  padding: 20px;
+  padding: 30px;
 }
 
 /* Flash messages */
@@ -244,6 +245,37 @@ img {
 
 .dv-message.warning {
   background-color: var(--warning-color);
+}
+
+/* Server stats widget */
+.dv-widget {
+  width: 100%;
+}
+
+.dv-server-stats .dv-server-stats-item {
+  display: inline-block;
+  width: 19%;
+}
+
+/* Footer */
+.dv-footer {
+  margin-top: 20px;
+}
+
+.dv-footer .dv-copyright p {
+  margin: 0;
+}
+
+.dv-footer .dv-copyright p a {
+  font-weight: bold;
+}
+
+.dv-footer i.fa-heart {
+  color: #ff4d4d;
+}
+
+.dv-footer i.fa-coffee {
+  color: #0099ff;
 }
 
 /* Responsive things */
