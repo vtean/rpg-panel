@@ -16,6 +16,18 @@
   --text-color: #fff;
   --text-hover-color: #448aff;
   --nav-title-color: #8e97bf;
+
+  /* info colors */
+  --danger-color: #DA6572;
+  --warning-color: #F3B911;
+  --info-color: #0DB2CC;
+  --success-color: #29CC5F;
+
+  /* info borders */
+  --danger-border: #B9434F;
+  --warning-border: #CA9805;
+  --info-border: #0BA3BB;
+  --success-border: #25A750;
 }
 
 *,
@@ -75,6 +87,7 @@ img {
   top: 0;
   left: 0;
 }
+
 /* Logo */
 .dv-main-menu .dv-logo {
   text-align: center;
@@ -105,7 +118,7 @@ img {
 }
 
 .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls ul {
@@ -131,6 +144,10 @@ img {
 
 .dv-main-menu .dv-navbar {
   margin-top: 15px;
+}
+
+.dv-main-menu .dv-navbar .navbar-toggler {
+  margin: 0 auto;
 }
 
 .dv-main-menu .dv-navbar .dv-nav-group {
@@ -188,4 +205,99 @@ img {
   width: calc(100% - 270px);
   margin-left: 270px;
   padding: 20px;
+}
+
+/* Flash messages */
+.dv-message {
+  width: 100%;
+  background: url(../img/bg-lines.png) repeat-x #95A5A6;
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.dv-message i,
+.dv-message span {
+  vertical-align: middle;
+}
+
+.dv-message i {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.dv-message span {
+  font-weight: bold;
+}
+
+.dv-message.success {
+  background-color: var(--success-color);
+}
+
+.dv-message.info {
+  background-color: var(--info-color);
+}
+
+.dv-message.danger {
+  background-color: var(--danger-color);
+}
+
+.dv-message.warning {
+  background-color: var(--warning-color);
+}
+
+/* Responsive things */
+@media screen and (max-width: 991px) {
+  .dv-main-menu {
+    position: relative;
+    min-height: auto;
+    width: 100%;
+  }
+
+  .dv-main-menu .dv-logo {
+    font-size: 1.5rem;
+  }
+
+  .dv-main-menu .dv-navbar {
+    margin-top: 0;
+  }
+
+  .dv-main-content {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .dv-main-menu .dv-user-bar .dv-user-welcome {
+    text-align: left;
+  }
+
+  .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar,
+  .dv-main-menu .dv-user-bar .dv-user-welcome .dv-welcome-text {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dv-main-menu .dv-user-bar .dv-user-welcome .dv-welcome-text {
+    margin-top: 0;
+    margin-left: 3px;
+  }
+
+  .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls {
+    width: fit-content;
+    float: right;
+  }
+
+  .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls ul li a i {
+    font-size: 1.5rem;
+    vertical-align: middle;
+  }
+
+  .dv-main-menu .dv-navbar .navbar-toggler {
+
+  }
 }
