@@ -56,7 +56,9 @@ class Login extends MainController
                         // add a session message
                         flashMessage('success', 'You were successfully logged in.');
                         // start the session
-                        $this->authModel->startSession($loggedInUser/*, $userGroup*/);
+                        $this->authModel->startSession($loggedInUser);
+                        // redirect
+                        redirect('/');
                     } else {
                         die('Oops, something went wrong');
                     }
@@ -76,8 +78,6 @@ class Login extends MainController
                     'user_password_error' => ''
                 ];
 
-                $arr = $this->authModel->searchExistingUsername('Indigo');
-                print_r($arr['Password']);
                 // load the view
                 $this->loadView('login', $data, $errors);
             }

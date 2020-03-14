@@ -33,6 +33,7 @@ html {
 body {
   font-family: 'Open Sans', sans-serif;
   width: 100%;
+  min-height: 100vh;
   margin: 0;
   background-color: var(--body-bg);
   background-image: url(../img/panel-bg.jpg);
@@ -70,6 +71,9 @@ img {
   width: 270px;
   min-height: 100vh;
   padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 /* Logo */
 .dv-main-menu .dv-logo {
@@ -182,4 +186,6 @@ img {
 /* Main content */
 .dv-main-content {
   width: calc(100% - 270px);
+  margin-left: 270px;
+  padding: 20px;
 }

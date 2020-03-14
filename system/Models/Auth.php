@@ -80,7 +80,7 @@ class Auth
         // assign user password to a variable
         $user_password = $result['Password'];
         // check if the entered password and the one from database match
-        if ($password == $user_password) {
+        if (strcasecmp($password, $user_password) == 0) {
             return $result;
         } else {
             return false;
@@ -88,7 +88,7 @@ class Auth
     }
 
     // start the session
-    public function startSession($user/*,$group*/) {
+    public function startSession($user) {
         // add user id to the session
         $_SESSION['user_id'] = $user['ID'];
 
