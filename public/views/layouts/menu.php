@@ -4,6 +4,7 @@
     </div>
     <div class="dv-user-bar">
         <div class="dv-user-welcome">
+<<<<<<< HEAD
             <img class="dv-user-avatar" src="<?php echo BASE_URL . '/public/resources/img/avatar.png' ?>" alt="User Avatar">
             <span class="dv-welcome-text">Welcome, Bitch</span>
             <div class="dv-user-controls">
@@ -13,6 +14,27 @@
                     <li><a href="<?php echo BASE_URL . '/logout' ?>"><i class="fas fa-sign-out-alt"></i></a></li>
                 </ul>
             </div>
+=======
+            <?php if (isLoggedIn()): ?>
+                <img class="dv-user-avatar" src="<?php echo BASE_URL . '/public/resources/img/avatar.png' ?>" alt="User Avatar">
+                <span class="dv-welcome-text">Welcome, Bitch</span>
+                <div class="dv-user-controls">
+                    <ul class="list-style-none">
+                        <li><a href=""><i class="fas fa-user-cog"></i></a></li>
+                        <li><a href=""><i class="fas fa-bell"></i></a></li>
+                        <li><a href="<?php echo BASE_URL . '/logout'; ?>"><i class="fas fa-sign-out-alt"></i></a></li>
+                    </ul>
+                </div>
+            <?php else: ?>
+                <img class="dv-user-avatar" src="<?php echo BASE_URL . '/public/resources/img/avatar.png' ?>" alt="User Avatar">
+                <span class="dv-welcome-text">Welcome, Guest</span>
+                <div class="dv-user-controls">
+                    <ul class="list-style-none">
+                        <li><a href="<?php echo BASE_URL . '/login'; ?>"><i class="fas fa-sign-in-alt"></i></a></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
+>>>>>>> 82269f03220437152934dc72bee2e0ac6c1750d1
         </div>
     </div>
     <nav class="dv-navbar navbar navbar-expand-lg navbar-dark">
@@ -24,13 +46,13 @@
                 <h6 class="dv-nav-title">General</h6>
                 <ul class="dv-nav">
                     <li class="dv-nav-item">
-                        <a class="dv-nav-link" href="#">
+                        <a class="dv-nav-link" href="<?php echo BASE_URL; ?>">
                             <i class="dv-nav-icon fas fa-home"></i>
                             <span class="dv-nav-text">Home</span>
                         </a>
                     </li>
                     <li class="dv-nav-item">
-                        <a class="dv-nav-link" href="#">
+                        <a class="dv-nav-link" href="https://forum.dreamvibe.ro">
                             <i class="dv-nav-icon fas fa-comments"></i>
                             <span class="dv-nav-text">Forum</span>
                         </a>

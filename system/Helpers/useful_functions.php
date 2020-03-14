@@ -52,7 +52,7 @@ function flashMessage($type = '', $message = '')
         $_SESSION['message'] = $message;
     } else if (isset($_SESSION['message_type']) && isset($_SESSION['message'])) {
         // display the message
-        echo '<div class="tnMessage ' . $_SESSION['message_type'] . '"><i class="fas fa-info-circle"></i><span>' . $_SESSION['message'] . '</span></div>';
+        echo '<div class="dv-message ' . $_SESSION['message_type'] . '"><i class="fas fa-info-circle"></i><span>' . $_SESSION['message'] . '</span></div>';
         // unset session message
         unset($_SESSION['message_type'], $_SESSION['message']);
     }
