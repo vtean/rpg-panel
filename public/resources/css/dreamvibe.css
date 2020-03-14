@@ -211,7 +211,7 @@ img {
 .dv-message {
   width: 100%;
   background: url(../img/bg-lines.png) repeat-x #95A5A6;
-  margin: 10px 0;
+  margin-bottom: 10px;
   padding: 8px 12px;
   border-radius: 5px;
 }

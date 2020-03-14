@@ -93,6 +93,29 @@
                     </li>
                 </ul>
             </div>
+            <div class="dv-nav-group">
+                <h6 class="dv-nav-title">Groups</h6>
+                <ul class="dv-nav">
+                    <li class="dv-nav-item">
+                        <a class="dv-nav-link" href="#">
+                            <i class="dv-nav-icon fas fa-users-cog"></i>
+                            <span class="dv-nav-text">Staff</span>
+                        </a>
+                    </li>
+                    <li class="dv-nav-item">
+                        <a class="dv-nav-link" href="#">
+                            <i class="dv-nav-icon fas fa-user-friends"></i>
+                            <span class="dv-nav-text">Factions</span>
+                        </a>
+                    </li>
+                    <li class="dv-nav-item">
+                        <a class="dv-nav-link" href="#">
+                            <i class="dv-nav-icon fas fa-users"></i>
+                            <span class="dv-nav-text">Families</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </div>
