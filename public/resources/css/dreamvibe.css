@@ -276,6 +276,190 @@ img {
 
 .dv-footer i.fa-coffee {
   color: #0099ff;
+/* Login */
+
+.login {
+  border-radius: 10px;
+  border: none;
+  padding: 25px;
+  background: -webkit-linear-gradient(45deg, #E9405760, #8A238760 80%);
+  position: relative
+}
+
+.login .login-icon {
+  background: #fff;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  font-size: 60px;
+  margin: 0 auto
+}
+
+.login .login-title {
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  position: relative;
+  font-weight: 700;
+  top: 15px
+}
+
+.login .login-form {
+  font-size: 18px;
+  color: #fff!important;
+  line-height: 1.2;
+  display: block;
+  width: 100%;
+  height: 45px;
+  background: 0 0;
+  padding: 0 5px 0 38px;
+  border: none;
+  border-bottom: 2px solid #ffffff40
+}
+
+.login .login-form::-webkit-input-placeholder {
+  color: #fff
+}
+
+.login .login-form::-moz-placeholder {
+  color: #fff
+}
+
+.login .login-form:-ms-input-placeholder {
+  color: #fff
+}
+
+.login .login-form::-ms-input-placeholder {
+  color: #fff
+}
+
+.login .login-form::placeholder {
+  color: #fff
+}
+
+.login .login-form:focus {
+  outline: 0;
+  padding-left: 5px
+}
+
+.login .login-form:focus+.login-span:before {
+  bottom: 38px;
+  font-size: 14px
+}
+
+.login .login-form:focus-within+.login-span:after {
+  width: 100%!important
+}
+
+.login .login-form:focus::-webkit-input-placeholder {
+  color: transparent
+}
+
+.login .login-form:focus::-moz-placeholder {
+  color: transparent
+}
+
+.login .login-form:focus:-ms-input-placeholder {
+  color: transparent
+}
+
+.login .login-form:focus::-ms-input-placeholder {
+  color: transparent
+}
+
+.login .login-form:focus::placeholder {
+  color: transparent
+}
+
+.login .login-group {
+  position: relative
+}
+
+.login .login-span {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none
+}
+
+.login .login-span:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  -webkit-transition: all .4s;
+  -o-transition: all .4s;
+  transition: all .4s;
+  background: #fff
+}
+
+.login .username:before {
+  content: "\f007";
+  font-family: "Font Awesome 5 Free", serif;
+  font-weight: 900;
+  font-size: 16px;
+  position: absolute;
+  bottom: 13px;
+  color: #fff;
+  left: 5px;
+  -webkit-transition: all .4s;
+  -o-transition: all .4s;
+  transition: all .4s
+}
+
+.login .password:before {
+  content: "\f084";
+  font-family: "Font Awesome 5 Free", serif;
+  font-weight: 900;
+  font-size: 16px;
+  position: absolute;
+  bottom: 13px;
+  color: #fff;
+  left: 5px;
+  -webkit-transition: all .4s;
+  -o-transition: all .4s;
+  transition: all .4s
+}
+
+.login .login-btn {
+  padding: 0 20px;
+  width: 120px;
+  height: 50px;
+  border-radius: 25px;
+  outline: 0;
+  border: none
+}
+
+.login-focused {
+  outline: 0;
+  padding-left: 5px!important
+}
+
+.login-focused+.login-span:before {
+  bottom: 38px!important;
+  font-size: 14px!important
+}
+
+.login-focused+.login-span:after {
+  width: 100%!important
 }
 
 /* Responsive things */
