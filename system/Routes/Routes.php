@@ -15,3 +15,12 @@ Route::set('', 'Main', 'index');
 // auth
 Route::set('login', 'Login', 'index');
 Route::set('logout', 'Logout', 'index');
+
+// owner
+Route::set('owner', 'Owner', 'index');
+
+// admin
+Route::set('admin', 'Admin', 'index');
+
+// leader
+Route::set('leader', 'Leader', 'index');
