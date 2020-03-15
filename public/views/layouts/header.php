@@ -13,5 +13,4 @@
 </head>
 <body>
     <main class="dv-main">
-        <?php getMenu(); ?>
         <div class="dv-main-content">
