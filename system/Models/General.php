@@ -74,7 +74,7 @@ class General
         $this->db->bind(':username', $username);
         // get the result
         $result = $this->db->getResult();
-        $leader = $result['LeaderController'];
+        $leader = $result['Leader'];
         if ($this->db->countRows() > 0) {
             return $leader;
         } else {

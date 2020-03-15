@@ -7,28 +7,28 @@
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="dv-server-stats-item shadow">
                         <i class="fas fa-users"></i>
-                        <span class="dv-first">256</span>
+                        <span class="dv-first"><?php echo $data['regUsers']; ?></span>
                         <span class="dv-second">Registered Users</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="dv-server-stats-item shadow">
                         <i class="fas fa-home"></i>
-                        <span class="dv-first">860</span>
+                        <span class="dv-first"><?php echo $data['houses']; ?></span>
                         <span class="dv-second">Houses</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="dv-server-stats-item shadow">
                         <i class="fas fa-building"></i>
-                        <span class="dv-first">183</span>
+                        <span class="dv-first"><?php echo $data['business']; ?></span>
                         <span class="dv-second">Businesses</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="dv-server-stats-item shadow">
                         <i class="fas fa-car-side"></i>
-                        <span class="dv-first">690</span>
+                        <span class="dv-first"><?php echo $data['vehicles']; ?></span>
                         <span class="dv-second">Personal Vehicles</span>
                     </div>
                 </div>

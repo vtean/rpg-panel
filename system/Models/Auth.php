@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief The model for the register system
+ * @brief The model for the auth system
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
