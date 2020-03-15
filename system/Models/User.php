@@ -15,7 +15,24 @@ class User
         $this->db = new Db();
     }
 
-    public function getFaction($factionId) {
+    public function searchExistingUser($nickname)
+    {
+        $sql = "SELECT * FROM accounts WHERE NickName=:user_nick";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':user_nick', $nickname);
+        // get the result
+        $result = $this->db->getResult();
+        if ($this->db->countRows() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function getFaction($factionId)
+    {
         $sql = "SELECT Name FROM orgsinfo WHERE ID=:factionId";
         // prepare the query
         $this->db->prepareQuery($sql);

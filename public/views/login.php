@@ -1,4 +1,4 @@
-<?php getHeader($data); ?>
+<?php getHeader($data['pageTitle']); ?>
     <div class="card col-md-5 login shadow">
         <div class="card-body">
             <span class="login-icon">
@@ -8,7 +8,7 @@
             <form action="" method="POST" class="dv-form">
                 <div class="form-group login-group">
                     <input type="text" name="username" id="username"
-                           class="login-form<?php if (!empty($errors['user_name_error'])): ?> is-invalid<?php endif; ?>">
+                           class="login-form<?php if (!empty($errors['user_name_error'])): ?> is-invalid<?php endif; ?>" value="<?php echo $data['user_name']; ?>">
                     <span class="login-span username"></span>
                     <?php if (!empty($errors['user_name_error'])): ?>
                         <div class="invalid-feedback">

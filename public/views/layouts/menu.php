@@ -9,7 +9,7 @@
                 <span class="dv-welcome-text">Welcome, <?php echo $_SESSION['user_name']; ?></span>
                 <div class="dv-user-controls">
                     <ul class="list-style-none">
-                        <li><a href=""><i class="fas fa-user-cog"></i></a></li>
+                        <li><a href="<?php echo BASE_URL . '/users/profile/' . $_SESSION['user_name']; ?>"><i class="fas fa-user"></i></a></li>
                         <li><a href=""><i class="fas fa-bell"></i></a></li>
                         <li><a href="<?php echo BASE_URL . '/logout'; ?>"><i class="fas fa-sign-out-alt"></i></a></li>
                     </ul>
@@ -70,7 +70,7 @@
                         <?php if (isLeader()): ?>
                             <li class="dv-nav-item">
                                 <a class="dv-nav-link" href="#">
-                                    <i class="dv-nav-icon fas fa-shield-alt"></i>
+                                    <i class="dv-nav-icon fas fa-user-tie"></i>
                                     <span class="dv-nav-text">Leader Panel</span>
                                 </a>
                             </li>

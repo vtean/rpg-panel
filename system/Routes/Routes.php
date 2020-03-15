@@ -16,11 +16,14 @@ Route::set('', 'Main', 'index');
 Route::set('login', 'Login', 'index');
 Route::set('logout', 'Logout', 'index');
 
-// owner
+// owner page
 Route::set('owner', 'Owner', 'index');
 
-// admin
+// admin page
 Route::set('admin', 'Admin', 'index');
 
-// leader
+// leader page
 Route::set('leader', 'Leader', 'index');
+
+// user page
+Route::set('users', 'Users', 'index');

@@ -30,6 +30,24 @@
   --success-border: #25A750;
 }
 
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2b3044;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b425e;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-hover-color);
+}
+
 *,
 ::after,
 ::before {
@@ -52,6 +70,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-attachment: fixed;
   color: var(--text-color);
 }
 
@@ -71,6 +90,10 @@ a:hover {
 
 img {
   max-width: 100%;
+}
+
+pre {
+  color: var(--text-color);
 }
 
 .list-style-none {
