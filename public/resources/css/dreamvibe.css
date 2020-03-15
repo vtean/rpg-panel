@@ -208,6 +208,80 @@ img {
   padding: 30px;
 }
 
+.dv-row {
+  margin-bottom: 20px;
+}
+
+.dv-page-title {
+  margin-bottom: 10px;
+}
+
+/* Main feed */
+.dv-main-feed {
+  background: #2f314c80;
+  border-radius: 5px;
+}
+
+.dv-main-feed .nav-link {
+  padding: 1rem 1.5rem;
+  border: 0;
+  font-size: 1.1rem;
+}
+
+.dv-main-feed .nav-tabs {
+  border-bottom: 2px solid #4c507d99;
+}
+
+.dv-main-feed .nav-tabs .nav-item {
+  margin-bottom: -2px;
+}
+
+.dv-main-feed .nav-tabs .nav-item.show .nav-link,
+.dv-main-feed .nav-tabs .nav-link.active {
+  background: var(--text-hover-color);
+  color: var(--text-color);
+}
+
+.dv-main-feed .nav-tabs .nav-link.active {
+  font-weight: bold;
+}
+
+.dv-main-feed .tab-content {
+  padding: 15px;
+}
+
+/* Latest actions */
+.dv-main-feed .dv-general-fh {
+  padding: 0;
+  margin: 0;
+}
+
+.dv-main-feed .dv-general-fh .dv-general-fh-item {
+  margin-bottom: 15px;
+}
+
+.dv-main-feed .dv-general-fh .dv-general-fh-item:last-child {
+  margin-bottom: 0;
+}
+
+.dv-main-feed .dv-general-fh .dv-general-fh-item img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.dv-main-feed .dv-general-fh .dv-general-fh-item img,
+.dv-main-feed .dv-general-fh .dv-general-fh-item .dv-general-fh-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.dv-main-feed .dv-general-fh .dv-general-fh-item p {
+  margin: 0;
+}
+
 /* Flash messages */
 .dv-message {
   width: 100%;
@@ -248,13 +322,89 @@ img {
 }
 
 /* Server stats widget */
-.dv-widget {
+.dv-server-stats {
   width: 100%;
 }
 
 .dv-server-stats .dv-server-stats-item {
-  display: inline-block;
-  width: 19%;
+  text-align: center;
+  padding: 20px 0;
+  border-radius: 5px;
+  position: relative;
+  border-left: 3px solid transparent;
+  overflow: hidden;
+  cursor: default;
+  transition: all .2s ease-in-out;
+}
+
+.dv-server-stats .dv-server-stats-item i {
+  font-size: 1.8rem;
+  vertical-align: middle;
+  margin-right: 3px;
+  transition: all .2s ease-in-out;
+}
+
+.dv-server-stats .dv-server-stats-item .dv-first {
+  font-size: 1.2rem;
+  font-weight: bold;
+  vertical-align: middle;
+  transition: all .2s ease-in-out;
+}
+
+.dv-server-stats .dv-server-stats-item .dv-second {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .2s ease-in-out;
+}
+
+.dv-server-stats .dv-server-stats-item:hover i,
+.dv-server-stats .dv-server-stats-item:hover .dv-first{
+  opacity: 0;
+  visibility: hidden;
+}
+
+.dv-server-stats .dv-server-stats-item:hover .dv-second {
+  font-size: 1.2rem;
+  font-weight: bold;
+  opacity: 1;
+  visibility: visible;
+}
+
+.dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(1) .dv-server-stats-item {
+  border-left-color: var(--info-border);
+  background: linear-gradient(to right, #2f314c80 50%, #0ba3bb 50%);
+  background-size: 200% 100%;
+  background-position: left bottom;
+}
+
+.dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(2) .dv-server-stats-item {
+  border-left-color: var(--danger-border);
+  background: linear-gradient(to right, #2f314c80 50%, #b9434f 50%);
+  background-size: 200% 100%;
+  background-position: left bottom;
+}
+
+.dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(3) .dv-server-stats-item {
+  border-left-color: var(--warning-border);
+  background: linear-gradient(to right, #2f314c80 50%, #ca9805 50%);
+  background-size: 200% 100%;
+  background-position: left bottom;
+}
+
+.dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(4) .dv-server-stats-item {
+  border-left-color: var(--success-border);
+  background: linear-gradient(to right, #2f314c80 50%, #25a750 50%);
+  background-size: 200% 100%;
+  background-position: left bottom;
+}
+
+.dv-server-stats .row .col-lg-3.col-md-6.col-sm-12 .dv-server-stats-item:hover {
+  background-position: right bottom;
 }
 
 /* Footer */
@@ -278,19 +428,19 @@ img {
   color: #0099ff;
 }
 
-
 /* Login */
 .login {
   border-radius: 10px;
   border: none;
   padding: 25px;
-  background: -webkit-linear-gradient(45deg, #E9405760, #8A238760 80%);
-  position: relative
+  background: #2f314c80;
+  position: relative;
+  margin: 50px auto;
 }
 
 .login .login-icon {
-  background: #fff;
-  color: #682f4d;
+  background: #448aff99;
+  color: var(--text-color);
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -444,6 +594,11 @@ img {
 }
 
 .login .login-btn {
+  color: var(--text-color);
+  background: #448aff99;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
   padding: 0 20px;
   width: 120px;
   height: 50px;
@@ -524,7 +679,7 @@ img {
     vertical-align: middle;
   }
 
-  .dv-main-menu .dv-navbar .navbar-toggler {
-
+  .dv-server-stats .dv-server-stats-item {
+    margin-bottom: 10px;
   }
 }
