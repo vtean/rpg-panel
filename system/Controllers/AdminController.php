@@ -26,11 +26,15 @@ class AdminController extends Controller
     }
     public function index()
     {
-        $admin = $this->generalModel->checkAdmin($_SESSION['user_name']);
+        $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
+        $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
+        $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
         $data = [
-            'pageTitle' => 'Home',
+            'pageTitle' => 'Admin Panel',
             'name' => $_SESSION['user_name'],
-            'admin' => $admin
+            'fullAccess' => $fullAccess,
+            'isAdmin' => $isAdmin,
+            'isLeader' => $isLeader
         ];
         $this->loadView('admin', $data);
     }

@@ -1,3 +1,3 @@
-Ceaaaaau <?php echo $data['name']; ?> </br>
-ebaaaati, tu esti admin lvl <?php echo $data['admin']; ?> </br>
-#rezisti
+<?php getHeader($data); ?>
+<?php flashMessage(); ?>
+<?php getFooter(); ?>

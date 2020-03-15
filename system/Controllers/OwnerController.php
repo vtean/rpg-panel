@@ -26,9 +26,16 @@ class OwnerController extends Controller
     }
     public function index()
     {
+        $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
+        $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
+        $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
+
         $data = [
-            'pageTitle' => 'Home',
-            'name' => $_SESSION['user_name']
+            'pageTitle' => 'Owner Panel',
+            'name' => $_SESSION['user_name'],
+            'fullAccess' => $fullAccess,
+            'isAdmin' => $isAdmin,
+            'isLeader' => $isLeader
         ];
         $this->loadView('owner', $data);
     }

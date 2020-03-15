@@ -28,14 +28,19 @@ class LeaderController extends Controller
     }
     public function index()
     {
-        $leader = $this->generalModel->checkLeader($_SESSION['user_name']);
-        if ($leader != 0 ) {
-            $faction = $this->userModel->getFaction($leader);
+        $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
+        $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
+        $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
+        if ($isLeader != 0 ) {
+            $faction = $this->userModel->getFaction($isLeader);
         }
         $data = [
-            'pageTitle' => 'Home',
+            'pageTitle' => 'Leader Panel',
             'name' => $_SESSION['user_name'],
-            'faction' => $faction['Name']
+            'faction' => $faction['Name'],
+            'fullAccess' => $fullAccess,
+            'isAdmin' => $isAdmin,
+            'isLeader' => $isLeader
         ];
         $this->loadView('leader', $data);
     }

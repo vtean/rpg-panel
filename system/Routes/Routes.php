@@ -27,3 +27,6 @@ Route::set('leader', 'LeaderController', 'index');
 
 // user page
 Route::set('users', 'UsersController', 'index');
+
+// statistics pages
+Route::set('online', 'StatisticsController', 'online');

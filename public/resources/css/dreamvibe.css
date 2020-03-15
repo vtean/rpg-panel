@@ -432,7 +432,14 @@ pre {
 
 /* Footer */
 .dv-footer {
-  margin-top: 20px;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 270px);
+  text-align: center;
+  height: 70px;
+  padding: 20px 0px;
+  background-color: var(--menu-bg);
+  right: 0;
 }
 
 .dv-footer .dv-copyright p {
