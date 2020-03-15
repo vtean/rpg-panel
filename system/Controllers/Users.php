@@ -9,11 +9,14 @@
 class Users extends MainController
 {
     private $userModel;
+    private $generalModel;
 
     public function __construct()
     {
         // load the model
         $this->userModel = $this->loadModel('User');
+        // load general model
+        $this->generalModel = $this->loadModel('General');
     }
 
     public function index()
@@ -34,9 +37,15 @@ class Users extends MainController
                 // redirect logged in user to the main page
                 redirect('/');
             }
+            $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
+            $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
+            $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
             $data = [
                 'pageTitle' => $userInfo['NickName'] . "'s Profile",
-                'user' => $userInfo
+                'user' => $userInfo,
+                'fullAccess' => $fullAccess,
+                'isAdmin' => $isAdmin,
+                'isLeader' => $isLeader
             ];
             // load the profile view
             $this->loadView('profile', $data);

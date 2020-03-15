@@ -14,13 +14,12 @@ class Main extends MainController
     {
         // load the model
         $this->generalModel = $this->loadModel('General');
-
     }
     public function index()
     {
-        $fullAccess = $this->generalModel->checkFullAccess($_SESSION['user_name']);
-        $isAdmin = $this->generalModel->checkAdmin($_SESSION['user_name']);
-        $isLeader = $this->generalModel->checkLeader($_SESSION['user_name']);
+        $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
+        $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
+        $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
         $data = [
             'pageTitle' => 'Home',
             'fullAccess' => $fullAccess,

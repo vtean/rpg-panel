@@ -12,11 +12,14 @@ class Login extends MainController
 {
     use ValidateLogin;
     private $authModel;
+    private $generalModel;
 
     public function __construct()
     {
         // load the model
         $this->authModel = $this->loadModel('Auth');
+        // load general model
+        $this->generalModel = $this->loadModel('General');
     }
 
     public function index()
@@ -28,6 +31,9 @@ class Login extends MainController
             // redirect logged in user to the main page
             redirect('/');
         } else {
+            $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
+            $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
+            $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
             // check if the form is submitted
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // sanitize post data
@@ -37,7 +43,10 @@ class Login extends MainController
                 $data = [
                     'pageTitle' => 'Login',
                     'user_name' => $_POST['username'],
-                    'user_password' => $_POST['password']
+                    'user_password' => $_POST['password'],
+                    'fullAccess' => $fullAccess,
+                    'isAdmin' => $isAdmin,
+                    'isLeader' => $isLeader
                 ];
 
                 // check if the user with this username exists
@@ -70,7 +79,10 @@ class Login extends MainController
             } else {
                 $data = [
                     'pageTitle' => 'Login',
-                    'user_name' => ''
+                    'user_name' => '',
+                    'fullAccess' => $fullAccess,
+                    'isAdmin' => $isAdmin,
+                    'isLeader' => $isLeader
                 ];
 
                 $errors = [
