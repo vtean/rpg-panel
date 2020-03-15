@@ -53,7 +53,7 @@
                     <ul class="dv-nav">
                         <?php if ($data['fullAccess']): ?>
                             <li class="dv-nav-item">
-                                <a class="dv-nav-link" href="/owner">
+                                <a class="dv-nav-link" href="<?php echo BASE_URL . '/owner'; ?>">
                                     <i class="dv-nav-icon fas fa-cog"></i>
                                     <span class="dv-nav-text">Owner Panel</span>
                                 </a>
@@ -61,7 +61,7 @@
                         <?php endif; ?>
                         <?php if ($data['isAdmin']): ?>
                             <li class="dv-nav-item">
-                                <a class="dv-nav-link" href="/admin">
+                                <a class="dv-nav-link" href="<?php echo BASE_URL . '/admin'; ?>">
                                     <i class="dv-nav-icon fas fa-shield-alt"></i>
                                     <span class="dv-nav-text">Admin Panel</span>
                                 </a>
@@ -69,7 +69,7 @@
                         <?php endif; ?>
                         <?php if ($data['isLeader']): ?>
                             <li class="dv-nav-item">
-                                <a class="dv-nav-link" href="/leader">
+                                <a class="dv-nav-link" href="<?php echo BASE_URL . '/leader'; ?>">
                                     <i class="dv-nav-icon fas fa-user-tie"></i>
                                     <span class="dv-nav-text">Leader Panel</span>
                                 </a>
