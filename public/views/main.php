@@ -1,4 +1,4 @@
-<?php getHeader($data['pageTitle']); ?>
+<?php getHeader($data); ?>
     <?php flashMessage(); ?>
     <div class="dv-row">
         <h4 class="dv-page-title">Server stats</h4>

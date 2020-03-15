@@ -8,13 +8,13 @@
  */
 
 /* Get menu */
-function getMenu()
+function getMenu($data)
 {
     require_once ROOT_PATH . '/public/views/layouts/menu.php';
 }
 
 /* Get page header */
-function getHeader($pageTitle)
+function getHeader($data)
 {
     require_once ROOT_PATH . '/public/views/layouts/header.php';
 }
@@ -36,46 +36,6 @@ function redirect($page)
 function isLoggedIn()
 {
     if (isset($_SESSION['user_id']) && isset($_SESSION['user_name'])) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-// check if user is owner
-function isOwner()
-{
-    if (isLoggedIn() && isset($_SESSION['isBigBoss']) && ($_SESSION['isBigBoss'] === true)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-// check if user if admin
-function isAdmin()
-{
-    if (isLoggedIn() && isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] === true)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-// check if user is helper
-function isHelper()
-{
-    if (isLoggedIn() && isset($_SESSION['isHelper']) && ($_SESSION['isHelper'] === true)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-// check if user is leader
-function isLeader()
-{
-    if (isLoggedIn() && isset($_SESSION['isLeader']) && ($_SESSION['isLeader'] === true)) {
         return true;
     } else {
         return false;

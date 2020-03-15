@@ -8,14 +8,14 @@
 
 class Admin extends MainController
 {
-    private $userModel;
+    private $generalModel;
 
     public function __construct()
     {
         // load the model
-        $this->userModel = $this->loadModel('User');
+        $this->generalModel = $this->loadModel('General');
 
-        $admin = $this->userModel->checkAdmin($_SESSION['user_name']);
+        $admin = $this->generalModel->checkAdmin($_SESSION['user_name']);
         if ($admin == 0) {
             // add session message
             flashMessage('danger', 'You are not allowed to access this page.');
@@ -26,7 +26,7 @@ class Admin extends MainController
     }
     public function index()
     {
-        $admin = $this->userModel->checkAdmin($_SESSION['user_name']);
+        $admin = $this->generalModel->checkAdmin($_SESSION['user_name']);
         $data = [
             'pageTitle' => 'Home',
             'name' => $_SESSION['user_name'],

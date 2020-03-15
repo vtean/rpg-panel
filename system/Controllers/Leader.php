@@ -8,14 +8,16 @@
 
 class Leader extends MainController
 {
+    private $generalModel;
     private $userModel;
 
     public function __construct()
     {
-        // load the model
-        $this->userModel = $this->loadModel('User');
+        // load models
+        $this->generalModel = $this->loadModel('General');
+        $this->userModel = $this->loadModel('user');
 
-        $leader = $this->userModel->checkLeader($_SESSION['user_name']);
+        $leader = $this->generalModel->checkLeader($_SESSION['user_name']);
         if ($leader == 0) {
             // add session message
             flashMessage('danger', 'You are not allowed to access this page.');
@@ -26,7 +28,7 @@ class Leader extends MainController
     }
     public function index()
     {
-        $leader = $this->userModel->checkLeaderq($_SESSION['user_name']);
+        $leader = $this->generalModel->checkLeader($_SESSION['user_name']);
         if ($leader != 0 ) {
             $faction = $this->userModel->getFaction($leader);
         }
