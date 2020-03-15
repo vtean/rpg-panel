@@ -65,6 +65,7 @@ class Auth
 //        return $this->db->getResult();
 //    }
 
+
     // login user
     public function loginUser($username, $password)
     {
@@ -87,6 +88,73 @@ class Auth
         }
     }
 
+    public function checkFullAccess($username)
+    {
+        $sql = "SELECT FullDostup1 FROM fulldostup WHERE FullDostup1=:username";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':username', $username);
+        // get the result
+        $this->db->getResult();
+        if ($this->db->countRows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function checkAdmin($username)
+    {
+        $sql = "SELECT * FROM accounts WHERE NickName=:username";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':username', $username);
+        // get the result
+        $result = $this->db->getResult();
+        $admin = $result['Admin'];
+        if ($this->db->countRows() > 0) {
+            return $admin;
+        } else {
+            return false;
+        }
+    }
+
+    public function checkHelper($username)
+    {
+        $sql = "SELECT * FROM accounts WHERE NickName=:username";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':username', $username);
+        // get the result
+        $result = $this->db->getResult();
+        $helper = $result['Helper'];
+        if ($this->db->countRows() > 0) {
+            return $helper;
+        } else {
+            return false;
+        }
+    }
+
+    public function checkLeader($username)
+    {
+        $sql = "SELECT * FROM accounts WHERE NickName=:username";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':username', $username);
+        // get the result
+        $result = $this->db->getResult();
+        $leader = $result['Leader'];
+        if ($this->db->countRows() > 0) {
+            return $leader;
+        } else {
+            return false;
+        }
+    }
+
     // start the session
     public function startSession($user) {
         // add user id to the session
@@ -98,17 +166,25 @@ class Auth
         // add user email to the session
         $_SESSION['user_email'] = $user['Mail'];
 
-        // add user group id to the session
-//        $_SESSION['user_group_id'] = $user['user_group_id'];
+        // check and add owner access to the session
+        if ($this->checkFullAccess($user['NickName'])) {
+            $_SESSION['isBigBoss'] = true;
+        }
 
-        // add user join date to the session
-//        $_SESSION['user_joined'] = $user['user_joined'];
+        // check and add admin access to the session
+        if ($this->checkAdmin($user['NickName']) > 0) {
+            $_SESSION['isAdmin'] = true;
+        }
 
-        // unset group id
-//        unset($group['group_id']);
+        // check and add helper access to the session
+        if ($this->checkHelper($user['NickName']) > 0) {
+            $_SESSION['isHelper'] = true;
+        }
 
-        // add group details to the session
-//        $_SESSION['user_group'] = $group;
+        // check and add leader access to the session
+        if ($this->checkLeader($user['NickName']) > 0) {
+            $_SESSION['isLeader'] = true;
+        }
 
         // redirect user to the main page
         redirect('/');

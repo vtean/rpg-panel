@@ -1,4 +1,4 @@
-<?php getHeader($data['pageTitle']); ?>
+<?php getHeader($data); ?>
     <div class="card col-md-5 login shadow">
         <div class="card-body">
             <span class="login-icon">
