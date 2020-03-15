@@ -682,4 +682,8 @@ img {
   .dv-server-stats .dv-server-stats-item {
     margin-bottom: 10px;
   }
+
+  .dv-main-feed .dv-general-fh .dv-general-fh-item .dv-general-fh-text {
+    width: calc(100% - 52px);
+  }
 }
