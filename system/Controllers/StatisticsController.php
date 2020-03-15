@@ -19,7 +19,7 @@ class StatisticsController extends Controller
     }
     public function online()
     {
-        $query = new SampQuery("46.174.50.20", 7810);
+        $query = new SampQuery("rpg.dreamvibe.ro", 7777);
 
         if ($query->connect()) {
             echo "Connected<br /><br />";
