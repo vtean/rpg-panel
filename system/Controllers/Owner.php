@@ -8,14 +8,14 @@
 
 class Owner extends MainController
 {
-    private $userModel;
+    private $generalModel;
 
     public function __construct()
     {
         // load the model
-        $this->userModel = $this->loadModel('User');
+        $this->generalModel = $this->loadModel('General');
 
-        $fullAccess = $this->userModel->checkFullAccess($_SESSION['user_name']);
+        $fullAccess = $this->generalModel->checkFullAccess($_SESSION['user_name']);
         if (!$fullAccess) {
             // add session message
             flashMessage('danger', 'You are not allowed to access this page.');

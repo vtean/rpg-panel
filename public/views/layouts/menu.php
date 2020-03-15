@@ -48,10 +48,10 @@
                 </ul>
             </div>
             <div class="dv-nav-group">
-                <?php if (isOwner() || isAdmin() || isLeader()): ?>
+                <?php if ($data['fullAccess'] || $data['isAdmin'] || $data['isLeader']): ?>
                     <h6 class="dv-nav-title">Top secret</h6>
                     <ul class="dv-nav">
-                        <?php if (isOwner()): ?>
+                        <?php if ($data['fullAccess']): ?>
                             <li class="dv-nav-item">
                                 <a class="dv-nav-link" href="/owner">
                                     <i class="dv-nav-icon fas fa-cog"></i>
@@ -59,17 +59,17 @@
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php if (isAdmin()): ?>
+                        <?php if ($data['isAdmin']): ?>
                             <li class="dv-nav-item">
-                                <a class="dv-nav-link" href="#">
+                                <a class="dv-nav-link" href="/admin">
                                     <i class="dv-nav-icon fas fa-shield-alt"></i>
                                     <span class="dv-nav-text">Admin Panel</span>
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php if (isLeader()): ?>
+                        <?php if ($data['isLeader']): ?>
                             <li class="dv-nav-item">
-                                <a class="dv-nav-link" href="#">
+                                <a class="dv-nav-link" href="/leader">
                                     <i class="dv-nav-icon fas fa-shield-alt"></i>
                                     <span class="dv-nav-text">Leader Panel</span>
                                 </a>
