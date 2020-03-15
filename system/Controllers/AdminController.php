@@ -1,24 +1,22 @@
 <?php
 /**
- * @brief Leader controller.
+ * @brief Admin controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
  */
 
-class Leader extends MainController
+class AdminController extends Controller
 {
     private $generalModel;
-    private $userModel;
 
     public function __construct()
     {
-        // load models
+        // load the model
         $this->generalModel = $this->loadModel('General');
-        $this->userModel = $this->loadModel('user');
 
-        $leader = $this->generalModel->checkLeader($_SESSION['user_name']);
-        if ($leader == 0) {
+        $admin = $this->generalModel->checkAdmin($_SESSION['user_name']);
+        if ($admin == 0) {
             // add session message
             flashMessage('danger', 'You are not allowed to access this page.');
             // redirect to main page
@@ -28,15 +26,12 @@ class Leader extends MainController
     }
     public function index()
     {
-        $leader = $this->generalModel->checkLeader($_SESSION['user_name']);
-        if ($leader != 0 ) {
-            $faction = $this->userModel->getFaction($leader);
-        }
+        $admin = $this->generalModel->checkAdmin($_SESSION['user_name']);
         $data = [
             'pageTitle' => 'Home',
             'name' => $_SESSION['user_name'],
-            'faction' => $faction['Name']
+            'admin' => $admin
         ];
-        $this->loadView('leader', $data);
+        $this->loadView('admin', $data);
     }
 }

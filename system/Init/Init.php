@@ -31,7 +31,7 @@ require_once ROOT_PATH . '/system/Routes/Routes.php';
 require_once ROOT_PATH . '/system/Helpers/useful_functions.php';
 
 // load the main controller
-require_once ROOT_PATH . '/system/Controllers/MainController.php';
+require_once ROOT_PATH . '/system/Controllers/Controller.php';
 
 // load the core
 require_once ROOT_PATH . '/system/Load/Core.php';

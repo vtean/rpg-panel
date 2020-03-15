@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief Login input validation
+ * @brief LoginController input validation
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1

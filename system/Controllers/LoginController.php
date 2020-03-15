@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief Login controller.
+ * @brief LoginController controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
@@ -8,7 +8,7 @@
 
 require_once ROOT_PATH . '/system/Validations/ValidateLogin.php';
 
-class Login extends MainController
+class LoginController extends Controller
 {
     use ValidateLogin;
     private $authModel;
@@ -41,7 +41,7 @@ class Login extends MainController
 
                 // user data
                 $data = [
-                    'pageTitle' => 'Login',
+                    'pageTitle' => 'LoginController',
                     'user_name' => $_POST['username'],
                     'user_password' => $_POST['password'],
                     'fullAccess' => $fullAccess,
@@ -78,7 +78,7 @@ class Login extends MainController
 
             } else {
                 $data = [
-                    'pageTitle' => 'Login',
+                    'pageTitle' => 'LoginController',
                     'user_name' => '',
                     'fullAccess' => $fullAccess,
                     'isAdmin' => $isAdmin,

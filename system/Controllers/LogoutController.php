@@ -1,12 +1,12 @@
 <?php
 /**
- * @brief Logout user
+ * @brief LogoutController user
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
  */
 
-class Logout {
+class LogoutController {
     public function index() {
         // unset session variables
         unset($_SESSION['user_id']);

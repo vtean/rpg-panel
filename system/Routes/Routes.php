@@ -10,20 +10,20 @@
 // Example: Route::set('about', 'aboutUs', 'index');
 
 // main index
-Route::set('', 'Main', 'index');
+Route::set('', 'MainController', 'index');
 
 // auth
-Route::set('login', 'Login', 'index');
-Route::set('logout', 'Logout', 'index');
+Route::set('login', 'LoginController', 'index');
+Route::set('logout', 'LogoutController', 'index');
 
 // owner page
-Route::set('owner', 'Owner', 'index');
+Route::set('owner', 'OwnerController', 'index');
 
 // admin page
-Route::set('admin', 'Admin', 'index');
+Route::set('admin', 'AdminController', 'index');
 
 // leader page
-Route::set('leader', 'Leader', 'index');
+Route::set('leader', 'LeaderController', 'index');
 
 // user page
-Route::set('users', 'Users', 'index');
+Route::set('users', 'UsersController', 'index');

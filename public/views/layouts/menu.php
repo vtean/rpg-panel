@@ -69,7 +69,7 @@
                         <?php endif; ?>
                         <?php if ($data['isLeader']): ?>
                             <li class="dv-nav-item">
-                                <a class="dv-nav-link" href="#">
+                                <a class="dv-nav-link" href="/leader">
                                     <i class="dv-nav-icon fas fa-user-tie"></i>
                                     <span class="dv-nav-text">Leader Panel</span>
                                 </a>

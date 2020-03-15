@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * */
-/* Main css file goes here                         */
+/* MainController css file goes here                         */
 /* (c) All rights reserved to DreamVibe Community  */
 /* * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -100,7 +100,7 @@ pre {
   list-style: none;
 }
 
-/* Main menu */
+/* MainController menu */
 .dv-main-menu {
   background-color: var(--menu-bg);
   width: 270px;
@@ -224,7 +224,7 @@ pre {
   margin-left: 39px;
 }
 
-/* Main content */
+/* MainController content */
 .dv-main-content {
   width: calc(100% - 270px);
   margin-left: 270px;
@@ -239,7 +239,7 @@ pre {
   margin-bottom: 10px;
 }
 
-/* Main feed */
+/* MainController feed */
 .dv-main-feed {
   background: #2f314c80;
   border-radius: 5px;
@@ -451,7 +451,7 @@ pre {
   color: #0099ff;
 }
 
-/* Login */
+/* LoginController */
 .login {
   border-radius: 10px;
   border: none;

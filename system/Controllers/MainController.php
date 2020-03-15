@@ -1,40 +1,31 @@
 <?php
 /**
- * @brief The main controller.
+ * @brief MainController index controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
  */
 
-class MainController
+class MainController extends Controller
 {
-    // load model
-    public function loadModel($modelName)
+    private $generalModel;
+
+    public function __construct()
     {
-        // make the first letter to be uppercase if not
-        $modelName = ucfirst($modelName);
-
-        // check if model exists
-        if (file_exists(ROOT_PATH . '/system/Models/' . $modelName . '.php')) {
-            // require the model file
-            require_once ROOT_PATH . '/system/Models/' . $modelName . '.php';
-
-            // initiate the model
-            return new $modelName();
-        } else {
-            die('Model ' . $modelName . ' cannot be found');
-        }
+        // load the model
+        $this->generalModel = $this->loadModel('General');
     }
-
-    // load view
-    public function loadView($viewName, $data = [], $errors = [])
+    public function index()
     {
-        // check if view exists
-        if (file_exists(ROOT_PATH . '/public/views/' . $viewName . '.php')) {
-            // load the view file
-            require_once ROOT_PATH . '/public/views/' . $viewName . '.php';
-        } else {
-            die('View ' . $viewName . ' does not exist');
-        }
+        $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
+        $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
+        $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
+        $data = [
+            'pageTitle' => 'Home',
+            'fullAccess' => $fullAccess,
+            'isAdmin' => $isAdmin,
+            'isLeader' => $isLeader
+        ];
+        $this->loadView('main', $data);
     }
 }

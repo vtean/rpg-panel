@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief Main file. Everything goes through this file.
+ * @brief MainController file. Everything goes through this file.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1

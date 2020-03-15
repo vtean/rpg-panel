@@ -1,12 +1,12 @@
 <?php
 /**
- * @brief Admin controller.
+ * @brief OwnerController controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
  */
 
-class Admin extends MainController
+class OwnerController extends Controller
 {
     private $generalModel;
 
@@ -15,8 +15,8 @@ class Admin extends MainController
         // load the model
         $this->generalModel = $this->loadModel('General');
 
-        $admin = $this->generalModel->checkAdmin($_SESSION['user_name']);
-        if ($admin == 0) {
+        $fullAccess = $this->generalModel->checkFullAccess($_SESSION['user_name']);
+        if (!$fullAccess) {
             // add session message
             flashMessage('danger', 'You are not allowed to access this page.');
             // redirect to main page
@@ -26,12 +26,10 @@ class Admin extends MainController
     }
     public function index()
     {
-        $admin = $this->generalModel->checkAdmin($_SESSION['user_name']);
         $data = [
             'pageTitle' => 'Home',
-            'name' => $_SESSION['user_name'],
-            'admin' => $admin
+            'name' => $_SESSION['user_name']
         ];
-        $this->loadView('admin', $data);
+        $this->loadView('owner', $data);
     }
 }

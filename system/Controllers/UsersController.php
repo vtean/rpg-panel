@@ -1,12 +1,12 @@
 <?php
 /**
- * @brief Users controller
+ * @brief UsersController controller
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
  */
 
-class Users extends MainController
+class UsersController extends Controller
 {
     private $userModel;
     private $generalModel;
