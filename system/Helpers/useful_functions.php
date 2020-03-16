@@ -57,3 +57,13 @@ function flashMessage($type = '', $message = '')
         unset($_SESSION['message_type'], $_SESSION['message']);
     }
 }
+
+function convertMinutes($time, $format = '%02d:%02d')
+{
+    if ($time < 1) {
+        return 0;
+    }
+    $hours = floor($time / 60);
+    $minutes = ($time % 60);
+    return sprintf($format, $hours, $minutes);
+}

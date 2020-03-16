@@ -17,7 +17,7 @@ class Main
 
     public function getHouses()
     {
-        $sql = "SELECT ID FROM houses";
+        $sql = "SELECT ID FROM sv_houses";
         // prepare the query
         $this->db->prepareQuery($sql);
         // get the result
@@ -27,7 +27,7 @@ class Main
 
     public function getBusiness()
     {
-        $sql = "SELECT ID FROM businesses";
+        $sql = "SELECT ID FROM sv_businesses";
         // prepare the query
         $this->db->prepareQuery($sql);
         // get the result
@@ -37,7 +37,7 @@ class Main
 
     public function getVehicles()
     {
-        $sql = "SELECT Owner FROM ownable WHERE NOT Owner = 'The State'";
+        $sql = "SELECT Owner FROM sv_vehicles WHERE NOT Owner = 'The State'";
         // prepare the query
         $this->db->prepareQuery($sql);
         // get the result
@@ -47,7 +47,7 @@ class Main
 
     public function getRegUsers()
     {
-        $sql = "SELECT ID FROM accounts";
+        $sql = "SELECT ID FROM sv_accounts";
         // prepare the query
         $this->db->prepareQuery($sql);
         // get the result

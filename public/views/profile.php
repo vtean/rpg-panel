@@ -40,25 +40,32 @@
                         <span class="dv-first">Faction</span>
                         <span class="dv-second">School Instructors</span>
                     </div>
+
+                    <div class="dv-user-info-group">
+                        <span class="dv-first">Level</span>
+                        <span class="dv-second"><?php echo $data['user']['Level']; ?></span>
+                    </div>
+                    <div class="dv-user-info-group">
+                        <span class="dv-first">Email</span>
+                        <span class="dv-second"><?php echo $data['user']['Mail']; ?></span>
+                    </div>
+
                     <div class="dv-user-info-group">
                         <span class="dv-first">Faction Rank</span>
                         <span class="dv-second">Director</span>
                     </div>
                     <div class="dv-user-info-group">
+                        <span class="dv-first">Played Time</span>
+                        <span class="dv-second"><?php echo convertMinutes($data['user']['PlayedTime']); ?>h</span>
+                    </div>
+                    <div class="dv-user-info-group">
+                        <span class="dv-first">2-Step Verification</span>
+                        <span class="dv-second">No</span>
+                    </div>
+
+                    <div class="dv-user-info-group">
                         <span class="dv-first">Family</span>
                         <span class="dv-second">DreamVibe</span>
-                    </div>
-                    <div class="dv-user-info-group">
-                        <span class="dv-first">Family Rank</span>
-                        <span class="dv-second">Leader</span>
-                    </div>
-                    <div class="dv-user-info-group">
-                        <span class="dv-first">Level</span>
-                        <span class="dv-second">69</span>
-                    </div>
-                    <div class="dv-user-info-group">
-                        <span class="dv-first">Playing Time</span>
-                        <span class="dv-second">24</span>
                     </div>
                     <div class="dv-user-info-group">
                         <span class="dv-first">Phone Number</span>
@@ -66,47 +73,46 @@
                     </div>
                     <div class="dv-user-info-group">
                         <span class="dv-first">Joined</span>
-                        <span class="dv-second">10.3.2020 - 02:36:20</span>
+                        <span class="dv-second"><?php echo $data['user']['RegData']; ?></span>
+                    </div>
+
+                    <div class="dv-user-info-group">
+                        <span class="dv-first">Family Rank</span>
+                        <span class="dv-second">Leader</span>
+                    </div>
+                    <div class="dv-user-info-group">
+                        <span class="dv-first">Money</span>
+                        <span class="dv-second">$<?php echo $data['user']['Money']; ?></span>
                     </div>
                     <div class="dv-user-info-group">
                         <span class="dv-first">Last Online</span>
                         <span class="dv-second">16.3.2020 - 18:30:51</span>
                     </div>
+
                     <div class="dv-user-info-group">
-                        <span class="dv-first">Money</span>
-                        <span class="dv-second">$69,000,000</span>
+                        <span class="dv-first">Forum Name</span>
+                        <span class="dv-second">Lust</span>
                     </div>
                     <div class="dv-user-info-group">
                         <span class="dv-first">Bank Money</span>
                         <span class="dv-second">$20,251,365</span>
                     </div>
                     <div class="dv-user-info-group">
-                        <span class="dv-first">Email</span>
-                        <span class="dv-second">valentintean@gmail.com</span>
+                        <span class="dv-first">Warnings</span>
+                        <span class="dv-second">0/3</span>
+                    </div>
+
+                    <div class="dv-user-info-group">
+                        <span class="dv-first">Job</span>
+                        <span class="dv-second">Unemployed</span>
                     </div>
                     <div class="dv-user-info-group">
                         <span class="dv-first">DV Coins</span>
                         <span class="dv-second">690</span>
                     </div>
                     <div class="dv-user-info-group">
-                        <span class="dv-first">2-Step Verification</span>
-                        <span class="dv-second">No</span>
-                    </div>
-                    <div class="dv-user-info-group">
-                        <span class="dv-first">Job</span>
-                        <span class="dv-second">Unemployed</span>
-                    </div>
-                    <div class="dv-user-info-group">
-                        <span class="dv-first">Warnings</span>
-                        <span class="dv-second">0/3</span>
-                    </div>
-                    <div class="dv-user-info-group">
                         <span class="dv-first">Faction Warnings</span>
                         <span class="dv-second">0/3</span>
-                    </div>
-                    <div class="dv-user-info-group">
-                        <span class="dv-first">Forum Name</span>
-                        <span class="dv-second">Lust</span>
                     </div>
                 </div>
                 <div class="dv-user-properties dv-row">
