@@ -78,7 +78,7 @@ class LoginController extends Controller
 
             } else {
                 $data = [
-                    'pageTitle' => 'LoginController',
+                    'pageTitle' => 'Login',
                     'user_name' => '',
                     'fullAccess' => $fullAccess,
                     'isAdmin' => $isAdmin,

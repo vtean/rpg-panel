@@ -55,21 +55,21 @@
                         <li class="dv-general-fh-item">
                             <img src="<?php echo BASE_URL . '/public/resources/img/avatar2.png'; ?>" alt="">
                             <div class="dv-general-fh-text">
-                                <p>Indigo a fost demis de catre Adminul Lust din factiunea School Instructors (rank 10) dupa 69 de zile, fara FP. Motiv: Renuntare la functie!</p>
+                                <p>Indigo was uninvited by Admin Lust from faction School Instructors (rank 10) after 69 days, without FP. Reason: Renuntare la functie!</p>
                                 <span><i class="far fa-clock"></i> 15/03/2020 03:19</span>
                             </div>
                         </li>
                         <li class="dv-general-fh-item">
                             <img src="<?php echo BASE_URL . '/public/resources/img/avatar.png'; ?>" alt="">
                             <div class="dv-general-fh-text">
-                                <p>Lust a fost demis de catre Indigo din factiunea School Instructors (rank 9) dupa 69 de zile, fara FP. Motiv: Cerere de demisie!</p>
+                                <p>Lust was uninvited by Indigo from faction School Instructors (rank 9) after 69 days, without FP. Reason: Cerere de demisie!</p>
                                 <span><i class="far fa-clock"></i> 15/03/2020 02:25</span>
                             </div>
                         </li>
                         <li class="dv-general-fh-item">
                             <img src="<?php echo BASE_URL . '/public/resources/img/avatar.png'; ?>" alt="">
                             <div class="dv-general-fh-text">
-                                <p>Lust a aderat la factiunea School Instructors (invitat de Indigo).</p>
+                                <p>Lust has joined the faction School Instructors (invited by Indigo).</p>
                                 <span><i class="far fa-clock"></i> 15/03/2020 00:15</span>
                             </div>
                         </li>

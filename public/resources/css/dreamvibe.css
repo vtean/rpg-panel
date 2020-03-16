@@ -11,6 +11,7 @@
   --menu-bg: #22263595;
   --menu-item-bg: #30354795;
   --menu-icon-bg: #272b3b99;
+  --menu-item-hover-bg: #3e445b95;
 
   /* Text colors */
   --text-color: #fff;
@@ -32,11 +33,11 @@
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #2b3044;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -101,6 +102,15 @@ pre {
   list-style: none;
 }
 
+.dv-bg-color {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: -webkit-linear-gradient(45deg, #E9405705, #8A238707 80%);
+}
+
 /* MainController menu */
 .dv-main-menu {
   background-color: var(--menu-bg);
@@ -112,6 +122,15 @@ pre {
   left: 0;
   box-shadow: 0 0 10px 1px #00000060;
   z-index: 999;
+  overflow-y: hidden;
+}
+
+.dv-main-menu:hover {
+  overflow-y: scroll;
+}
+
+.dv-main-menu:hover .dv-menu-content {
+  margin-right: -5px;
 }
 
 /* Logo */
@@ -132,8 +151,13 @@ pre {
   margin: 0 auto;
   background-color: var(--menu-item-bg);
   border-radius: 50%;
-  border: 2px solid #393e52;
+  border: 2px solid #6b7bbf40;
   overflow: hidden;
+  transition: all .2s ease-in-out;
+}
+
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar:hover {
+  border-color: var(--text-hover-color);
 }
 
 .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar .dv-logged-img {
@@ -189,11 +213,17 @@ pre {
 .dv-main-menu .dv-navbar .dv-nav-group {
   width: 100%;
   margin-top: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #3d4261;
 }
 
 .dv-main-menu .dv-navbar .dv-nav-group:nth-child(1)
 {
   margin-top: 0;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group:last-child {
+  border-bottom: 0;
 }
 
 .dv-main-menu .dv-navbar .dv-nav-group .dv-nav {
@@ -207,33 +237,81 @@ pre {
 
 .dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item {
   display: block;
-  margin: 5px 0;
+  margin: 6px 0;
   position: relative;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item .dv-nav-link.dv-collapse::after {
+  content: '\f107';
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 900;
+  font-size: 1.4rem;
+  color: #6273bb;
+  display: inline-block;
+  float: right;
+  transition: all .2s ease-in-out;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item:hover .dv-nav-link.dv-collapse::after {
+  color: var(--text-hover-color);
 }
 
 .dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item .dv-nav-link {
   display: block;
-  height: 32px;
-  line-height: 32px;
-  background-color: var(--menu-item-bg);
+  height: 30px;
+  line-height: 30px;
   border-radius: 5px;
+  padding-right: 10px;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item:hover .dv-nav-link {
+  color: var(--text-hover-color);
 }
 
 .dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item .dv-nav-link .dv-nav-icon {
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  font-size: 14px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 1.2rem;
   text-align: center;
-  background-color: var(--body-bg);
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 5px 10px 10px 5px;
+  color: #6273bb;
+  background-color: var(--menu-item-bg);
+  margin-right: 3px;
+  border-radius: 5px;
+  transition: all .2s ease-in-out;
 }
 
-.dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item .dv-nav-link .dv-nav-text {
-  margin-left: 39px;
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item:hover .dv-nav-link .dv-nav-icon {
+  color: var(--text-hover-color);
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav-collapse {
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav-collapse .dv-nav-collapse-item {
+  margin: 5px 0;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav-collapse .dv-nav-collapse-item .dv-nav-collapse-link {
+  display: block;
+  padding: 5px 10px 5px 0;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav-collapse .dv-nav-collapse-item .dv-nav-collapse-link .dv-nav-collapse-icon {
+  font-size: 1.2rem;
+  vertical-align: middle;
+  width: 20px;
+  text-align: center;
+  color: #6273bb;
+  position: relative;
+  top: -1px;
+  transition: all .2s ease-in-out;
+}
+
+.dv-main-menu .dv-navbar .dv-nav-group .dv-nav-collapse .dv-nav-collapse-item:hover .dv-nav-collapse-link .dv-nav-collapse-icon {
+  color: var(--text-hover-color);
 }
 
 /* MainController content */
