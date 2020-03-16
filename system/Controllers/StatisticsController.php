@@ -22,7 +22,6 @@ class StatisticsController extends Controller
         $query = new SampQuery("rpg.dreamvibe.ro", 7777);
 
         if ($query->connect()) {
-            echo "Connected<br /><br />";
             $players = $query->getBasicPlayers();
             $info = $query->getInfo();
         } else {

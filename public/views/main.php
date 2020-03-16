@@ -5,28 +5,28 @@
         <div class="dv-server-stats">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="dv-server-stats-item shadow">
+                    <div class="dv-server-stats-item">
                         <i class="fas fa-users"></i>
                         <span class="dv-first"><?php echo $data['regUsers']; ?></span>
                         <span class="dv-second">Registered Users</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="dv-server-stats-item shadow">
+                    <div class="dv-server-stats-item">
                         <i class="fas fa-home"></i>
                         <span class="dv-first"><?php echo $data['houses']; ?></span>
                         <span class="dv-second">Houses</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="dv-server-stats-item shadow">
+                    <div class="dv-server-stats-item">
                         <i class="fas fa-building"></i>
                         <span class="dv-first"><?php echo $data['business']; ?></span>
                         <span class="dv-second">Businesses</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="dv-server-stats-item shadow">
+                    <div class="dv-server-stats-item">
                         <i class="fas fa-car-side"></i>
                         <span class="dv-first"><?php echo $data['vehicles']; ?></span>
                         <span class="dv-second">Personal Vehicles</span>
@@ -37,7 +37,7 @@
     </div>
     <div class="dv-row">
         <h4 class="dv-page-title">Don't miss anything</h4>
-        <div class="dv-main-feed shadow">
+        <div class="dv-main-feed">
             <ul class="nav nav-tabs" id="dvTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="latest-actions-tab" data-toggle="tab" href="#latest-actions" role="tab" aria-controls="latest-actions" aria-selected="true">Latest actions</a>

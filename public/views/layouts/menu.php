@@ -155,6 +155,12 @@
                     </ul>
                     <ul class="dv-nav-collapse collapse list-style-none" id="collapseStats">
                         <li class="dv-nav-collapse-item">
+                            <a href="<?php echo BASE_URL . '/online'; ?>" class="dv-nav-collapse-link">
+                                <i class="dv-nav-collapse-icon fas fa-signal"></i>
+                                <span class="dv-nav-collapse-text">Online</span>
+                            </a>
+                        </li>
+                        <li class="dv-nav-collapse-item">
                             <a href="" class="dv-nav-collapse-link">
                                 <i class="dv-nav-collapse-icon fas fa-user-friends"></i>
                                 <span class="dv-nav-collapse-text">Top Players</span>

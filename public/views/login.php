@@ -1,5 +1,5 @@
 <?php getHeader($data); ?>
-    <div class="card col-md-5 login shadow">
+    <div class="card col-md-5 login">
         <div class="card-body">
             <span class="login-icon">
                 <i class="fas fa-sign-in-alt"></i>

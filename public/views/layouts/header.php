@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="<?php echo BASE_URL . '/public/resources/css/dreamvibe.css'; ?>" />
 </head>
 <body>
-    <div class="dv-bg-color"></div>
     <main class="dv-main">
         <?php getMenu($data); ?>
         <div class="dv-main-content">
+            <h1 class="dv-visually-hidden">DreamVibe Panel</h1>

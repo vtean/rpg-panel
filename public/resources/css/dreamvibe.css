@@ -8,15 +8,18 @@
 :root {
   /* Background colors */
   --body-bg: #272b3b;
-  --menu-bg: #22263595;
+  --menu-bg: #2c2a40;
   --menu-item-bg: #30354795;
   --menu-icon-bg: #272b3b99;
   --menu-item-hover-bg: #3e445b95;
+  --content-bg: #33304a;
+  --footer-bg: #2a283b;
 
   /* Text colors */
   --text-color: #fff;
   --text-hover-color: #448aff;
   --nav-title-color: #8e97bf;
+  --text-color-secondary: #6273bb;
 
   /* info colors */
   --danger-color: #DA6572;
@@ -90,6 +93,11 @@ a:hover {
   color: var(--text-hover-color);
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 img {
   max-width: 100%;
 }
@@ -109,6 +117,19 @@ pre {
   top: 0;
   left: 0;
   background: -webkit-linear-gradient(45deg, #E9405705, #8A238707 80%);
+  z-index: -1;
+}
+
+.dv-visually-hidden {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(0px 0px 99.9% 99.9%);
+  clip-path: inset(0px 0px 99.9% 99.9%);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  border: 0;
 }
 
 /* MainController menu */
@@ -120,7 +141,7 @@ pre {
   position: fixed;
   top: 0;
   left: 0;
-  box-shadow: 0 0 10px 1px #00000060;
+  /*box-shadow: 0 0 10px 1px #00000060;*/
   z-index: 999;
   overflow-y: hidden;
 }
@@ -246,7 +267,7 @@ pre {
   font-family: "Font Awesome 5 Pro";
   font-weight: 900;
   font-size: 1.4rem;
-  color: #6273bb;
+  color: var(--text-color-secondary);
   display: inline-block;
   float: right;
   transition: all .2s ease-in-out;
@@ -274,7 +295,7 @@ pre {
   line-height: 30px;
   font-size: 1.2rem;
   text-align: center;
-  color: #6273bb;
+  color: var(--text-color-secondary);
   background-color: var(--menu-item-bg);
   margin-right: 3px;
   border-radius: 5px;
@@ -304,7 +325,7 @@ pre {
   vertical-align: middle;
   width: 20px;
   text-align: center;
-  color: #6273bb;
+  color: var(--text-color-secondary);
   position: relative;
   top: -1px;
   transition: all .2s ease-in-out;
@@ -322,7 +343,7 @@ pre {
 .dv-main-content {
   width: calc(100% - 270px);
   margin-left: 270px;
-  padding: 30px 30px 100px 30px;
+  padding: 50px 50px 100px 50px;
 }
 
 .dv-row {
@@ -335,7 +356,7 @@ pre {
 
 /* MainController feed */
 .dv-main-feed {
-  background: #2f314c80;
+  background: var(--content-bg);
   border-radius: 5px;
 }
 
@@ -494,28 +515,28 @@ pre {
 
 .dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(1) .dv-server-stats-item {
   border-left-color: var(--info-border);
-  background: linear-gradient(to right, #2f314c80 50%, #0ba3bb 50%);
+  background: linear-gradient(to right, var(--content-bg) 50%, #0ba3bb 50%);
   background-size: 200% 100%;
   background-position: left bottom;
 }
 
 .dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(2) .dv-server-stats-item {
   border-left-color: var(--danger-border);
-  background: linear-gradient(to right, #2f314c80 50%, #b9434f 50%);
+  background: linear-gradient(to right, var(--content-bg) 50%, #b9434f 50%);
   background-size: 200% 100%;
   background-position: left bottom;
 }
 
 .dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(3) .dv-server-stats-item {
   border-left-color: var(--warning-border);
-  background: linear-gradient(to right, #2f314c80 50%, #ca9805 50%);
+  background: linear-gradient(to right, var(--content-bg) 50%, #ca9805 50%);
   background-size: 200% 100%;
   background-position: left bottom;
 }
 
 .dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(4) .dv-server-stats-item {
   border-left-color: var(--success-border);
-  background: linear-gradient(to right, #2f314c80 50%, #25a750 50%);
+  background: linear-gradient(to right, var(--content-bg) 50%, #25a750 50%);
   background-size: 200% 100%;
   background-position: left bottom;
 }
@@ -529,7 +550,7 @@ pre {
   text-align: center;
   height: 70px;
   padding: 20px 0px;
-  background-color: var(--menu-bg);
+  background-color: var(--footer-bg);
   position: relative;
   clear: both;
   margin-top: -70px;
@@ -561,7 +582,7 @@ pre {
   border-radius: 10px;
   border: none;
   padding: 25px;
-  background: #2f314c80;
+  background: var(--content-bg);
   position: relative;
   margin: 50px auto;
 }
@@ -756,7 +777,251 @@ pre {
   position: absolute;
 }
 
-/* Responsive things */
+/* User profile */
+.dv-user-profile {
+
+}
+
+.dv-user-profile .dv-user-profile-main {
+  text-align: center;
+}
+
+.dv-user-profile .dv-user-profile-main .dv-user-profile-skin {
+  height: 480px;
+  width: 240px;
+  object-fit: cover;
+  object-position: center -20px;
+}
+
+.dv-user-profile .dv-user-profile-info {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}
+
+.dv-user-profile .dv-user-profile-info .dv-user-info-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.dv-user-profile .dv-user-profile-info .dv-user-info-group::before {
+  content: '\f292';
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 900;
+  position: absolute;
+  font-size: 3rem;
+  left: -13px;
+  top: -4px;
+  color: #435ebb30;
+  z-index: -1;
+}
+
+.dv-user-profile .dv-user-profile-info .dv-user-info-group span {
+  display: block;
+}
+
+.dv-user-profile .dv-user-profile-info .dv-user-info-group .dv-first {
+
+}
+
+.dv-user-profile .dv-user-profile-info .dv-user-info-group .dv-second {
+  color: var(--text-color-secondary);
+  font-size: 1.4rem;
+}
+
+.dv-user-profile .dv-user-profile-info .dv-user-groups {
+
+}
+
+.dv-user-groups .dv-user-single-group {
+  background-color: #5060a2;
+  padding: 4px 10px;
+  width: fit-content;
+  border-radius: 5px;
+  display: inline-block;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.dv-user-groups .dv-user-single-group .dv-user-group-icon,
+.dv-user-groups .dv-user-single-group .dv-user-group-title {
+  vertical-align: middle;
+}
+
+.dv-user-groups .dv-user-single-group .dv-user-group-icon {
+  font-size: 1.2rem;
+}
+
+.dv-user-groups .dv-user-single-group .dv-user-group-title {
+  font-weight: bold;
+}
+
+.dv-owner {
+  background-color: #d54d40 !important;
+}
+
+.dv-admin {
+  background-color: #4081ee !important;
+}
+
+.dv-faction-leader {
+  background-color: #23d706 !important;
+}
+
+.dv-support {
+  background-color: #586bbb !important;
+}
+
+.dv-vip {
+  background-color: #eab209 !important;
+}
+
+.dv-user-profile .dv-user-row-title {
+  text-shadow: 0 12px 25px #6d88f8;
+  width: fit-content;
+  margin-bottom: 15px;
+}
+
+.dv-user-profile .dv-user-row-title::after {
+  content: '';
+  display: block;
+  width: 120%;
+  height: 2px;
+  background-color: #6d88f8;
+  margin-top: 5px;
+}
+
+.dv-user-profile .dv-user-properties .dv-user-property {
+  position: relative;
+  margin-left: 45px;
+  margin-bottom: 15px;
+}
+
+.dv-user-profile .dv-user-properties .dv-user-property::before {
+  content: '\f27a';
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 900;
+  font-size: 5rem;
+  color: #435ebb30;
+  position: absolute;
+  top: -7px;
+  left: -30px;
+  z-index: -1;
+}
+
+.dv-house::before {
+  content: '\f015' !important;
+}
+
+.dv-business::before {
+  content: '\f1ad' !important;
+}
+
+.dv-vehicle::before {
+  content: '\f5de' !important;
+}
+
+.dv-user-profile .dv-user-properties .dv-user-property .dv-second {
+  color: #6577c3;
+}
+
+.dv-user-fh {
+  margin-left: 15px;
+}
+
+.dv-user-fh .dv-user-fh-item {
+  margin-bottom: 10px;
+}
+
+.dv-user-fh .dv-user-fh-item .dv-user-fh-avatar,
+.dv-user-fh .dv-user-fh-item .dv-user-fh-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.dv-user-fh .dv-user-fh-item .dv-user-fh-avatar {
+  width: 45px;
+  height: 45px;
+  background-color: var(--text-color-secondary);
+  border-radius: 50%;
+  border: 2px solid transparent;
+  overflow: hidden;
+  margin-right: 3px;
+}
+
+.dv-user-fh .dv-user-fh-item .dv-user-fh-avatar img {
+  height: 300%;
+  object-fit: cover;
+  position: relative;
+  top: -5px;
+}
+
+.dv-user-fh .dv-user-fh-item .dv-user-fh-text {
+  width: calc(100% - 52px);
+}
+
+.dv-user-fh .dv-user-fh-item .dv-user-fh-text p {
+  margin: 0;
+  padding: 0;
+}
+
+.dv-user-profile .dv-user-profile-controls {
+  width: fit-content;
+}
+
+.dv-btn {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.5rem 0.75rem;
+}
+
+.dv-user-weapon-skills {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin-left: 15px;
+}
+
+.dv-user-weapon-skills .dv-weapon-single {
+  margin-bottom: 10px;
+}
+
+.dv-user-weapon-skills .dv-weapon-single .progress {
+  width: 85%;
+}
+
+.dv-progress {
+  background-color: #3d4160;
+}
+
+.dv-progress .dv-progress-color {
+  background-color: #6882ec;
+}
+
+/* Responsive profile */
+@media screen and (max-width: 1366px) {
+  .dv-user-profile .dv-user-profile-info {
+    grid-template-columns: 50% 50%;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .dv-user-profile .dv-user-profile-main .dv-user-profile-skin {
+    height: 150px;
+    width: 100px;
+    object-position: center -7px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .dv-user-profile .dv-user-profile-info {
+    grid-template-columns: 100%;
+  }
+}
+
+/* General responsive things */
 @media screen and (max-width: 991px) {
   .dv-main-menu {
     position: relative;
@@ -821,5 +1086,11 @@ pre {
 
   .dv-footer {
     margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .dv-main-content {
+    padding: 30px 30px 100px 30px;
   }
 }
