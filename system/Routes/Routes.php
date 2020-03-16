@@ -30,3 +30,6 @@ Route::set('users', 'UsersController', 'index');
 
 // statistics pages
 Route::set('online', 'StatisticsController', 'online');
+
+// groups page
+Route::set('groups', 'GroupsController', 'index');

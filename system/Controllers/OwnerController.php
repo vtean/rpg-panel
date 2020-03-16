@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief OwnerController controller.
+ * @brief Owner Panel controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
@@ -8,15 +8,14 @@
 
 class OwnerController extends Controller
 {
-    private $generalModel;
+    private $privileges;
 
     public function __construct()
     {
-        // load the model
-        $this->generalModel = $this->loadModel('General');
+        // store user privileges
+        $this->privileges = $this->checkPrivileges();
 
-        $fullAccess = $this->generalModel->checkFullAccess($_SESSION['user_name']);
-        if (!$fullAccess) {
+        if (!$this->privileges['fullAccess']) {
             // add session message
             flashMessage('danger', 'You are not allowed to access this page.');
             // redirect to main page
@@ -26,16 +25,12 @@ class OwnerController extends Controller
     }
     public function index()
     {
-        $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
-        $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
-        $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
-
         $data = [
             'pageTitle' => 'Owner Panel',
             'name' => $_SESSION['user_name'],
-            'fullAccess' => $fullAccess,
-            'isAdmin' => $isAdmin,
-            'isLeader' => $isLeader
+            'fullAccess' => $this->privileges['fullAccess'],
+            'isAdmin' => $this->privileges['isAdmin'],
+            'isLeader' => $this->privileges['isLeader']
         ];
         $this->loadView('owner', $data);
     }

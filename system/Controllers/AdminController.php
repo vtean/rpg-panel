@@ -8,15 +8,14 @@
 
 class AdminController extends Controller
 {
-    private $generalModel;
+    private $privileges;
 
     public function __construct()
     {
-        // load the model
-        $this->generalModel = $this->loadModel('General');
+        // store user privileges
+        $this->privileges = $this->checkPrivileges();
 
-        $admin = $this->generalModel->checkAdmin($_SESSION['user_name']);
-        if ($admin == 0) {
+        if ($this->privileges['isAdmin'] == 0) {
             // add session message
             flashMessage('danger', 'You are not allowed to access this page.');
             // redirect to main page
@@ -26,15 +25,12 @@ class AdminController extends Controller
     }
     public function index()
     {
-        $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
-        $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
-        $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
         $data = [
             'pageTitle' => 'Admin Panel',
             'name' => $_SESSION['user_name'],
-            'fullAccess' => $fullAccess,
-            'isAdmin' => $isAdmin,
-            'isLeader' => $isLeader
+            'fullAccess' => $this->privileges['fullAccess'],
+            'isAdmin' => $this->privileges['isAdmin'],
+            'isLeader' => $this->privileges['isLeader']
         ];
         $this->loadView('admin', $data);
     }

@@ -12,14 +12,15 @@ class LoginController extends Controller
 {
     use ValidateLogin;
     private $authModel;
-    private $generalModel;
+    private $privileges;
 
     public function __construct()
     {
         // load the model
         $this->authModel = $this->loadModel('Auth');
-        // load general model
-        $this->generalModel = $this->loadModel('General');
+
+        // store user privileges
+        $this->privileges = $this->checkPrivileges();
     }
 
     public function index()
@@ -31,9 +32,6 @@ class LoginController extends Controller
             // redirect logged in user to the main page
             redirect('/');
         } else {
-            $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
-            $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
-            $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
             // check if the form is submitted
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // sanitize post data
@@ -44,9 +42,9 @@ class LoginController extends Controller
                     'pageTitle' => 'LoginController',
                     'user_name' => $_POST['username'],
                     'user_password' => $_POST['password'],
-                    'fullAccess' => $fullAccess,
-                    'isAdmin' => $isAdmin,
-                    'isLeader' => $isLeader
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader']
                 ];
 
                 // check if the user with this username exists
@@ -80,9 +78,9 @@ class LoginController extends Controller
                 $data = [
                     'pageTitle' => 'Login',
                     'user_name' => '',
-                    'fullAccess' => $fullAccess,
-                    'isAdmin' => $isAdmin,
-                    'isLeader' => $isLeader
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader']
                 ];
 
                 $errors = [

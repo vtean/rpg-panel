@@ -11,6 +11,7 @@ class LogoutController {
         // unset session variables
         unset($_SESSION['user_id']);
         unset($_SESSION['user_name']);
+        unset($_SESSION['user_skin']);
         // destroy the session
         session_destroy();
         // redirect to the main page

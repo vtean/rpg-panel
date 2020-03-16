@@ -8,6 +8,8 @@
 
 class Controller
 {
+    private $bigBossModel;
+
     // load model
     public function loadModel($modelName)
     {
@@ -36,5 +38,22 @@ class Controller
         } else {
             die('View ' . $viewName . ' does not exist');
         }
+    }
+
+    // check privileges
+    protected function checkPrivileges()
+    {
+        // load the model
+        $this->bigBossModel = $this->loadModel('General');
+
+        $fullAccess = isLoggedIn() ? $this->bigBossModel->checkFullAccess($_SESSION['user_name']) : 0;
+        $isAdmin = isLoggedIn() ? $this->bigBossModel->checkAdmin($_SESSION['user_name']) : 0;
+        $isLeader = isLoggedIn() ? $this->bigBossModel->checkLeader($_SESSION['user_name']) : 0;
+
+        return [
+            'fullAccess' => $fullAccess,
+            'isAdmin' => $isAdmin,
+            'isLeader' => $isLeader
+        ];
     }
 }

@@ -10,12 +10,12 @@ require_once ROOT_PATH . '/system/API/SampQuery.class.php';
 
 class StatisticsController extends Controller
 {
-    private $generalModel;
+    private $privileges;
 
     public function __construct()
     {
-        // load the model
-        $this->generalModel = $this->loadModel('General');
+        // store user privileges
+        $this->privileges = $this->checkPrivileges();
     }
     public function online()
     {
@@ -29,15 +29,11 @@ class StatisticsController extends Controller
         }
         $query->close(); // Close the connection
 
-
-        $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
-        $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
-        $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
         $data = [
             'pageTitle' => 'Online',
-            'fullAccess' => $fullAccess,
-            'isAdmin' => $isAdmin,
-            'isLeader' => $isLeader,
+            'fullAccess' => $this->privileges['fullAccess'],
+            'isAdmin' => $this->privileges['isAdmin'],
+            'isLeader' => $this->privileges['isLeader'],
             'players' => $players,
             'info' => $info
         ];

@@ -8,17 +8,18 @@
 
 class LeaderController extends Controller
 {
-    private $generalModel;
     private $userModel;
+    private $privileges;
 
     public function __construct()
     {
-        // load models
-        $this->generalModel = $this->loadModel('General');
-        $this->userModel = $this->loadModel('user');
+        // load user model
+        $this->userModel = $this->loadModel('User');
 
-        $leader = $this->generalModel->checkLeader($_SESSION['user_name']);
-        if ($leader == 0) {
+        // store user privileges
+        $this->privileges = $this->checkPrivileges();
+
+        if ($this->privileges['isLeader'] == 0) {
             // add session message
             flashMessage('danger', 'You are not allowed to access this page.');
             // redirect to main page
@@ -28,19 +29,16 @@ class LeaderController extends Controller
     }
     public function index()
     {
-        $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
-        $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
-        $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
-        if ($isLeader != 0 ) {
-            $faction = $this->userModel->getFaction($isLeader);
+        if ($this->privileges['isLeader'] != 0 ) {
+            $faction = $this->userModel->getFaction($this->privileges['isLeader']);
         }
         $data = [
             'pageTitle' => 'Leader Panel',
             'name' => $_SESSION['user_name'],
             'faction' => $faction['Name'],
-            'fullAccess' => $fullAccess,
-            'isAdmin' => $isAdmin,
-            'isLeader' => $isLeader
+            'fullAccess' => $this->privileges['fullAccess'],
+            'isAdmin' => $this->privileges['isAdmin'],
+            'isLeader' => $this->privileges['isLeader']
         ];
         $this->loadView('leader', $data);
     }

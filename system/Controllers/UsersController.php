@@ -9,14 +9,15 @@
 class UsersController extends Controller
 {
     private $userModel;
-    private $generalModel;
+    private $privileges;
 
     public function __construct()
     {
         // load the model
         $this->userModel = $this->loadModel('User');
-        // load general model
-        $this->generalModel = $this->loadModel('General');
+
+        // store use privileges
+        $this->privileges = $this->checkPrivileges();
     }
 
     public function index()
@@ -37,15 +38,12 @@ class UsersController extends Controller
                 // redirect logged in user to the main page
                 redirect('/');
             }
-            $fullAccess = isLoggedIn() ? $this->generalModel->checkFullAccess($_SESSION['user_name']) : 0;
-            $isAdmin = isLoggedIn() ? $this->generalModel->checkAdmin($_SESSION['user_name']) : 0;
-            $isLeader = isLoggedIn() ? $this->generalModel->checkLeader($_SESSION['user_name']) : 0;
             $data = [
                 'pageTitle' => $userInfo['NickName'] . "'s Profile",
                 'user' => $userInfo,
-                'fullAccess' => $fullAccess,
-                'isAdmin' => $isAdmin,
-                'isLeader' => $isLeader
+                'fullAccess' => $this->privileges['fullAccess'],
+                'isAdmin' => $this->privileges['isAdmin'],
+                'isLeader' => $this->privileges['isLeader']
             ];
             // load the profile view
             $this->loadView('profile', $data);
