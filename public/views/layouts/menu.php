@@ -5,7 +5,9 @@
     <div class="dv-user-bar">
         <div class="dv-user-welcome">
             <?php if (isLoggedIn()): ?>
-                <img class="dv-user-avatar" src="<?php echo BASE_URL . '/public/resources/img/avatar.png' ?>" alt="User Avatar">
+                <div class="dv-user-avatar">
+                    <img class="dv-logged-img" src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $_SESSION['user_skin'] . '.png'; ?>" alt="<?php echo $_SESSION['user_name'] . "'s Avatar"; ?>>">
+                </div>
                 <span class="dv-welcome-text">Welcome, <?php echo $_SESSION['user_name']; ?></span>
                 <div class="dv-user-controls">
                     <ul class="list-style-none">
@@ -15,7 +17,9 @@
                     </ul>
                 </div>
             <?php else: ?>
-                <img class="dv-user-avatar" src="<?php echo BASE_URL . '/public/resources/img/avatar.png' ?>" alt="User Avatar">
+                <div class="dv-user-avatar">
+                    <img class="dv-guest-img" src="<?php echo BASE_URL . '/public/resources/img/avatar.png' ?>" alt="User Avatar">
+                </div>
                 <span class="dv-welcome-text">Welcome, Guest</span>
                 <div class="dv-user-controls">
                     <ul class="list-style-none">

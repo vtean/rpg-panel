@@ -96,6 +96,9 @@ class Auth
         // add user name to the session
         $_SESSION['user_name'] = $user['NickName'];
 
+        // add user skin to the session
+        $_SESSION['user_skin'] = $user['Skin'];
+
         // redirect user to the main page
         redirect('/');
     }

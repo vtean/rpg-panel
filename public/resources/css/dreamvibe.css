@@ -58,12 +58,13 @@
 
 html {
   font-size: 12px;
+  height: 100%;
 }
 
 body {
   font-family: 'Open Sans', sans-serif;
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
   margin: 0;
   background-color: var(--body-bg);
   background-image: url(../img/panel-bg.jpg);
@@ -104,18 +105,19 @@ pre {
 .dv-main-menu {
   background-color: var(--menu-bg);
   width: 270px;
-  min-height: 100vh;
+  height: 100%;
   padding: 10px;
   position: fixed;
   top: 0;
   left: 0;
   box-shadow: 0 0 10px 1px #00000060;
+  z-index: 999;
 }
 
 /* Logo */
 .dv-main-menu .dv-logo {
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 /* User bar */
@@ -127,8 +129,18 @@ pre {
 .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar {
   width: 120px;
   height: 120px;
-  object-fit: cover;
   margin: 0 auto;
+  background-color: var(--menu-item-bg);
+  border-radius: 50%;
+  border: 2px solid #393e52;
+  overflow: hidden;
+}
+
+.dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar .dv-logged-img {
+  height: 300%;
+  object-fit: cover;
+  position: relative;
+  top: -15px;
 }
 
 .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar,
@@ -155,7 +167,7 @@ pre {
 }
 
 .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls ul li a i {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin: 0 7px;
 }
 
@@ -225,10 +237,14 @@ pre {
 }
 
 /* MainController content */
+.dv-main {
+  min-height: 100%;
+}
+
 .dv-main-content {
   width: calc(100% - 270px);
   margin-left: 270px;
-  padding: 30px;
+  padding: 30px 30px 100px 30px;
 }
 
 .dv-row {
@@ -432,14 +448,18 @@ pre {
 
 /* Footer */
 .dv-footer {
-  position: fixed;
-  bottom: 0;
-  width: calc(100% - 270px);
   text-align: center;
   height: 70px;
   padding: 20px 0px;
   background-color: var(--menu-bg);
-  right: 0;
+  position: relative;
+  clear: both;
+  margin-top: -70px;
+  margin-left: 270px;
+}
+
+.dv-footer .dv-copyright {
+  padding: 0 20px;
 }
 
 .dv-footer .dv-copyright p {
@@ -662,12 +682,12 @@ pre {
 @media screen and (max-width: 991px) {
   .dv-main-menu {
     position: relative;
-    min-height: auto;
+    height: auto;
     width: 100%;
   }
 
   .dv-main-menu .dv-logo {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .dv-main-menu .dv-navbar {
@@ -694,6 +714,10 @@ pre {
     height: 40px;
   }
 
+  .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar .dv-logged-img {
+    top: -4px;
+  }
+
   .dv-main-menu .dv-user-bar .dv-user-welcome .dv-welcome-text {
     margin-top: 0;
     margin-left: 3px;
@@ -705,7 +729,7 @@ pre {
   }
 
   .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls ul li a i {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     vertical-align: middle;
   }
 
@@ -715,5 +739,9 @@ pre {
 
   .dv-main-feed .dv-general-fh .dv-general-fh-item .dv-general-fh-text {
     width: calc(100% - 52px);
+  }
+
+  .dv-footer {
+    margin-left: 0;
   }
 }
