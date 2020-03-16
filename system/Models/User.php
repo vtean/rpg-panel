@@ -17,7 +17,7 @@ class User
 
     public function searchExistingUser($nickname)
     {
-        $sql = "SELECT * FROM accounts WHERE NickName=:user_nick";
+        $sql = "SELECT * FROM sv_accounts WHERE NickName=:user_nick";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -33,7 +33,7 @@ class User
 
     public function getFaction($factionId)
     {
-        $sql = "SELECT Name FROM orgsinfo WHERE ID=:factionId";
+        $sql = "SELECT Name FROM sv_factions WHERE ID=:factionId";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params

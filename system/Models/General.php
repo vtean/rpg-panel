@@ -17,7 +17,7 @@ class General
 
     public function checkFullAccess($username)
     {
-        $sql = "SELECT FullDostup1 FROM fulldostup WHERE FullDostup1=:username";
+        $sql = "SELECT FullDostup1 FROM sv_fulldostup WHERE FullDostup1=:username";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -33,7 +33,7 @@ class General
 
     public function checkAdmin($username)
     {
-        $sql = "SELECT * FROM accounts WHERE NickName=:username";
+        $sql = "SELECT * FROM sv_accounts WHERE NickName=:username";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -50,7 +50,7 @@ class General
 
     public function checkHelper($username)
     {
-        $sql = "SELECT * FROM accounts WHERE NickName=:username";
+        $sql = "SELECT * FROM sv_accounts WHERE NickName=:username";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -67,7 +67,7 @@ class General
 
     public function checkLeader($username)
     {
-        $sql = "SELECT * FROM accounts WHERE NickName=:username";
+        $sql = "SELECT * FROM sv_accounts WHERE NickName=:username";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
