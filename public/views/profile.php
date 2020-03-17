@@ -42,7 +42,7 @@
             <div class="dv-user-profile-info dv-row">
                 <div class="dv-user-info-group">
                     <span class="dv-first">Faction</span>
-                    <span class="dv-second"><?php echo $data['Member'] != 0 ? $data['faction'] : 'No Faction'; ?></span>
+                    <span class="dv-second"><?php echo $data['user']['Member'] != 0 ? $data['faction'] : 'No Faction'; ?></span>
                 </div>
 
                 <div class="dv-user-info-group">
@@ -56,7 +56,7 @@
 
                 <div class="dv-user-info-group">
                     <span class="dv-first">Faction Rank</span>
-                    <span class="dv-second"><?php echo $data['Member'] != 0 ? $data['factionRank'] : 'No Rank'; ?></span>
+                    <span class="dv-second"><?php echo $data['user']['Member'] != 0 ? $data['factionRank'] : 'No Rank'; ?></span>
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first">Played Time</span>
@@ -69,7 +69,7 @@
 
                 <div class="dv-user-info-group">
                     <span class="dv-first">Family</span>
-                    <span class="dv-second"><?php echo $data['pFamily'] != 0 ? $data['family'] : 'No Family'; ?></span>
+                    <span class="dv-second"><?php echo $data['user']['pFamily'] != 0 ? $data['family'] : 'No Family'; ?></span>
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first">Phone Number</span>
