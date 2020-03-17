@@ -14,6 +14,7 @@
   --menu-item-hover-bg: #3e445b95;
   --content-bg: #33304a;
   --footer-bg: #2a283b;
+  --form-input-bg: #3f3c5d;
 
   /* Text colors */
   --text-color: #fff;
@@ -343,7 +344,7 @@ pre {
 .dv-main-content {
   width: calc(100% - 270px);
   margin-left: 270px;
-  padding: 50px 50px 100px 50px;
+  padding: 30px 40px 100px 40px;
 }
 
 .dv-row {
@@ -778,10 +779,6 @@ pre {
 }
 
 /* User profile */
-.dv-user-profile {
-
-}
-
 .dv-user-profile .dv-user-profile-main {
   text-align: center;
 }
@@ -819,17 +816,9 @@ pre {
   display: block;
 }
 
-.dv-user-profile .dv-user-profile-info .dv-user-info-group .dv-first {
-
-}
-
 .dv-user-profile .dv-user-profile-info .dv-user-info-group .dv-second {
   color: var(--text-color-secondary);
   font-size: 1.4rem;
-}
-
-.dv-user-profile .dv-user-profile-info .dv-user-groups {
-
 }
 
 .dv-user-groups .dv-user-single-group {
@@ -876,13 +865,13 @@ pre {
   background-color: #eab209 !important;
 }
 
-.dv-user-profile .dv-user-row-title {
+.dv-row-title {
   text-shadow: 0 12px 25px #6d88f8;
   width: fit-content;
   margin-bottom: 15px;
 }
 
-.dv-user-profile .dv-user-row-title::after {
+.dv-row-title::after {
   content: '';
   display: block;
   width: 120%;
@@ -1019,6 +1008,114 @@ pre {
   .dv-user-profile .dv-user-profile-info {
     grid-template-columns: 100%;
   }
+}
+
+/* Groups page */
+.dv-create-group .dv-form .form-control[type="text"] {
+  width: 30%;
+}
+
+.dv-create-group .dv-form .form-group {
+  margin-left: 15px;
+}
+
+.dv-create-group .dv-form label,
+.dv-create-group .dv-form .form-control {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.dv-create-group .dv-form label {
+  margin-right: 5px;
+}
+
+.dv-create-group .dv-form label:first-child {
+  min-width: 250px;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Forms */
+.dv-form label {
+  margin-bottom: .275rem;
+}
+
+.dv-form .form-control {
+  background-color: var(--form-input-bg);
+  color: var(--text-color);
+  height: calc(1.5em + 1rem + 2px);
+  border-color: transparent;
+  padding: .375rem 1rem;
+  border-radius: 5px;
+}
+
+.dv-form .form-control:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: var(--text-hover-color);
+}
+
+.dv-form button[type="submit"] {
+  padding: .6rem 3.6rem;
+}
+
+/* The switch - the box around the slider */
+.dv-switch {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 28px;
+}
+
+/* Hide default HTML checkbox */
+.dv-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.dv-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--form-input-bg);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.dv-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.dv-switch input:checked + .dv-switch-slider {
+  background-color: var(--text-hover-color);
+}
+
+.dv-switch input:checked + .dv-switch-slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.dv-switch-slider.dv-round {
+  border-radius: 34px;
+}
+
+.dv-switch-slider.dv-round:before {
+  border-radius: 50%;
 }
 
 /* General responsive things */

@@ -118,7 +118,7 @@
                 <div class="dv-user-properties dv-row">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-6">
-                            <h4 class="dv-user-row-title">Houses</h4>
+                            <h4 class="dv-row-title">Houses</h4>
                             <div class="dv-user-property dv-house">
                                 <ul class="list-style-none">
                                     <li>
@@ -161,7 +161,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
-                            <h4 class="dv-user-row-title">Businesses</h4>
+                            <h4 class="dv-row-title">Businesses</h4>
                             <div class="dv-user-property dv-business">
                                 <ul class="list-style-none">
                                     <li>
@@ -184,7 +184,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12 col-sm-12">
-                            <h4 class="dv-user-row-title">Vehicles</h4>
+                            <h4 class="dv-row-title">Vehicles</h4>
                             <div class="dv-user-property dv-vehicle">
                                 <ul class="list-style-none">
                                     <li>
@@ -209,7 +209,7 @@
                     </div>
                 </div>
                 <div class="dv-row">
-                    <h4 class="dv-user-row-title">Faction History</h4>
+                    <h4 class="dv-row-title">Faction History</h4>
                     <ul class="dv-user-fh list-style-none">
                         <li class="dv-user-fh-item">
                             <div class="dv-user-fh-avatar">
@@ -232,7 +232,7 @@
                     </ul>
                 </div>
                 <div class="dv-row">
-                    <h4 class="dv-user-row-title">Weapon Skills</h4>
+                    <h4 class="dv-row-title">Weapon Skills</h4>
                     <div class="dv-user-weapon-skills">
                         <div class="dv-weapon-single">
                             <h5 class="skill-title">Pistol</h5>
