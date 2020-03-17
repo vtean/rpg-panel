@@ -1,52 +1,53 @@
+<?php global $lang; ?>
 <?php getHeader($data); ?>
     <?php flashMessage(); ?>
     <div class="dv-row">
-        <h4 class="dv-page-title">Server stats</h4>
+        <h4 class="dv-page-title"><?php echo $lang['sv_stats_txt']; ?></h4>
         <div class="dv-server-stats">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="dv-server-stats-item">
                         <i class="fas fa-users"></i>
                         <span class="dv-first"><?php echo $data['regUsers']; ?></span>
-                        <span class="dv-second">Registered Users</span>
+                        <span class="dv-second"><?php echo $lang['reg_users_txt']; ?></span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="dv-server-stats-item">
                         <i class="fas fa-home"></i>
                         <span class="dv-first"><?php echo $data['houses']; ?></span>
-                        <span class="dv-second">Houses</span>
+                        <span class="dv-second"><?php echo $lang['houses_txt']; ?></span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="dv-server-stats-item">
                         <i class="fas fa-building"></i>
                         <span class="dv-first"><?php echo $data['business']; ?></span>
-                        <span class="dv-second">Businesses</span>
+                        <span class="dv-second"><?php echo $lang['businesses_txt']; ?></span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="dv-server-stats-item">
                         <i class="fas fa-car-side"></i>
                         <span class="dv-first"><?php echo $data['vehicles']; ?></span>
-                        <span class="dv-second">Personal Vehicles</span>
+                        <span class="dv-second"><?php echo $lang['personal_vehicles_txt']; ?></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="dv-row">
-        <h4 class="dv-page-title">Don't miss anything</h4>
+        <h4 class="dv-page-title"><?php echo $lang['dont_miss_txt']; ?></h4>
         <div class="dv-main-feed">
             <ul class="nav nav-tabs" id="dvTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="latest-actions-tab" data-toggle="tab" href="#latest-actions" role="tab" aria-controls="latest-actions" aria-selected="true">Latest actions</a>
+                    <a class="nav-link active" id="latest-actions-tab" data-toggle="tab" href="#latest-actions" role="tab" aria-controls="latest-actions" aria-selected="true"><?php echo $lang['latest_actions_txt']; ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="server-news-tab" data-toggle="tab" href="#server-news" role="tab" aria-controls="server-news" aria-selected="false">Server news</a>
+                    <a class="nav-link" id="server-news-tab" data-toggle="tab" href="#server-news" role="tab" aria-controls="server-news" aria-selected="false"><?php echo $lang['sv_news_txt']; ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="server-updates-tab" data-toggle="tab" href="#server-updates" role="tab" aria-controls="server-updates" aria-selected="false">Server updates</a>
+                    <a class="nav-link" id="server-updates-tab" data-toggle="tab" href="#server-updates" role="tab" aria-controls="server-updates" aria-selected="false"><?php echo $lang['sv_updates_txt']; ?></a>
                 </li>
             </ul>
             <div class="tab-content" id="dvTabContent">

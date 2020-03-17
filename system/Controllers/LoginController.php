@@ -25,10 +25,14 @@ class LoginController extends Controller
 
     public function index()
     {
+        global $lang;
+
+        $pageTitle = $_SESSION['user_lang'] == 'ro' ? 'Autentificare' : 'Login';
+
         // check if user is logged in or not
         if (isLoggedIn()) {
             // add session message
-            flashMessage('info', 'You are already logged in.');
+            flashMessage('info', $lang['already_logged_txt']);
             // redirect logged in user to the main page
             redirect('/');
         } else {
@@ -39,7 +43,7 @@ class LoginController extends Controller
 
                 // user data
                 $data = [
-                    'pageTitle' => 'LoginController',
+                    'pageTitle' => $pageTitle,
                     'user_name' => $_POST['username'],
                     'user_password' => $_POST['password'],
                     'fullAccess' => $this->privileges['fullAccess'],
@@ -61,7 +65,7 @@ class LoginController extends Controller
 //                    $userGroup = $this->authModel->checkGroup($loggedInUser['user_group_id']);
                     if ($loggedInUser) {
                         // add a session message
-                        flashMessage('success', 'You were successfully logged in.');
+                        flashMessage('success', $lang['success_login_txt']);
                         // start the session
                         $this->authModel->startSession($loggedInUser);
                         // redirect
@@ -76,7 +80,7 @@ class LoginController extends Controller
 
             } else {
                 $data = [
-                    'pageTitle' => 'Login',
+                    'pageTitle' => $pageTitle,
                     'user_name' => '',
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],

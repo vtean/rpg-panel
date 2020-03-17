@@ -15,6 +15,16 @@ class Group
         $this->db = new Db();
     }
 
+    // get all groups
+    public function getAllGroups()
+    {
+        $sql = "SELECT * FROM panel_groups";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // return result
+        return $this->db->getResults();
+    }
+
     // get group by user id
     public function getSingleGroup($id)
     {
@@ -103,6 +113,22 @@ class Group
         foreach ($data as $key => $value) {
             $this->db->bind(":$key", $value);
         }
+        $this->db->bind(':id', $id);
+        // execute query
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // delete group
+    public function deleteGroup($id)
+    {
+        $sql = "DELETE FROM panel_groups WHERE group_id = :id";
+        // prepare query
+        $this->db->prepareQuery($sql);
+        // bind params
         $this->db->bind(':id', $id);
         // execute query
         if ($this->db->executeStmt()) {

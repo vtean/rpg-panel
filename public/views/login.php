@@ -1,10 +1,11 @@
+<?php global $lang; ?>
 <?php getHeader($data); ?>
     <div class="card col-md-5 login">
         <div class="card-body">
             <span class="login-icon">
                 <i class="fas fa-sign-in-alt"></i>
             </span>
-            <h2 class="login-title">Log In</h2>
+            <h2 class="login-title"><?php echo $lang['login_txt']; ?></h2>
             <form action="" method="POST" class="dv-form">
                 <div class="form-group login-group">
                     <input type="text" name="username" id="username"
@@ -26,7 +27,8 @@
                         </div>
                     <?php endif; ?>
                 </div>
-                <button type="submit" class="login-btn">Login</button>
+                <p class="text-align-center"><?php echo $lang['lost_pass_txt']; ?> <a href=""><?php echo $lang['here_txt']; ?></a></p>
+                <button type="submit" class="login-btn"><?php echo $lang['login_txt']; ?></button>
             </form>
         </div>
     </div>

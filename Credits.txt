@@ -29,3 +29,10 @@ Bootstrap
 	Version: 4.4.1
 	Website: https://getbootstrap.com/
 	License: https://github.com/twbs/bootstrap/blob/v4.0.0/LICENSE
+
+DataTables
+	Description: Table plug-in for jQuery
+	Location: public/resources/3rd_party/datatables
+	Version: 1.10.20
+	Website: https://datatables.net
+	License: https://datatables.net/license

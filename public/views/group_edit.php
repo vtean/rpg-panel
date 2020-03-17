@@ -1,7 +1,14 @@
 <?php $group = $data['group']; ?>
 <?php getHeader($data); ?>
-<?php flashMessage(); ?>
-    <h3 class="dv-page-title">Create New Group</h3>
+    <?php flashMessage(); ?>
+    <h3 class="dv-page-title">Edit Group: <?php echo $group['group_name']; ?></h3>
+    <div class="dv-row">
+        <div class="dv-secret-actions">
+            <form action="" method="post">
+                <button type="submit" name="delete_group" class="dv-btn btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Group</button>
+            </form>
+        </div>
+    </div>
     <div class="dv-row dv-create-group">
         <form action="" method="post" class="dv-form">
             <!-- Group Details -->
@@ -313,7 +320,9 @@
                     <span class="dv-switch-slider dv-round"></span>
                 </label>
             </div>
-            <button type="submit" name="edit_group" class="dv-btn btn btn-primary m-auto">Submit</button>
+            <div class="text-align-center">
+                <button type="submit" name="edit_group" class="dv-btn btn btn-primary m-auto">Submit</button>
+            </div>
         </form>
     </div>
 <?php getFooter();

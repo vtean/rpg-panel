@@ -33,12 +33,16 @@ class GroupsController extends Controller
 
     public function index()
     {
+        $allGroups = $this->groupModel->getAllGroups();
+
         $data = [
             'pageTitle' => 'Panel Groups',
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader']
+            'isLeader' => $this->privileges['isLeader'],
+            'groups' => $allGroups
         ];
+
         $this->loadView('groups_index', $data);
     }
 
@@ -194,6 +198,17 @@ class GroupsController extends Controller
             ];
 
             $errors = [];
+
+            // check if delete group button is set
+            if (isset($_POST['delete_group'])) {
+                if ($this->groupModel->deleteGroup($id)) {
+                    flashMessage('success', 'Group has been successfully deleted!');
+                    redirect('/groups');
+                    unset($_POST);
+                } else {
+                    die('Something went wrong');
+                }
+            }
 
             // check if edit button is set
             if (isset($_POST['edit_group'])) {

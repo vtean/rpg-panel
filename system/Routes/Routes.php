@@ -33,3 +33,9 @@ Route::set('online', 'StatisticsController', 'online');
 
 // groups page
 Route::set('groups', 'GroupsController', 'index');
+
+// change lang to romanian
+Route::set('ro', 'MainController', 'ro');
+
+// change lang to english
+Route::set('en', 'MainController', 'en');

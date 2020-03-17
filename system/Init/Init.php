@@ -12,6 +12,22 @@ session_start();
 // load the main config
 require_once 'config.php';
 
+// language configuration
+if (!isset($_SESSION['user_lang'])) {
+    $_SESSION['user_lang'] = 'ro';
+}
+
+switch ($_SESSION['user_lang']) {
+    case 'en':
+        require_once ROOT_PATH . '/public/languages/en.php';
+        break;
+    case 'ro':
+        require_once ROOT_PATH . '/public/languages/ro.php';
+        break;
+    default:
+        require_once ROOT_PATH . '/public/languages/ro.php';
+}
+
 // connect to the database
 require_once ROOT_PATH . '/system/Db/Connect.php';
 

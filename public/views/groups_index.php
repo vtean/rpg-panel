@@ -1,3 +1,32 @@
+<?php global $lang; ?>
 <?php getHeader($data); ?>
     <?php flashMessage(); ?>
+    <h3 class="dv-page-title"><?php echo $lang['groups_view_txt']; ?></h3>
+    <div class="dv-row">
+        <div class="dv-secret-actions">
+            <a href="<?php echo BASE_URL . '/groups/create'; ?>" class="dv-btn btn btn-success"><i class="fas fa-user-plus"></i> <?php echo $lang['create_group_txt']; ?></a>
+        </div>
+    </div>
+    <div class="dv-row">
+        <table id="dvTable" class="display">
+            <thead>
+                <tr>
+                    <th><?php echo $lang['group_id_txt']; ?></th>
+                    <th><?php echo $lang['group_name_txt']; ?></th>
+                    <th><?php echo $lang['actions_txt']; ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($data['groups'] as $group): ?>
+                    <tr>
+                        <td><?php echo $group['group_id']; ?></td>
+                        <td><?php echo $group['group_name']; ?></td>
+                        <td>
+                            <a href="<?php echo BASE_URL . '/groups/edit/' . $group['group_id']; ?>" class="dv-action-btn"><i class="fas fa-edit"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 <?php getFooter();

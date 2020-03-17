@@ -1,3 +1,3 @@
 <?php getHeader($data); ?>
-<?php flashMessage(); ?>
+    <?php flashMessage(); ?>
 <?php getFooter(); ?>

@@ -25,8 +25,10 @@ class MainController extends Controller
         $business = $this->mainModel->getBusiness();
         $vehicles = $this->mainModel->getVehicles();
         $regUsers= $this->mainModel->getRegUsers();
+        $pageTitle = $_SESSION['user_lang'] == 'ro' ? 'Acasă' : 'Home';
+
         $data = [
-            'pageTitle' => 'Home',
+            'pageTitle' => $pageTitle,
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
@@ -35,6 +37,31 @@ class MainController extends Controller
             'vehicles' => $vehicles,
             'regUsers' => $regUsers
         ];
+
         $this->loadView('main', $data);
+    }
+
+    public function ro()
+    {
+        // set language to romanian
+        $_SESSION['user_lang'] = 'ro';
+
+        // add flash message
+        flashMessage('success', 'Limba a fost modificată cu succes în Română');
+
+        // redirect to the main page
+        redirect('/');
+    }
+
+    public function en()
+    {
+        // set language to english
+        $_SESSION['user_lang'] = 'en';
+
+        // add flash message
+        flashMessage('success', 'Site language has been changed successfully to English');
+
+        // redirect to the main page
+        redirect('/');
     }
 }

@@ -30,12 +30,12 @@ class LeaderController extends Controller
     public function index()
     {
         if ($this->privileges['isLeader'] != 0 ) {
-            $faction = $this->userModel->getFaction($this->privileges['isLeader']);
+            $factionName = $this->userModel->getFaction($this->privileges['isLeader']);
         }
         $data = [
             'pageTitle' => 'Leader Panel',
             'name' => $_SESSION['user_name'],
-            'faction' => $faction['Name'],
+            'faction' => $factionName,
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader']

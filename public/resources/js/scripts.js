@@ -12,3 +12,9 @@
     })
 
 })(jQuery);
+
+$(document).ready( function () {
+    $('#dvTable').DataTable();
+});
+
+
