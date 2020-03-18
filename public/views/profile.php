@@ -76,7 +76,7 @@
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $lang['played_time_txt']; ?></span>
-                    <span class="dv-second"><?php echo convertMinutes($data['user']['PlayedTime']); ?>h</span>
+                    <span class="dv-second"><?php echo convertMinutes($data['user']['PlayedTime']); ?></span>
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $lang['warnings_txt']; ?></span>
