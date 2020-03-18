@@ -25,13 +25,17 @@ class AdminController extends Controller
     }
     public function index()
     {
+        global $lang;
+
         $data = [
             'pageTitle' => 'Admin Panel',
             'name' => $_SESSION['user_name'],
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader']
+            'isLeader' => $this->privileges['isLeader'],
+            'lang' => $lang
         ];
+
         $this->loadView('admin', $data);
     }
 }

@@ -21,6 +21,8 @@ class MainController extends Controller
     }
     public function index()
     {
+        global $lang;
+
         $houses = $this->mainModel->getHouses();
         $business = $this->mainModel->getBusiness();
         $vehicles = $this->mainModel->getVehicles();
@@ -35,7 +37,8 @@ class MainController extends Controller
             'houses' => $houses,
             'business' => $business,
             'vehicles' => $vehicles,
-            'regUsers' => $regUsers
+            'regUsers' => $regUsers,
+            'lang' => $lang
         ];
 
         $this->loadView('main', $data);

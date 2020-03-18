@@ -15,6 +15,10 @@
 
 $(document).ready( function () {
     $('#dvTable').DataTable();
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 });
 
 

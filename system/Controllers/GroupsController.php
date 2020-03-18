@@ -33,6 +33,8 @@ class GroupsController extends Controller
 
     public function index()
     {
+        global $lang;
+
         $allGroups = $this->groupModel->getAllGroups();
 
         $data = [
@@ -40,7 +42,8 @@ class GroupsController extends Controller
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
-            'groups' => $allGroups
+            'groups' => $allGroups,
+            'lang' => $lang
         ];
 
         $this->loadView('groups_index', $data);
@@ -48,6 +51,8 @@ class GroupsController extends Controller
 
     public function create()
     {
+        global $lang;
+
         if (isset($_POST['create_group'])) {
             // sanitize post data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -100,7 +105,8 @@ class GroupsController extends Controller
                 'fullAccess' => $this->privileges['fullAccess'],
                 'isAdmin' => $this->privileges['isAdmin'],
                 'isLeader' => $this->privileges['isLeader'],
-                'group' => $_POST
+                'group' => $_POST,
+                'lang' => $lang
             ];
 
             // check if group already exists
@@ -173,7 +179,8 @@ class GroupsController extends Controller
                   'can_delete_lapps' => 0,
                   'can_edit_happs' => 0,
                   'can_delete_happs' => 0
-              ]
+              ],
+              'lang' => $lang
             ];
 
             // load view
@@ -183,6 +190,8 @@ class GroupsController extends Controller
 
     public function edit($id = 0)
     {
+        global $lang;
+
         if ($id == 0) {
             flashMessage('danger', 'Nothing to see here.');
             redirect('/');
@@ -194,7 +203,8 @@ class GroupsController extends Controller
                 'group' => $group,
                 'fullAccess' => $this->privileges['fullAccess'],
                 'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader']
+                'isLeader' => $this->privileges['isLeader'],
+                'lang' => $lang
             ];
 
             $errors = [];

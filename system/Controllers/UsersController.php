@@ -27,6 +27,7 @@ class UsersController extends Controller
 
     public function profile($nickname = '')
     {
+        global $lang;
         if (empty($nickname)) {
             echo 'nothing to see here';
         } else {
@@ -55,7 +56,8 @@ class UsersController extends Controller
                 'faction' => $faction,
                 'factionRank' => $factionRank,
                 'getVehicle' => $getVehicle,
-                'getModelName' => $getModelName
+                'getModelName' => $getModelName,
+                'lang' => $lang
             ];
             // load the profile view
             $this->loadView('profile', $data);

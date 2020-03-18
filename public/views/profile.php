@@ -1,23 +1,39 @@
-<?php global $lang; ?>
 <?php getHeader($data); ?>
 <div class="dv-user-profile">
     <div class="row justify-content-center">
         <div class="col-auto">
             <div class="dv-user-profile-main">
-                <h3 class="dv-user-profile-name"><?php echo $data['user']['NickName']; ?></h3>
+                <h3 class="dv-user-profile-name">
+                    <span class="dv-online-status<?php if ($data['user']['Online_status'] == 0): ?> dv-offline<?php else: ?> dv-online<?php endif; ?>"
+                          data-toggle="tooltip" data-placement="left"
+                          title="<?php if ($data['user']['Online_status'] == 0): ?>Offline<?php else: ?>Online<?php endif; ?>"><i
+                                class="fas fa-dot-circle"></i></span>
+                    <span> <?php echo $data['user']['NickName']; ?></span>
+                </h3>
+                <div class="dv-progress progress">
+                    <div class="progress-bar <?php if ($data['user']['HP'] >= 90): ?> dv-green<?php elseif ($data['user']['HP'] >= 70 && $data['user']['HP'] < 90): ?> dv-orange<?php elseif ($data['user']['HP'] >= 20 && $data['user']['HP'] < 70): ?> dv-dark-orange<?php else: ?> dv-red<?php endif; ?>"
+                         role="progressbar"
+                         style="width: <?php echo $data['user']['HP']; ?>%"
+                         aria-valuenow="<?php echo $data['user']['HP']; ?>" aria-valuemin="0" aria-valuemax="100"
+                         data-toggle="tooltip" data-placement="left" title="<?php echo $data['user']['HP']; ?> HP"></div>
+                </div>
                 <img class="dv-user-profile-skin"
                      src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>"
                      alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
             </div>
             <div class="dv-user-profile-controls m-auto">
                 <?php if (isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])): ?>
-                    <a class="dv-btn btn btn-primary" href="#" role="button"><i class="fas fa-user-edit"></i> <?php echo $lang['profile_settings_txt']; ?></a>
+                    <a class="dv-btn btn btn-primary" href="#" role="button"><i
+                                class="fas fa-user-edit"></i> <?php echo $data['lang']['profile_settings_txt']; ?></a>
                 <?php endif; ?>
                 <?php if ((isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])) || (isLoggedIn() && ($data['isAdmin'] > 0))): ?>
-                    <a class="dv-btn btn btn-warning" href="#" role="button"><i class="fas fa-exclamation-triangle"></i> <?php echo $lang['last_punish_txt']; ?></a>
+                    <a class="dv-btn btn btn-warning" href="#" role="button"><i
+                                class="fas fa-exclamation-triangle"></i> <?php echo $data['lang']['last_punish_txt']; ?>
+                    </a>
                 <?php endif; ?>
                 <?php if (isLoggedIn() && ($data['fullAccess'] == true)): ?>
-                    <a class="dv-btn btn btn-info" href="#" role="button"><i class="fas fa-wrench"></i> <?php echo $lang['edit_user_txt']; ?></a>
+                    <a class="dv-btn btn btn-info" href="#" role="button"><i
+                                class="fas fa-wrench"></i> <?php echo $data['lang']['edit_user_txt']; ?></a>
                 <?php endif; ?>
             </div>
         </div>
@@ -46,77 +62,77 @@
             </div>
             <div class="dv-user-profile-info dv-row">
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['faction_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['faction_txt']; ?></span>
                     <span class="dv-second"><?php echo $data['user']['Member'] != 0 ? $data['faction'] : 'No Faction'; ?></span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['level_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['level_txt']; ?></span>
                     <span class="dv-second"><?php echo $data['user']['Level']; ?></span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['joined_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['joined_txt']; ?></span>
                     <span class="dv-second"><?php $date = date_create($data['user']['RegData']);
                         echo date_format($date, 'd.n.Y - H:i:s'); ?></span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['faction_rank_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['faction_rank_txt']; ?></span>
                     <span class="dv-second"><?php echo $data['user']['Member'] != 0 ? $data['factionRank'] : 'No Rank'; ?></span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['phone_nr_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['phone_nr_txt']; ?></span>
                     <span class="dv-second"><?php echo $data['user']['TelNum'] != 0 ? $data['user']['TelNum'] : 'No Phone'; ?></span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['last_online_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['last_online_txt']; ?></span>
                     <span class="dv-second"><?php echo $data['user']['LastLogin']; ?></span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['family_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['family_txt']; ?></span>
                     <span class="dv-second"><?php echo $data['user']['pFamily'] != 0 ? $data['family'] : 'No Family'; ?></span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['played_time_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['played_time_txt']; ?></span>
                     <span class="dv-second"><?php echo convertMinutes($data['user']['PlayedTime']); ?>h</span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['warnings_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['warnings_txt']; ?></span>
                     <span class="dv-second"><?php echo $data['user']['Warns']; ?>/3</span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['family_rank_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['family_rank_txt']; ?></span>
                     <span class="dv-second">Leader</span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['job_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['job_txt']; ?></span>
                     <span class="dv-second"><?php echo $data['user']['Job'] == 0 ? 'Unemployed' : $data['job']; ?></span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['faction_warns_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['faction_warns_txt']; ?></span>
                     <span class="dv-second"><?php echo $data['user']['FWarns']; ?>/3</span>
                 </div>
                 <div class="dv-user-info-group">
-                    <span class="dv-first"><?php echo $lang['forum_name_txt']; ?></span>
+                    <span class="dv-first"><?php echo $data['lang']['forum_name_txt']; ?></span>
                     <span class="dv-second">Lust</span>
                 </div>
                 <?php if (isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])): ?>
                     <div class="dv-user-info-group">
-                        <span class="dv-first"><?php echo $lang['email_txt']; ?></span>
+                        <span class="dv-first"><?php echo $data['lang']['email_txt']; ?></span>
                         <span class="dv-second"><?php echo $data['user']['Mail']; ?></span>
                     </div>
                     <div class="dv-user-info-group">
-                        <span class="dv-first"><?php echo $lang['2step_txt']; ?></span>
+                        <span class="dv-first"><?php echo $data['lang']['2step_txt']; ?></span>
                         <span class="dv-second"><?php echo $data['user']['GoogleStatus'] == 0 ? 'No' : 'Yes'; ?></span>
                     </div>
                     <div class="dv-user-info-group">
-                        <span class="dv-first"><?php echo $lang['money_txt']; ?></span>
+                        <span class="dv-first"><?php echo $data['lang']['money_txt']; ?></span>
                         <span class="dv-second">$<?php echo number_format($data['user']['Money'], 0, ',', ' '); ?></span>
                     </div>
                     <div class="dv-user-info-group">
-                        <span class="dv-first"><?php echo $lang['bank_money_txt']; ?></span>
+                        <span class="dv-first"><?php echo $data['lang']['bank_money_txt']; ?></span>
                         <span class="dv-second">$<?php echo number_format($data['user']['Bank'], 0, ',', ' '); ?></span>
                     </div>
                     <div class="dv-user-info-group">
-                        <span class="dv-first"><?php echo $lang['dv_coins_txt']; ?></span>
+                        <span class="dv-first"><?php echo $data['lang']['dv_coins_txt']; ?></span>
                         <span class="dv-second"><?php echo $data['user']['VirMoney']; ?></span>
                     </div>
                 <?php endif; ?>
@@ -124,23 +140,23 @@
             <div class="dv-user-properties dv-row">
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <h4 class="dv-row-title"><?php echo $lang['houses_txt']; ?></h4>
+                        <h4 class="dv-row-title"><?php echo $data['lang']['houses_txt']; ?></h4>
                         <div class="dv-user-property dv-house">
                             <ul class="list-style-none">
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['house_id_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['house_id_txt']; ?>: </span>
                                     <span class="dv-second">420</span>
                                 </li>
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['level_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['level_txt']; ?>: </span>
                                     <span class="dv-second">7</span>
                                 </li>
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['price_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['price_txt']; ?>: </span>
                                     <span class="dv-second">$1,750,000</span>
                                 </li>
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['locked_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['locked_txt']; ?>: </span>
                                     <span class="dv-second">Yes</span>
                                 </li>
                             </ul>
@@ -148,68 +164,68 @@
                         <div class="dv-user-property dv-house">
                             <ul class="list-style-none">
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['house_id_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['house_id_txt']; ?>: </span>
                                     <span class="dv-second">422</span>
                                 </li>
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['level_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['level_txt']; ?>: </span>
                                     <span class="dv-second">7</span>
                                 </li>
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['price_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['price_txt']; ?>: </span>
                                     <span class="dv-second">$1,750,000</span>
                                 </li>
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['locked_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['locked_txt']; ?>: </span>
                                     <span class="dv-second">Yes</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
-                        <h4 class="dv-row-title"><?php echo $lang['businesses_txt']; ?></h4>
+                        <h4 class="dv-row-title"><?php echo $data['lang']['businesses_txt']; ?></h4>
                         <div class="dv-user-property dv-business">
                             <ul class="list-style-none">
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['biz_id_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['biz_id_txt']; ?>: </span>
                                     <span class="dv-second">69</span>
                                 </li>
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['type_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['type_txt']; ?>: </span>
                                     <span class="dv-second">Ammunition</span>
                                 </li>
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['price_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['price_txt']; ?>: </span>
                                     <span class="dv-second">$3,500,000</span>
                                 </li>
                                 <li>
-                                    <span class="dv-first"><?php echo $lang['products_txt']; ?>: </span>
+                                    <span class="dv-first"><?php echo $data['lang']['products_txt']; ?>: </span>
                                     <span class="dv-second">5000</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
-                        <h4 class="dv-row-title"><?php echo $lang['vehicles_txt']; ?></h4>
+                        <h4 class="dv-row-title"><?php echo $data['lang']['vehicles_txt']; ?></h4>
                         <?php
                         if (!empty($data['getVehicle'])) {
                             foreach ($data['getVehicle'] as $index => $vehicle) { ?>
                                 <div class="dv-user-property dv-vehicle">
                                     <ul class="list-style-none">
                                         <li>
-                                            <span class="dv-first"><?php echo $lang['type_txt']; ?>: </span>
+                                            <span class="dv-first"><?php echo $data['lang']['type_txt']; ?>: </span>
                                             <span class="dv-second"><?php echo $data['getModelName'][$index]['Name'] ?></span>
                                         </li>
                                         <li>
-                                            <span class="dv-first"><?php echo $lang['days_txt']; ?>: </span>
+                                            <span class="dv-first"><?php echo $data['lang']['days_txt']; ?>: </span>
                                             <span class="dv-second">7</span>
                                         </li>
                                         <li>
-                                            <span class="dv-first"><?php echo $lang['odometer_txt']; ?>: </span>
+                                            <span class="dv-first"><?php echo $data['lang']['odometer_txt']; ?>: </span>
                                             <span class="dv-second"><?php echo $vehicle['Milage'] ?>KM</span>
                                         </li>
                                         <li>
-                                            <span class="dv-first"><?php echo $lang['colors_txt']; ?>: </span>
+                                            <span class="dv-first"><?php echo $data['lang']['colors_txt']; ?>: </span>
                                             <span class="dv-second"><?php echo $vehicle['Color_1'] ?>, <?php echo $vehicle['Color_2'] ?></span>
                                         </li>
                                     </ul>
@@ -222,7 +238,7 @@
                 </div>
             </div>
             <div class="dv-row">
-                <h4 class="dv-row-title"><?php echo $lang['fh_txt']; ?></h4>
+                <h4 class="dv-row-title"><?php echo $data['lang']['fh_txt']; ?></h4>
                 <ul class="dv-user-fh list-style-none">
                     <li class="dv-user-fh-item">
                         <div class="dv-user-fh-avatar">
@@ -248,7 +264,7 @@
                 </ul>
             </div>
             <div class="dv-row">
-                <h4 class="dv-row-title"><?php echo $lang['weapon_skills_txt']; ?></h4>
+                <h4 class="dv-row-title"><?php echo $data['lang']['weapon_skills_txt']; ?></h4>
                 <div class="dv-user-weapon-skills">
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">SD Pistol</h5>

@@ -48,7 +48,8 @@ class LoginController extends Controller
                     'user_password' => $_POST['password'],
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader']
+                    'isLeader' => $this->privileges['isLeader'],
+                    'lang' => $lang
                 ];
 
                 // check if the user with this username exists
@@ -84,7 +85,8 @@ class LoginController extends Controller
                     'user_name' => '',
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader']
+                    'isLeader' => $this->privileges['isLeader'],
+                    'lang' => $lang
                 ];
 
                 $errors = [

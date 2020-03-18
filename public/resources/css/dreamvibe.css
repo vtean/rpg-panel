@@ -819,6 +819,89 @@ pre {
   text-align: center;
 }
 
+.dv-user-profile-main .dv-online-status {
+  font-size: 1.3rem;
+  position: relative;
+  top: -1.75px;
+}
+
+.dv-online {
+  color: #00b300;
+}
+
+.dv-offline {
+  color: #dc3c3c;
+}
+
+.dv-user-profile .dv-user-profile-main .dv-progress {
+  width: 60%;
+  margin: 10px auto;
+  overflow: hidden;
+}
+
+.dv-hp-bar {
+  padding-top: 35px;
+  margin: 15px 0 5px 0;
+  position: relative;
+}
+
+.dv-triangle {
+  width: 85px;
+  height: 85px;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 42px);
+  clip: rect(auto, 130px, auto, 53px);
+  transform: rotate(-90deg);
+}
+
+.dv-green {
+  background-color: #00b300;
+}
+
+.dv-orange {
+  background-color: #e69500;
+}
+
+.dv-dark-orange {
+  background-color: #e69500;
+}
+
+.dv-red {
+  background-color: #ff4d4d;
+}
+
+.dv-triangle::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(60%, #252638), color-stop(100%, #00b300));
+  transform: rotate(-45deg);
+}
+
+.dv-green-triangle::after {
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(60%, #252638), color-stop(100%, #00b300));
+}
+
+.dv-orange-triangle::after {
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(60%, #252638), color-stop(100%, #e69500));
+}
+
+.dv-dark-orange-triangle::after {
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(60%, #252638), color-stop(100%, #e67e00));
+}
+
+.dv-red-triangle::after {
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(60%, #252638), color-stop(100%, #ff4d4d));
+}
+
+.dv-hp-bar span {
+  font-size: 1.2rem;
+}
+
 .dv-user-profile .dv-user-profile-main .dv-user-profile-skin {
   height: 480px;
   width: 240px;

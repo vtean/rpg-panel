@@ -29,17 +29,22 @@ class LeaderController extends Controller
     }
     public function index()
     {
+        global $lang;
+
         if ($this->privileges['isLeader'] != 0 ) {
             $factionName = $this->userModel->getFaction($this->privileges['isLeader']);
         }
+
         $data = [
             'pageTitle' => 'Leader Panel',
             'name' => $_SESSION['user_name'],
             'faction' => $factionName,
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader']
+            'isLeader' => $this->privileges['isLeader'],
+            'lang' => $lang
         ];
+
         $this->loadView('leader', $data);
     }
 }

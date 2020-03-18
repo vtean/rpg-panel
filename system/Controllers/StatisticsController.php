@@ -19,6 +19,8 @@ class StatisticsController extends Controller
     }
     public function online()
     {
+        global $lang;
+
         $query = new SampQuery("rpg.dreamvibe.ro", 7777);
 
         if ($query->connect()) {
@@ -35,8 +37,11 @@ class StatisticsController extends Controller
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
             'players' => $players,
-            'info' => $info
+            'info' => $info,
+            'lang' => $lang
         ];
+
+
         $this->loadView('online', $data);
     }
 }
