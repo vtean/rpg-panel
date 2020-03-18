@@ -58,7 +58,7 @@ function flashMessage($type = '', $message = '')
     }
 }
 
-function convertMinutes($time, $format = '%02d:%02d')
+function convertMinutes($time, $format = '%02dh %02dm')
 {
     if ($time < 1) {
         return 0;
