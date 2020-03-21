@@ -34,6 +34,9 @@ require_once ROOT_PATH . '/system/Db/Connect.php';
 // load database queries
 require_once ROOT_PATH . '/system/Db/Db.php';
 
+// load two factor auth
+require_once ROOT_PATH . '/system/API/GoogleAuthenticator.php';
+
 // load the URL handler
 require_once ROOT_PATH . '/system/Url/UrlHandler.php';
 

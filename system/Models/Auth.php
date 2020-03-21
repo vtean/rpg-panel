@@ -9,10 +9,32 @@
 class Auth
 {
     private $db;
+    private $ga;
 
     public function __construct()
     {
         $this->db = new Db();
+        $this->ga = new GoogleAuthenticator();
+    }
+
+    public function createSecretCode()
+    {
+        return $this->ga->createSecret();
+    }
+
+    public function createQrCode($username, $secret)
+    {
+        return $this->ga->getQRCodeGoogleUrl($username, $secret);
+    }
+
+    public function createCode($secret)
+    {
+        return $this->ga->getCode($secret);
+    }
+
+    public function checkCode($secret, $code, $k=2)
+    {
+        return $this->ga->verifyCode($secret, $code, $k);
     }
 
     // check for existing users with an username
@@ -50,21 +72,6 @@ class Auth
             return false;
         }
     }
-
-    // check user group
-//    public function checkGroup($group_id)
-//    {
-//        $sql = "SELECT * FROM groups WHERE group_id=:group_id";
-//        // prepare query
-//        $this->db->prepareQuery($sql);
-//        // bind params
-//        $this->db->bind(':group_id', $group_id);
-//        // execute query
-//        $this->db->executeStmt();
-//        // return result
-//        return $this->db->getResult();
-//    }
-
 
     // login user
     public function loginUser($username, $password)

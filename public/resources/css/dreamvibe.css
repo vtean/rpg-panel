@@ -839,6 +839,12 @@ pre {
   overflow: hidden;
 }
 
+.progress {
+  -webkit-border-radius: .55rem;
+  -moz-border-radius: .55rem;
+  border-radius: .55rem;
+}
+
 .dv-hp-bar {
   padding-top: 35px;
   margin: 15px 0 5px 0;

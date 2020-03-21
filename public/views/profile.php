@@ -269,15 +269,15 @@
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">SD Pistol</h5>
                         <div class="dv-progress progress">
-                            <div class="progress-bar progress-bar-striped dv-progress-color" role="progressbar"
+                            <div class="progress-bar dv-progress-color" role="progressbar"
                                  style="width: <?php echo $data['user']['SDPistol_Skill'] / 100; ?>%" aria-valuenow="10"
                                  aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                        </div><div class="data"><?php echo $data['user']['SDPistol_Skill'] / 100; ?>%</div>
                     </div>
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">Desert Eagle</h5>
                         <div class="dv-progress progress">
-                            <div class="progress-bar progress-bar-striped dv-progress-color" role="progressbar"
+                            <div class="progress-bar dv-progress-color" role="progressbar"
                                  style="width: <?php echo $data['user']['Eagle_Skill'] / 100; ?>%" aria-valuenow="10"
                                  aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -285,7 +285,7 @@
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">Shotgun</h5>
                         <div class="dv-progress progress">
-                            <div class="progress-bar progress-bar-striped dv-progress-color" role="progressbar"
+                            <div class="progress-bar dv-progress-color" role="progressbar"
                                  style="width: <?php echo $data['user']['ShotGun_Skill'] / 100; ?>%" aria-valuenow="10"
                                  aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -293,7 +293,7 @@
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">Micro Uzi</h5>
                         <div class="dv-progress progress">
-                            <div class="progress-bar progress-bar-striped dv-progress-color" role="progressbar"
+                            <div class="progress-bar dv-progress-color" role="progressbar"
                                  style="width: <?php echo $data['user']['UZI_Skill'] / 100; ?>%" aria-valuenow="10"
                                  aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -301,7 +301,7 @@
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">MP5</h5>
                         <div class="dv-progress progress">
-                            <div class="progress-bar progress-bar-striped dv-progress-color" role="progressbar"
+                            <div class="progress-bar dv-progress-color" role="progressbar"
                                  style="width: <?php echo $data['user']['MP5_Skill'] / 100; ?>%" aria-valuenow="10"
                                  aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -309,7 +309,7 @@
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">AK-47</h5>
                         <div class="dv-progress progress">
-                            <div class="progress-bar progress-bar-striped dv-progress-color" role="progressbar"
+                            <div class="progress-bar dv-progress-color" role="progressbar"
                                  style="width: <?php echo $data['user']['AK47_Skill'] / 100; ?>%" aria-valuenow="10"
                                  aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -317,7 +317,7 @@
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">M4A1</h5>
                         <div class="dv-progress progress">
-                            <div class="progress-bar progress-bar-striped dv-progress-color" role="progressbar"
+                            <div class="progress-bar dv-progress-color" role="progressbar"
                                  style="width: <?php echo $data['user']['M4_Skill'] / 100; ?>%" aria-valuenow="10"
                                  aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -325,7 +325,7 @@
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">Sniper Rifle</h5>
                         <div class="dv-progress progress">
-                            <div class="progress-bar progress-bar-striped dv-progress-color" role="progressbar"
+                            <div class="progress-bar dv-progress-color" role="progressbar"
                                  style="width: <?php echo $data['user']['Sniper_Skill'] / 100; ?>%" aria-valuenow="10"
                                  aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
