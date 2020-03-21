@@ -48,6 +48,7 @@ $lang = [
     // Login page
     'login_txt' => 'Login',
     'lost_pass_txt' => 'Forgot your password? You can reset it',
+    'lost_secret_txt' => 'Don\'t have access to the phone? You can reset it',
     'here_txt' => 'here',
     'already_logged_txt' => 'You are already logged in',
     'success_login_txt' => 'You were successfully logged in',

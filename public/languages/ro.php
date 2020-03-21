@@ -48,6 +48,7 @@ $lang = [
     // Login page
     'login_txt' => 'Autentificare',
     'lost_pass_txt' => 'Ți-ai uitat parola? O poți reseta',
+    'lost_secret_txt' => 'Nu ai acces la telefon? Poți reseta',
     'here_txt' => 'aici',
     'already_logged_txt' => 'Ești deja autentificat',
     'success_login_txt' => 'Ai fost autentificat cu succes',
