@@ -741,7 +741,21 @@ pre {
 }
 
 .login .username:before {
-  content: "\f007";
+   content: "\f007";
+   font-family: "Font Awesome 5 Pro";
+   font-weight: 900;
+   font-size: 16px;
+   position: absolute;
+   bottom: 13px;
+   color: #fff;
+   left: 5px;
+   -webkit-transition: all .4s;
+   -o-transition: all .4s;
+   transition: all .4s
+ }
+
+.login .secret:before {
+  content: "\f084";
   font-family: "Font Awesome 5 Pro";
   font-weight: 900;
   font-size: 16px;
