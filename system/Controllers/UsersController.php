@@ -73,15 +73,15 @@ class UsersController extends Controller
             echo 'nothing to see here';
         } else {
             $userInfo = $this->userModel->searchExistingUser($nickname);
-            $secret = $userInfo['GoogleCode'];
+            /*$secret = $userInfo['GoogleCode'];
             $qrCode = $this->authModel->createQrCode($_SESSION['user_name'], $secret);
             $oneCode = $this->authModel->createCode($userInfo['GoogleCode']);
-            $verify = $this->authModel->checkCode($secret, $oneCode);
+            $verify = $this->authModel->checkCode($secret, $oneCode);*/
 
-//            $secret = $this->authModel->createSecretCode();
-//            $qrCode = $this->authModel->createQrCode($_SESSION['user_name'], $secret);
-//            $oneCode = $this->authModel->createCode($secret);
-//            $verify = $this->authModel->checkCode($secret, $oneCode);
+            $secret = $this->authModel->createSecretCode();
+            $qrCode = $this->authModel->createQrCode($_SESSION['user_name'], $secret);
+            $oneCode = $this->authModel->createCode($secret);
+            $verify = $this->authModel->checkCode($secret, $oneCode);
 
             $data = [
                 'pageTitle' => "Settings",
