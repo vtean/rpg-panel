@@ -37,6 +37,23 @@ class Auth
         return $this->ga->verifyCode($secret, $code, $k);
     }
 
+    public function getUser($id)
+    {
+        $sql = "SELECT * FROM sv_accounts WHERE ID=:id";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':id', $id);
+        // get the result
+        $result = $this->db->getResult();
+        // check if user exists
+        if ($this->db->countRows() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     // check for existing users with an username
     public function searchExistingUsername($username)
     {
@@ -108,5 +125,25 @@ class Auth
 
         // redirect user to the main page
         redirect('/');
+    }
+
+    // start the security session
+    public function startSessionSecurity($user) {
+        // add user id to the session
+        $_SESSION['sec_id'] = $user['ID'];
+
+        $_SESSION['sec_pass'] = $user['Password'];
+
+        redirect('/security');
+    }
+
+    // destroy the security session
+    public function destroySecuritySession() {
+        // unset user id
+        unset($_SESSION['sec_id']);
+
+        unset($_SESSION['sec_pass']);
+        // destroy the session
+        session_destroy();
     }
 }

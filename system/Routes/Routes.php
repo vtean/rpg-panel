@@ -15,7 +15,7 @@ Route::set('', 'MainController', 'index');
 // auth
 Route::set('login', 'LoginController', 'index');
 Route::set('logout', 'LogoutController', 'index');
-Route::set('security', 'LoginController', 'index');
+Route::set('security', 'SecurityController', 'securityCode');
 
 // owner page
 Route::set('owner', 'OwnerController', 'index');

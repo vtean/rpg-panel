@@ -65,12 +65,16 @@ class LoginController extends Controller
                     // store group id
 //                    $userGroup = $this->authModel->checkGroup($loggedInUser['user_group_id']);
                     if ($loggedInUser) {
-                        // add a session message
-                        flashMessage('success', $lang['success_login_txt']);
-                        // start the session
-                        $this->authModel->startSession($loggedInUser);
-                        // redirect
-                        redirect('/');
+                        if ($userCheck['GoogleStatus']) {
+                            $this->authModel->startSessionSecurity($loggedInUser);
+                        } else {
+                            // add a session message
+                            flashMessage('success', $lang['success_login_txt']);
+                            // start the session
+                            $this->authModel->startSession($loggedInUser);
+                            // redirect
+                            redirect('/');
+                        }
                     } else {
                         die('Oops, something went wrong');
                     }
