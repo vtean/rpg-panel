@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief Login controller.
+ * @brief LoginController controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
@@ -37,7 +37,7 @@ class LoginController extends Controller
             redirect('/');
         } else {
             // check if the form is submitted
-            if (isset($_POST['login'])) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // sanitize post data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -62,33 +62,15 @@ class LoginController extends Controller
                 if (count(array_filter($errors)) == 0) {
                     // log in the user
                     $loggedInUser = $this->authModel->loginUser($data['user_name'], $data['user_password']);
+                    // store group id
+//                    $userGroup = $this->authModel->checkGroup($loggedInUser['user_group_id']);
                     if ($loggedInUser) {
-                        if ($userCheck['GoogleStatus']) {
-                            $this->loadView('security', $data, $errors);
-                            if (isset($_POST['authCheck'])) {
-                                $this->loadView('security', $data, $errors);
-                                $secret = $userCheck['GoogleCode'];
-                                $userCode = $_POST['secret'];
-                                $verify = $this->authModel->checkCode($secret, $userCode);
-                                if ($verify) {
-                                    // add a session message
-                                    flashMessage('success', $lang['success_login_txt']);
-                                    // start the session
-                                    $this->authModel->startSession($loggedInUser);
-                                    // redirect
-                                    redirect('/');
-                                } else {
-                                    die('no no no');
-                                }
-                            }
-                        } else {
-                            // add a session message
-                            flashMessage('success', $lang['success_login_txt']);
-                            // start the session
-                            $this->authModel->startSession($loggedInUser);
-                            // redirect
-                            redirect('/');
-                        }
+                        // add a session message
+                        flashMessage('success', $lang['success_login_txt']);
+                        // start the session
+                        $this->authModel->startSession($loggedInUser);
+                        // redirect
+                        redirect('/');
                     } else {
                         die('Oops, something went wrong');
                     }

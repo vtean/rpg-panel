@@ -27,7 +27,7 @@
                     <?php endif; ?>
                 </div>
                 <p class="text-align-center"><?php echo $data['lang']['lost_pass_txt']; ?> <a href=""><?php echo $data['lang']['here_txt']; ?></a></p>
-                <button type="submit" class="login-btn" name="login"><?php echo $data['lang']['login_txt']; ?></button>
+                <button type="submit" class="login-btn" name="loginBtn"><?php echo $data['lang']['login_txt']; ?></button>
             </form>
         </div>
     </div>

@@ -12,7 +12,8 @@ trait ValidateLogin
     {
         $errors = [
             'user_name_error' => '',
-            'user_password_error' => ''
+            'user_password_error' => '',
+            'secret_error' => ''
         ];
 
         // check if the username field is empty
