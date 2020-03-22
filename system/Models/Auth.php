@@ -24,7 +24,7 @@ class Auth
 
     public function createQrCode($username, $secret)
     {
-        return $this->ga->getQRCodeGoogleUrl($username, $secret);
+        return $this->ga->getQRCodeGoogleUrl($username, $secret, "DreamVibe");
     }
 
     public function createCode($secret)
