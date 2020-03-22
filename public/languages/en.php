@@ -52,6 +52,7 @@ $lang = [
     'here_txt' => 'here',
     'already_logged_txt' => 'You are already logged in',
     'success_login_txt' => 'You were successfully logged in',
+    'need_login_txt' => 'You must log in',
 
     // Profile page
     'profile_settings_txt' => 'Profile Settings',

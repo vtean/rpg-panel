@@ -7,7 +7,7 @@
             <h2 class="login-title"><?php echo $data['lang']['login_txt']; ?></h2>
             <form action="" method="POST" class="dv-form">
                 <div class="form-group login-group">
-                    <input type="text" name="secret" id="secret"
+                    <input type="number" name="secret" id="secret"
                            class="login-form<?php if (!empty($errors['secret_error'])): ?> is-invalid<?php endif; ?>">
                     <span class="login-span secret"></span>
                     <?php if (!empty($errors['secret_error'])): ?>

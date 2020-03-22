@@ -33,4 +33,21 @@ trait ValidateLogin
 
         return $errors;
     }
+
+    public static function validateSecret($secret)
+    {
+        $errors = [
+            'secret_error' => ''
+        ];
+
+        // check if the username field is empty
+        if (empty($secret)) {
+            $errors['secret_error'] = "Please type your secret code.";
+            // check if an user with this username exists in the database
+        } else if (strlen($secret) < 6 || strlen($secret) > 6) {
+            $errors['secret_error'] = "The entered code must have exactly 6 digits.";
+        }
+
+        return $errors;
+    }
 }

@@ -52,6 +52,7 @@ $lang = [
     'here_txt' => 'aici',
     'already_logged_txt' => 'Ești deja autentificat',
     'success_login_txt' => 'Ai fost autentificat cu succes',
+    'need_login_txt' => 'Trebuie să te autentifici',
 
     // Profile page
     'profile_settings_txt' => 'Setări Profil',
