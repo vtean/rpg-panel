@@ -38,6 +38,7 @@ class SecurityController extends Controller
         } elseif (isset($_SESSION["sec_id"]) && !isLoggedIn()) {
             $user = $this->authModel->getUser($_SESSION['sec_id']);
             $type = $_SESSION['sec_type'];
+            $sendCode = random_int(100000, 999999);
             $mail = $user['Mail'];
             if ($type == 'email') {
                 $sendCode = $_SESSION['sec_code'];
