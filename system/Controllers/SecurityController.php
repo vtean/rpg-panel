@@ -27,7 +27,6 @@ class SecurityController extends Controller
     {
         global $lang;
 
-        $pageTitle = $_SESSION['user_lang'] == 'ro' ? 'Two Factor Authentication' : 'Autentificare în 2 pași';
 
         if (isLoggedIn()) {
             flashMessage('info', $lang['already_logged_txt']);
@@ -38,9 +37,9 @@ class SecurityController extends Controller
         } elseif (isset($_SESSION["sec_id"]) && !isLoggedIn()) {
             $user = $this->authModel->getUser($_SESSION['sec_id']);
             $type = $_SESSION['sec_type'];
-            $sendCode = random_int(100000, 999999);
             $mail = $user['Mail'];
             if ($type == 'email') {
+                $pageTitle = $_SESSION['user_lang'] == 'en' ? 'Email Confirmation' : 'Confirmare Email';
                 $sendCode = $_SESSION['sec_code'];
                 $message = "A fost depistata o autentificare pe contul tau de pe un nou IP. <br>
                             Daca ai fost tu, introdu pe server codul de mai jos. In cazul in care nu tu te-ai conectat, iti recomandam sa iti schimbi parola. <br><br>    
@@ -48,6 +47,8 @@ class SecurityController extends Controller
                 if (!isset($_POST['authCheck'])){
                     sendMail($mail, 'do-not-reply@dreamvibe.ro', 'DreamVibe RPG', 'Confirmare Login', $message);
                 }
+            } else {
+                $pageTitle = $_SESSION['user_lang'] == 'en' ? 'Two Factor Authentication' : 'Autentificare în 2 pași';
             }
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_POST['secret'] = filter_var($_POST['secret'], FILTER_VALIDATE_INT);
