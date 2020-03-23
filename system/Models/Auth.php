@@ -136,9 +136,10 @@ class Auth
 
         $_SESSION['sec_type'] = $type;
 
-        $sendCode = random_int(100000, 999999);
-
-        $_SESSION['sec_code'] = $sendCode;
+        if ($type == 'email') {
+            $sendCode = random_int(100000, 999999);
+            $_SESSION['sec_code'] = $sendCode;
+        }
 
         redirect('/security');
     }
