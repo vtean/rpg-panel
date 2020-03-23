@@ -4,9 +4,6 @@
             <span class="login-icon">
                 <i class="fas fa-shield-alt"></i>
             </span>
-            <?php
-                sendMail('gabrielbaraboi5@gmail.com', 'do-no-reply@dreamvibe.ro', 'test', 'test', 'test');
-            ?>
             <h2 class="login-title"><?php echo $data['lang']['login_txt']; ?></h2>
             <form action="" method="POST" class="dv-form">
                 <div class="form-group login-group">

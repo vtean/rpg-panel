@@ -38,6 +38,14 @@ class SecurityController extends Controller
         } elseif (isset($_SESSION["sec_id"]) && !isLoggedIn()) {
             $user = $this->authModel->getUser($_SESSION['sec_id']);
             $type = $_SESSION['sec_type'];
+            $mail = $user['Mail'];
+            if ($type == 'email') {
+                $sendCode = random_int(100000, 999999);
+                $message = "A fost depistata o autentificare pe contul tau de pe un nou IP. <br>
+                            Daca ai fost tu, introdu pe server codul de mai jos. In cazul in care nu tu te-ai conectat, iti recomandam sa iti schimbi parola. <br><br>    
+                            Codul de securitate pentru contul tau este: $sendCode.";
+                sendMail($mail, 'do-not-reply@dreamvibe.ro', 'DreamVibe RPG', 'Confirmare Login', $message);
+            }
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_POST['secret'] = filter_var($_POST['secret'], FILTER_VALIDATE_INT);
                 $userCode = $_POST['secret'];
@@ -53,8 +61,7 @@ class SecurityController extends Controller
                     $secret = $user['GoogleCode'];
                     $verify = $this->authModel->checkCode($secret, $userCode);
                     $errors = ValidateLogin::validateSecret($userCode, $verify);
-                } else {
-                    $sendCode = random_int(100000, 999999);
+                } else if ($type == 'email') {
                     $verify = $sendCode == $userCode ? 1 : 0;
                     $errors = ValidateLogin::validateSecretEmail($userCode, $verify);
                 }
