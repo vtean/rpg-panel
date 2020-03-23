@@ -136,17 +136,11 @@ class Auth
 
         $_SESSION['sec_type'] = $type;
 
+        $sendCode = random_int(100000, 999999);
+
+        $_SESSION['sec_code'] = $sendCode;
+
         redirect('/security');
-    }
-
-    // start the security session
-    public function startSessionSecurityEmail($user) {
-        // add user id to the session
-        $_SESSION['sec_id'] = $user['ID'];
-
-        $_SESSION['sec_pass'] = $user['Password'];
-
-        redirect('/security-email');
     }
 
     // destroy the security session
@@ -157,6 +151,8 @@ class Auth
         unset($_SESSION['sec_pass']);
 
         unset($_SESSION['sec_type']);
+
+        unset($_SESSION['sec_code']);
         // destroy the session
         session_destroy();
     }

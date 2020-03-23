@@ -40,7 +40,7 @@ class SecurityController extends Controller
             $type = $_SESSION['sec_type'];
             $mail = $user['Mail'];
             if ($type == 'email') {
-                $sendCode = random_int(100000, 999999);
+                $sendCode = $_SESSION['sec_code'];
                 $message = "A fost depistata o autentificare pe contul tau de pe un nou IP. <br>
                             Daca ai fost tu, introdu pe server codul de mai jos. In cazul in care nu tu te-ai conectat, iti recomandam sa iti schimbi parola. <br><br>    
                             Codul de securitate pentru contul tau este: $sendCode.";
