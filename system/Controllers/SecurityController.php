@@ -43,7 +43,10 @@ class SecurityController extends Controller
                 $data = [
                     'pageTitle' => $pageTitle,
                     'lang' => $lang,
-                    'user' => $user
+                    'user' => $user,
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader']
                 ];
                 $errors = ValidateLogin::validateSecret($userCode);
                 if (count(array_filter($errors)) == 0) {
@@ -66,7 +69,10 @@ class SecurityController extends Controller
             $data = [
                 'pageTitle' => $pageTitle,
                 'lang' => $lang,
-                'user' => $user
+                'user' => $user,
+                'fullAccess' => $this->privileges['fullAccess'],
+                'isAdmin' => $this->privileges['isAdmin'],
+                'isLeader' => $this->privileges['isLeader']
             ];
             $this->loadView('security', $data);
         } else {
