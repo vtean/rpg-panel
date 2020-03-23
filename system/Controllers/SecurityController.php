@@ -38,9 +38,9 @@ class SecurityController extends Controller
         } elseif (isset($_SESSION["sec_id"]) && !isLoggedIn()) {
             $user = $this->authModel->getUser($_SESSION['sec_id']);
             $type = $_SESSION['sec_type'];
+            $sendCode = random_int(100000, 999999);
             $mail = $user['Mail'];
             if ($type == 'email') {
-                $sendCode = random_int(100000, 999999);
                 $message = "A fost depistata o autentificare pe contul tau de pe un nou IP. <br>
                             Daca ai fost tu, introdu pe server codul de mai jos. In cazul in care nu tu te-ai conectat, iti recomandam sa iti schimbi parola. <br><br>    
                             Codul de securitate pentru contul tau este: $sendCode.";
