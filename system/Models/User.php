@@ -132,4 +132,36 @@ class User
         }
     }
 
+    public function getBusiness($nickName)
+    {
+        $sql = "SELECT * FROM sv_businesses WHERE Owner=:nickname";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':nickname', $nickName);
+        // get the result
+        $result = $this->db->getResults();
+        if ($this->db->countRows() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function getHouse($nickName)
+    {
+        $sql = "SELECT * FROM sv_houses WHERE Owner=:nickname";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':nickname', $nickName);
+        // get the result
+        $result = $this->db->getResults();
+        if ($this->db->countRows() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
 }

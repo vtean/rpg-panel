@@ -231,6 +231,7 @@ class GoogleAuthenticator
      */
     private function timingSafeEquals($safeString, $userString)
     {
+        $userString = "$userString";
         if (function_exists('hash_equals')) {
             return hash_equals($safeString, $userString);
         }

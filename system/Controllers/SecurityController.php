@@ -23,7 +23,7 @@ class SecurityController extends Controller
         $this->privileges = $this->checkPrivileges();
     }
 
-    public function securityCode()
+    public function security()
     {
         global $lang;
 
@@ -37,6 +37,7 @@ class SecurityController extends Controller
             redirect('/login');
         } elseif (isset($_SESSION["sec_id"]) && !isLoggedIn()) {
             $user = $this->authModel->getUser($_SESSION['sec_id']);
+            $type = $_SESSION['sec_type'];
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_POST['secret'] = filter_var($_POST['secret'], FILTER_VALIDATE_INT);
                 $userCode = $_POST['secret'];
@@ -45,15 +46,19 @@ class SecurityController extends Controller
                     'lang' => $lang,
                     'user' => $user
                 ];
-                $errors = ValidateLogin::validateSecret($userCode);
-                if (count(array_filter($errors)) == 0) {
-                    $loggedInUser = $this->authModel->loginUser($user['NickName'], $_SESSION['sec_pass']);
+                if ($type == '2fa') {
                     $secret = $user['GoogleCode'];
                     $verify = $this->authModel->checkCode($secret, $userCode);
+                    $errors = ValidateLogin::validateSecret($userCode, $verify);
+                } else {
+                    $sendCode = random_int(100000, 999999);
+                    $verify = $sendCode == $userCode ? 1 : 0;
+                    $errors = ValidateLogin::validateSecretEmail($userCode, $verify);
+                }
+                if (count(array_filter($errors)) == 0) {
+                    $loggedInUser = $this->authModel->loginUser($user['NickName'], $_SESSION['sec_pass']);
                     if ($verify) {
-                        // add a session message
                         flashMessage('success', $lang['success_login_txt']);
-                        // start the session
                         $this->authModel->startSession($loggedInUser);
                         $this->authModel->destroySecuritySession($loggedInUser);
                     } else {

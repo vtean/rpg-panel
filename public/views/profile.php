@@ -15,7 +15,8 @@
                          role="progressbar"
                          style="width: <?php echo $data['user']['HP']; ?>%"
                          aria-valuenow="<?php echo $data['user']['HP']; ?>" aria-valuemin="0" aria-valuemax="100"
-                         data-toggle="tooltip" data-placement="left" title="<?php echo $data['user']['HP']; ?> HP"></div>
+                         data-toggle="tooltip" data-placement="left"
+                         title="<?php echo $data['user']['HP']; ?> HP"></div>
                 </div>
                 <img class="dv-user-profile-skin"
                      src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>"
@@ -141,69 +142,63 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <h4 class="dv-row-title"><?php echo $data['lang']['houses_txt']; ?></h4>
-                        <div class="dv-user-property dv-house">
-                            <ul class="list-style-none">
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['house_id_txt']; ?>: </span>
-                                    <span class="dv-second">420</span>
-                                </li>
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['level_txt']; ?>: </span>
-                                    <span class="dv-second">7</span>
-                                </li>
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['price_txt']; ?>: </span>
-                                    <span class="dv-second">$1,750,000</span>
-                                </li>
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['locked_txt']; ?>: </span>
-                                    <span class="dv-second">Yes</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="dv-user-property dv-house">
-                            <ul class="list-style-none">
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['house_id_txt']; ?>: </span>
-                                    <span class="dv-second">422</span>
-                                </li>
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['level_txt']; ?>: </span>
-                                    <span class="dv-second">7</span>
-                                </li>
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['price_txt']; ?>: </span>
-                                    <span class="dv-second">$1,750,000</span>
-                                </li>
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['locked_txt']; ?>: </span>
-                                    <span class="dv-second">Yes</span>
-                                </li>
-                            </ul>
-                        </div>
+                        <?php
+                        if (!empty($data['getHouse'])) {
+                            foreach ($data['getHouse'] as $house) { ?>
+                                <div class="dv-user-property dv-house">
+                                    <ul class="list-style-none">
+                                        <li>
+                                            <span class="dv-first"><?php echo $data['lang']['house_id_txt']; ?>: </span>
+                                            <span class="dv-second"><?php echo $house['ID']; ?></span>
+                                        </li>
+                                        <li>
+                                            <span class="dv-first"><?php echo $data['lang']['level_txt']; ?>: </span>
+                                            <span class="dv-second"><?php echo $house['Level']; ?></span>
+                                        </li>
+                                        <li>
+                                            <span class="dv-first"><?php echo $data['lang']['price_txt']; ?>: </span>
+                                            <span class="dv-second">$<?php echo number_format($house['Cost'], 0, ',', ' '); ?></span>
+                                        </li>
+                                        <li>
+                                            <span class="dv-first"><?php echo $data['lang']['locked_txt']; ?>: </span>
+                                            <span class="dv-second"><?php echo $house['Lock'] == 0 ? 'No' : 'Yes'; ?></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <?php
+                            }
+                        } else { ?> <span class="dv-first">No Houses</span> <?php }
+                        ?>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <h4 class="dv-row-title"><?php echo $data['lang']['businesses_txt']; ?></h4>
-                        <div class="dv-user-property dv-business">
-                            <ul class="list-style-none">
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['biz_id_txt']; ?>: </span>
-                                    <span class="dv-second">69</span>
-                                </li>
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['type_txt']; ?>: </span>
-                                    <span class="dv-second">Ammunition</span>
-                                </li>
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['price_txt']; ?>: </span>
-                                    <span class="dv-second">$3,500,000</span>
-                                </li>
-                                <li>
-                                    <span class="dv-first"><?php echo $data['lang']['products_txt']; ?>: </span>
-                                    <span class="dv-second">5000</span>
-                                </li>
-                            </ul>
-                        </div>
+                        <?php
+                        if (!empty($data['getBusiness'])) {
+                            foreach ($data['getBusiness'] as $business) { ?>
+                                <div class="dv-user-property dv-business">
+                                    <ul class="list-style-none">
+                                        <li>
+                                            <span class="dv-first"><?php echo $data['lang']['biz_id_txt']; ?>: </span>
+                                            <span class="dv-second"><?php echo $business['ID']; ?></span>
+                                        </li>
+                                        <li>
+                                            <span class="dv-first"><?php echo $data['lang']['type_txt']; ?>: </span>
+                                            <span class="dv-second"><?php echo $business['Name']; ?></span>
+                                        </li>
+                                        <li>
+                                            <span class="dv-first"><?php echo $data['lang']['price_txt']; ?>: </span>
+                                            <span class="dv-second">$<?php echo number_format($business['Cost'], 0, ',', ' '); ?></span>
+                                        </li>
+                                        <li>
+                                            <span class="dv-first"><?php echo $data['lang']['products_txt']; ?>: </span>
+                                            <span class="dv-second"><?php echo $business['Products']; ?></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <?php
+                            }
+                        } else { ?> <span class="dv-first">No Businesses</span> <?php }
+                        ?>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <h4 class="dv-row-title"><?php echo $data['lang']['vehicles_txt']; ?></h4>
@@ -272,7 +267,7 @@
                             <div class="progress-bar dv-progress-color" role="progressbar"
                                  style="width: <?php echo $data['user']['SDPistol_Skill'] / 100; ?>%" aria-valuenow="10"
                                  aria-valuemin="0" aria-valuemax="100"></div>
-                        </div><div class="data"><?php echo $data['user']['SDPistol_Skill'] / 100; ?>%</div>
+                        </div>
                     </div>
                     <div class="dv-weapon-single">
                         <h5 class="skill-title">Desert Eagle</h5>

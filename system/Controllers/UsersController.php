@@ -41,6 +41,8 @@ class UsersController extends Controller
                 $factionRank = $this->userModel->getFactionRank($userInfo['Member'], $userInfo['Rank']);
                 $getVehicle = $this->userModel->getVehicle($userInfo['NickName']);
                 $getModelName = $this->userModel->getModelName($userInfo['NickName']);
+                $getBusiness = $this->userModel->getBusiness($userInfo['NickName']);
+                $getHouse = $this->userModel->getHouse($userInfo['NickName']);
             } else {
                 // add session message
                 flashMessage('info', 'User not found.');
@@ -59,6 +61,8 @@ class UsersController extends Controller
                 'factionRank' => $factionRank,
                 'getVehicle' => $getVehicle,
                 'getModelName' => $getModelName,
+                'getBusiness' => $getBusiness,
+                'getHouse' => $getHouse,
                 'lang' => $lang
             ];
             // load the profile view

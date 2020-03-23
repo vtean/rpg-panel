@@ -64,7 +64,9 @@ class LoginController extends Controller
                     $loggedInUser = $this->authModel->loginUser($data['user_name'], $data['user_password']);
                     if ($loggedInUser) {
                         if ($userCheck['GoogleStatus']) {
-                            $this->authModel->startSessionSecurity($loggedInUser);
+                            $this->authModel->startSessionSecurity($loggedInUser, '2fa');
+                        } else if ($userCheck['MailLogin']) {
+                            $this->authModel->startSessionSecurity($loggedInUser, 'email');
                         } else {
                             // add a session message
                             flashMessage('success', $lang['success_login_txt']);

@@ -67,3 +67,27 @@ function convertMinutes($time, $format = '%02dh %02dm')
     $minutes = ($time % 60);
     return sprintf($format, $hours, $minutes);
 }
+
+function sendMail($to, $from, $name, $subject, $message)
+{
+    $url = "http://dreamvibe.ro/mailer2.php";
+    $dataPost = array (
+        "t" => $to,
+        "f" => $from,
+        "n" => $name,
+        "s" => $subject,
+        "m" => $message
+    );
+
+    $fields_string = http_build_query($dataPost);
+    $ch = curl_init();
+
+    curl_setopt($ch,CURLOPT_URL, $url);
+    curl_setopt($ch,CURLOPT_POST, 1);
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+    $result = curl_exec($ch);
+    echo $result;
+
+    curl_close($ch);
+
+}

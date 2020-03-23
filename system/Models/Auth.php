@@ -128,13 +128,25 @@ class Auth
     }
 
     // start the security session
-    public function startSessionSecurity($user) {
+    public function startSessionSecurity($user, $type) {
         // add user id to the session
         $_SESSION['sec_id'] = $user['ID'];
 
         $_SESSION['sec_pass'] = $user['Password'];
 
+        $_SESSION['sec_type'] = $type;
+
         redirect('/security');
+    }
+
+    // start the security session
+    public function startSessionSecurityEmail($user) {
+        // add user id to the session
+        $_SESSION['sec_id'] = $user['ID'];
+
+        $_SESSION['sec_pass'] = $user['Password'];
+
+        redirect('/security-email');
     }
 
     // destroy the security session
@@ -143,6 +155,8 @@ class Auth
         unset($_SESSION['sec_id']);
 
         unset($_SESSION['sec_pass']);
+
+        unset($_SESSION['sec_type']);
         // destroy the session
         session_destroy();
     }
