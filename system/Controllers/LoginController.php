@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief Login controller.
+ * @brief LoginController controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
@@ -62,6 +62,8 @@ class LoginController extends Controller
                 if (count(array_filter($errors)) == 0) {
                     // log in the user
                     $loggedInUser = $this->authModel->loginUser($data['user_name'], $data['user_password']);
+                    // store group id
+//                    $userGroup = $this->authModel->checkGroup($loggedInUser['user_group_id']);
                     if ($loggedInUser) {
                         if ($userCheck['GoogleStatus']) {
                             $this->authModel->startSessionSecurity($loggedInUser, '2fa');

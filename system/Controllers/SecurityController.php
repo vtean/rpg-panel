@@ -44,7 +44,10 @@ class SecurityController extends Controller
                 $data = [
                     'pageTitle' => $pageTitle,
                     'lang' => $lang,
-                    'user' => $user
+                    'user' => $user,
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader']
                 ];
                 if ($type == '2fa') {
                     $secret = $user['GoogleCode'];
@@ -71,7 +74,10 @@ class SecurityController extends Controller
             $data = [
                 'pageTitle' => $pageTitle,
                 'lang' => $lang,
-                'user' => $user
+                'user' => $user,
+                'fullAccess' => $this->privileges['fullAccess'],
+                'isAdmin' => $this->privileges['isAdmin'],
+                'isLeader' => $this->privileges['isLeader']
             ];
             $this->loadView('security', $data);
         } else {
