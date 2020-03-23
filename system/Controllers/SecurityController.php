@@ -44,7 +44,9 @@ class SecurityController extends Controller
                 $message = "A fost depistata o autentificare pe contul tau de pe un nou IP. <br>
                             Daca ai fost tu, introdu pe server codul de mai jos. In cazul in care nu tu te-ai conectat, iti recomandam sa iti schimbi parola. <br><br>    
                             Codul de securitate pentru contul tau este: $sendCode.";
-                sendMail($mail, 'do-not-reply@dreamvibe.ro', 'DreamVibe RPG', 'Confirmare Login', $message);
+                if (!isset($_POST['authCheck'])){
+                    sendMail($mail, 'do-not-reply@dreamvibe.ro', 'DreamVibe RPG', 'Confirmare Login', $message);
+                }
             }
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_POST['secret'] = filter_var($_POST['secret'], FILTER_VALIDATE_INT);
