@@ -12,6 +12,7 @@ class LogoutController {
         unset($_SESSION['user_id']);
         unset($_SESSION['user_name']);
         unset($_SESSION['user_skin']);
+        unset($_SESSION['csrfToken']);
         // destroy the session
         session_destroy();
         // redirect to the main page

@@ -12,6 +12,9 @@ session_start();
 // load the main config
 require_once 'config.php';
 
+// load csrf token
+require_once ROOT_PATH . '/system/Session/Csrf.php';
+
 // language configuration
 if (!isset($_SESSION['user_lang'])) {
     $_SESSION['user_lang'] = 'ro';

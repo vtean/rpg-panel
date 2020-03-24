@@ -123,6 +123,9 @@ class Auth
         // add user skin to the session
         $_SESSION['user_skin'] = $user['Skin'];
 
+        // add user login time to the session
+        $_SESSION['user_login_time'] = time();
+
         // redirect user to the main page
         redirect('/');
     }

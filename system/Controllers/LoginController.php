@@ -41,11 +41,6 @@ class LoginController extends Controller
                 // sanitize post data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                $token = hash_hmac('sha256', '/login', $_SESSION['csrf']);
-                if (!hash_equals($token, $_POST['csrf-token'])) {
-                    die('Are you trying to hack us, dude?!');
-                }
-
                 // user data
                 $data = [
                     'pageTitle' => $pageTitle,

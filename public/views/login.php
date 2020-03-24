@@ -7,9 +7,7 @@
             </span>
             <h2 class="login-title"><?php echo $data['lang']['login_txt']; ?></h2>
             <form action="" method="POST" class="dv-form">
-                <input type="hidden" name="csrf-token" value="<?php
-                    echo hash_hmac('sha256', '/login', $_SESSION['csrf']);
-                ?>" />
+                <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>" />
                 <div class="form-group login-group">
                     <input type="text" name="username" id="username"
                            class="login-form<?php if (!empty($errors['user_name_error'])): ?> is-invalid<?php endif; ?>" value="<?php echo $data['user_name']; ?>">
