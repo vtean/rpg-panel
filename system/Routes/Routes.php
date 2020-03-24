@@ -40,3 +40,6 @@ Route::set('ro', 'MainController', 'ro');
 
 // change lang to english
 Route::set('en', 'MainController', 'en');
+
+// tickets page
+Route::set('tickets', 'TicketsController', 'index');

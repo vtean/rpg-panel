@@ -88,5 +88,22 @@ function sendMail($to, $from, $name, $subject, $message)
     $result = curl_exec($ch);
 
     curl_close($ch);
+}
 
+function getUserIp(){
+    if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+        //ip from share internet
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+        //ip pass from proxy
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }else{
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+}
+
+function strLimit($s, $length, $end='...')
+{
+    return substr($s, 0, $length) . $end;
 }

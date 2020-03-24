@@ -94,4 +94,13 @@ $lang = [
     'group_id_txt' => 'Group ID',
     'group_name_txt' => 'Group Name',
     'actions_txt' => 'Actions',
+
+    // Tickets page
+    'tickets_view_txt' => 'Tickets Overview',
+    'create_ticket_txt' => 'Create New ticket',
+    'ticket_id_txt' => 'Ticket ID',
+    'ticket_body_txt' => 'Ticket Description',
+    'ticket_author_txt' => 'Ticket Author',
+    'ticket_category_txt' => 'Ticket Category',
+    'ticket_status_txt' => 'Ticket Status'
 ];

@@ -839,6 +839,10 @@ pre {
   top: -1.75px;
 }
 
+textarea {
+  height: 100% !important;
+}
+
 .dv-online {
   color: #00b300;
 }

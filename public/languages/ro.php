@@ -94,4 +94,13 @@ $lang = [
     'group_id_txt' => 'ID Grup',
     'group_name_txt' => 'Nume Grup',
     'actions_txt' => 'Acțiuni',
+
+    // Tickets page
+    'tickets_view_txt' => 'Prezentare Generală ale Ticketelor',
+    'create_ticket_txt' => 'Creează Ticket Nou',
+    'ticket_id_txt' => 'ID Ticket',
+    'ticket_body_txt' => 'Descriere Ticket',
+    'ticket_author_txt' => 'Autorul Ticketului',
+    'ticket_category_txt' => 'Categoria Ticketului',
+    'ticket_status_txt' => 'Starea Ticketului'
 ];
