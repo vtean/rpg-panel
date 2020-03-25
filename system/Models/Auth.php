@@ -123,19 +123,31 @@ class Auth
         // add user skin to the session
         $_SESSION['user_skin'] = $user['Skin'];
 
-        // add user login time to the session
-        $_SESSION['user_login_time'] = time();
+        // clear things
+        if (isset($_SESSION['sec_id'])) {
+            unset($_SESSION['sec_id']);
+        }
+
+        if (isset($_SESSION['sec_pass'])) {
+            unset($_SESSION['sec_pass']);
+        }
+
+        if (isset($_SESSION['sec_type'])) {
+            unset($_SESSION['sec_type']);
+        }
+
+        if (isset($_SESSION['sec_code'])) {
+            unset($_SESSION['sec_code']);
+        }
 
         // redirect user to the main page
         redirect('/');
     }
 
     // start the security session
-    public function startSessionSecurity($user, $type) {
+    public function startSessionSecurity($user, $type, $pass) {
         // add user id to the session
         $_SESSION['sec_id'] = $user['ID'];
-
-        $_SESSION['sec_pass'] = $user['Password'];
 
         $_SESSION['sec_type'] = $type;
 
@@ -143,6 +155,8 @@ class Auth
             $sendCode = random_int(100000, 999999);
             $_SESSION['sec_code'] = $sendCode;
         }
+
+        $_SESSION['sec_pass'] = $pass;
 
         redirect('/security');
     }
@@ -157,7 +171,7 @@ class Auth
         unset($_SESSION['sec_type']);
 
         unset($_SESSION['sec_code']);
-        // destroy the session
+
         session_destroy();
     }
 }

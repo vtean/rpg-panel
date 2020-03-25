@@ -73,7 +73,6 @@ class SecurityController extends Controller
                     if ($verify) {
                         flashMessage('success', $lang['success_login_txt']);
                         $this->authModel->startSession($loggedInUser);
-                        $this->authModel->destroySecuritySession($loggedInUser);
                     } else {
                         die('Oops, something went wrong');
                     }

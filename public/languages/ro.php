@@ -102,5 +102,6 @@ $lang = [
     'ticket_body_txt' => 'Descriere Ticket',
     'ticket_author_txt' => 'Autorul Ticketului',
     'ticket_category_txt' => 'Categoria Ticketului',
-    'ticket_status_txt' => 'Starea Ticketului'
+    'ticket_status_txt' => 'Starea Ticketului',
+    'ticket_not_logged_txt' => 'Trebuie să te autentifici pentru a putea posta tickete.'
 ];

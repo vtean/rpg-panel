@@ -14,17 +14,20 @@ class UsersController extends Controller
 
     public function __construct()
     {
-        // load the model
+        // load models
         $this->userModel = $this->loadModel('User');
         $this->authModel = $this->loadModel('Auth');
 
         // store use privileges
         $this->privileges = $this->checkPrivileges();
+
+        if (in_array(0, $this->privileges['canAccessSite'])) {
+            die('You are banned noob.');
+        }
     }
 
     public function index()
     {
-        echo 'aloha bitch';
     }
 
     public function profile($nickname = '')
@@ -62,6 +65,7 @@ class UsersController extends Controller
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
                     'isLeader' => $this->privileges['isLeader'],
+                    'canAccessSite' => $this->privileges['canAccessSite'],
                     'userGroups' => $finalGroups,
                     'job' => $job,
                     'family' => $family,

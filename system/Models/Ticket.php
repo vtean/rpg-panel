@@ -46,12 +46,13 @@ class Ticket
     // create ticket
     public function createTicket($data)
     {
-        $sql = "INSERT INTO panel_tickets (body, author_name, author_ip, category_id, status) 
-                VALUES (:body, :author_name, :author_ip, :category_id, :status)";
+        $sql = "INSERT INTO panel_tickets (body, author_id, author_name, author_ip, category_id, status) 
+                VALUES (:body, :author_id, :author_name, :author_ip, :category_id, :status)";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params
         $this->db->bind(':body', $data['body']);
+        $this->db->bind(':author_id', $data['author_id']);
         $this->db->bind(':author_name', $data['author_name']);
         $this->db->bind(':author_ip', $data['author_ip']);
         $this->db->bind(':category_id', $data['category_id']);

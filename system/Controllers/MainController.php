@@ -50,7 +50,7 @@ class MainController extends Controller
         $_SESSION['user_lang'] = 'ro';
 
         // add flash message
-        flashMessage('success', 'Limba a fost modificată cu succes în Română');
+        flashMessage('success', 'Limba a fost modificată cu succes în Română.');
 
         // redirect to the main page
         redirect('/');
@@ -62,7 +62,7 @@ class MainController extends Controller
         $_SESSION['user_lang'] = 'en';
 
         // add flash message
-        flashMessage('success', 'Site language has been changed successfully to English');
+        flashMessage('success', 'Site language has been changed successfully to English.');
 
         // redirect to the main page
         redirect('/');

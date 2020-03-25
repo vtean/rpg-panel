@@ -102,5 +102,6 @@ $lang = [
     'ticket_body_txt' => 'Ticket Description',
     'ticket_author_txt' => 'Ticket Author',
     'ticket_category_txt' => 'Ticket Category',
-    'ticket_status_txt' => 'Ticket Status'
+    'ticket_status_txt' => 'Ticket Status',
+    'ticket_not_logged_txt' => 'You must log in first to be able to post tickets.'
 ];

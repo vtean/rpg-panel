@@ -11,7 +11,7 @@
                 <label for="ticket_body">Ticket Body</label>
                 <textarea type="text" rows="5" name="ticket_body"
                           class="form-control<?php if (!empty($errors['ticket_body_error'])): ?> is-invalid<?php endif; ?>"
-                          id="ticket_body"></textarea>
+                          id="ticket_body"><?php echo $data['ticketBody']; ?></textarea>
                 <?php if (!empty($errors['ticket_body_error'])): ?>
                     <div class="invalid-feedback"><?php echo $errors['ticket_body_error']; ?></div>
                 <?php endif; ?>

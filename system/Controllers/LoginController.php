@@ -66,9 +66,9 @@ class LoginController extends Controller
 //                    $userGroup = $this->authModel->checkGroup($loggedInUser['user_group_id']);
                     if ($loggedInUser) {
                         if ($userCheck['GoogleStatus']) {
-                            $this->authModel->startSessionSecurity($loggedInUser, '2fa');
+                            $this->authModel->startSessionSecurity($loggedInUser, '2fa', $data['user_password']);
                         } else if ($userCheck['MailLogin']) {
-                            $this->authModel->startSessionSecurity($loggedInUser, 'email');
+                            $this->authModel->startSessionSecurity($loggedInUser, 'email', $data['user_password']);
                         } else {
                             // add a session message
                             flashMessage('success', $lang['success_login_txt']);

@@ -87,4 +87,41 @@ class General
         }
     }
 
+    public function getUserGroupById($group_id)
+    {
+        $sql = "SELECT * FROM panel_groups WHERE group_id = :group_id";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':group_id', $group_id);
+        // get the result
+        $result = $this->db->getResult();
+        if ($this->db->countRows() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function getUserGroups($user_id)
+    {
+        $sql = "SELECT PanelGroups from sv_accounts WHERE ID = :user_id";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':user_id', $user_id);
+        // get result
+        $result = $this->db->getResult();
+        // transform result into an array of group IDs
+        $groups = unserialize(implode($result));
+        // create an array with user groups permissions
+        $final_results = array();
+        if (!empty($groups)) {
+            foreach ($groups as $key => $value) {
+                $group = $this->getUserGroupById($value);
+                array_push($final_results, $group);
+            }
+        }
+        return $final_results;
+    }
 }

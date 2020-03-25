@@ -16,12 +16,19 @@ class TicketsController extends Controller
 
     public function __construct()
     {
+        global $lang;
+
         // load the model
         $this->ticketModel = $this->loadModel('Ticket');
         $this->categoryModel = $this->loadModel('Category');
 
         // store user privileges
         $this->privileges = $this->checkPrivileges();
+
+        if (!isLoggedIn()) {
+            flashMessage('danger', $lang['ticket_not_logged_txt']);
+            redirect('/');
+        }
     }
 
     public function index()
@@ -36,7 +43,8 @@ class TicketsController extends Controller
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
             'tickets' => $allTickets,
-            'lang' => $lang
+            'lang' => $lang,
+            'canViewTickets' => $this->privileges['canViewTickets']
         ];
 
         $this->loadView('ticket_index', $data);
@@ -53,8 +61,11 @@ class TicketsController extends Controller
             // sanitize post data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+            $_POST['ticket_body'] = htmlentities($_POST['ticket_body']);
+
             $dataPost = [
                 'body' => $_POST['ticket_body'],
+                'author_id' => $_SESSION['user_id'],
                 'author_name' => $_SESSION['user_name'],
                 'author_ip' => getUserIp(),
                 'category_id' => $_POST['ticket_category']
@@ -68,7 +79,8 @@ class TicketsController extends Controller
                 'isLeader' => $this->privileges['isLeader'],
                 'ticket' => $dataPost,
                 'categories' => $categories,
-                'lang' => $lang
+                'lang' => $lang,
+                'ticketBody' => $_POST['ticket_body']
             ];
 
             // handle errors
@@ -93,6 +105,7 @@ class TicketsController extends Controller
                 'fullAccess' => $this->privileges['fullAccess'],
                 'isAdmin' => $this->privileges['isAdmin'],
                 'isLeader' => $this->privileges['isLeader'],
+                'ticketBody' => '',
                 'ticket' => [
                     'body' => '',
                     'category_id' => 0
