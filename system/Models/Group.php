@@ -137,4 +137,21 @@ class Group
             return false;
         }
     }
+
+    // assign groups
+    public function assignGroups($groups, $username)
+    {
+        $sql = "UPDATE sv_accounts SET PanelGroups = :groups WHERE NickName = :username";
+        // prepare query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':groups', $groups);
+        $this->db->bind(':username', $username);
+        // execute query
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

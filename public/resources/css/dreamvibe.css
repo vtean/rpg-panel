@@ -992,12 +992,20 @@ textarea {
   background-color: #d54d40 !important;
 }
 
+.dv-scripter {
+  background-color: #8a60e0 !important;
+}
+
 .dv-admin {
   background-color: #4081ee !important;
 }
 
-.dv-faction-leader {
-  background-color: #23d706 !important;
+.dv-leader {
+  background-color: #03c948 !important;
+}
+
+.dv-manager {
+  background-color: #07c5b3 !important;
 }
 
 .dv-support {
@@ -1161,7 +1169,8 @@ textarea {
 }
 
 /* Groups page */
-.dv-create-group .dv-form .form-control[type="text"] {
+.dv-create-group .dv-form .form-control[type="text"],
+.dv-create-group .dv-form select.form-control {
   width: 30%;
 }
 
@@ -1188,6 +1197,14 @@ textarea {
 .dv-create-group .dv-form .form-group .invalid-feedback {
   margin-left: 260px;
   width: fit-content;
+}
+
+.dv-assign {
+  margin: 20px 0;
+}
+
+.dv-assign .dv-form {
+  width: 30%;
 }
 
 /* Data tables design */

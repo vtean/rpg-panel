@@ -39,28 +39,16 @@
             </div>
         </div>
         <div class="col-lg-8 col-md-12 col-sm-12">
-            <div class="dv-user-groups dv-row clearfix">
-                <div class="dv-user-single-group dv-owner">
-                    <i class="dv-user-group-icon fas fa-user-astronaut"></i>
-                    <span class="dv-user-group-title">Owner</span>
+            <?php if ($data['userGroups']): ?>
+                <div class="dv-user-groups dv-row clearfix">
+                    <?php foreach ($data['userGroups'] as $key => $userGroup): ?>
+                        <div class="dv-user-single-group dv-<?php echo $userGroup['group_keyword']; ?>">
+                            <i class="dv-user-group-icon fas fa-<?php if ($userGroup['group_keyword'] == 'owner'): ?>user-astronaut<?php elseif ($userGroup['group_keyword'] == 'scripter'): ?>code<?php elseif ($userGroup['group_keyword'] == 'admin'): ?>shield-alt<?php elseif ($userGroup['group_keyword'] == 'manager'): ?>cog<?php elseif ($userGroup['group_keyword'] == 'leader'): ?>user-tie<?php elseif ($userGroup['group_keyword'] == 'support'): ?>life-ring<?php elseif ($userGroup['group_keyword'] == 'vip'): ?>star<?php endif; ?>"></i>
+                            <span class="dv-user-group-title"><?php echo $userGroup['group_name']; ?></span>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-                <div class="dv-user-single-group dv-admin">
-                    <i class="dv-user-group-icon fas fa-shield-alt"></i>
-                    <span class="dv-user-group-title">Admin</span>
-                </div>
-                <div class="dv-user-single-group dv-faction-leader">
-                    <i class="dv-user-group-icon fas fa-user-tie"></i>
-                    <span class="dv-user-group-title">Faction Leader</span>
-                </div>
-                <div class="dv-user-single-group dv-support">
-                    <i class="dv-user-group-icon fas fa-life-ring"></i>
-                    <span class="dv-user-group-title">Tickets Support</span>
-                </div>
-                <div class="dv-user-single-group dv-vip">
-                    <i class="dv-user-group-icon fas fa-star"></i>
-                    <span class="dv-user-group-title">Titan VIP</span>
-                </div>
-            </div>
+            <?php endif; ?>
             <div class="dv-user-profile-info dv-row">
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['faction_txt']; ?></span>

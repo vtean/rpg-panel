@@ -164,4 +164,32 @@ class User
         }
     }
 
+    // get user groups
+    public function getUserGroups($username)
+    {
+        $sql = "SELECT PanelGroups FROM sv_accounts WHERE NickName = :nickname";
+        // prepare query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':nickname', $username);
+        // return result
+        $result = $this->db->getResult();
+        if (!empty($result)) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    // get user group name
+    public function getUserGroupName($id)
+    {
+        $sql = "SELECT group_name, group_keyword FROM panel_groups WHERE group_id = :id";
+        // prepare query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':id', $id);
+        // return result
+        return $this->db->getResult();
+    }
 }

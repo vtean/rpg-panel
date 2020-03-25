@@ -11,6 +11,7 @@ require_once ROOT_PATH . '/system/Validations/ValidateGroup.php';
 class GroupsController extends Controller
 {
     private $groupModel;
+    private $userModel;
     private $privileges;
 
     use ValidateGroup;
@@ -19,6 +20,9 @@ class GroupsController extends Controller
     {
         // load group model
         $this->groupModel = $this->loadModel('Group');
+
+        // load user model
+        $this->userModel = $this->loadModel('User');
 
         // check user privileges
         $this->privileges = $this->checkPrivileges();
@@ -120,6 +124,7 @@ class GroupsController extends Controller
 
             // check if there are no errors
             if (count(array_filter($errors)) == 0) {
+                unset($_POST['csrfToken']);
                 // create group
                 if ($this->groupModel->createGroup($_POST)) {
                     flashMessage('success', 'The group has been successfully created!');
@@ -278,6 +283,7 @@ class GroupsController extends Controller
 
                 // check if there are no errors
                 if (count(array_filter($errors)) == 0) {
+                    unset($_POST['csrfToken']);
                     if ($this->groupModel->editGroup($_POST, $id)) {
                         flashMessage('success', 'Group has been successfully edited!');
                         redirect('/groups');
@@ -289,6 +295,59 @@ class GroupsController extends Controller
 
             // load view
             $this->loadView('group_edit', $data, $errors);
+        }
+    }
+
+    public function assign($name = '')
+    {
+        global $lang;
+
+        if (empty($name)) {
+            echo 'Page not found';
+        } else {
+            $user = $this->userModel->searchExistingUser($name);
+
+            if ($user) {
+                $allGroups = $this->groupModel->getAllGroups();
+                $userGroups = implode($this->userModel->getUserGroups($name));
+                $pageTitle = $_SESSION['user_lang'] == 'ro' ? 'Atribuire Grupuri' : 'Assign Groups';
+
+                // unserialize user groups
+                $userGroupsArr = unserialize($userGroups);
+
+                $data = [
+                    'pageTitle' => $pageTitle,
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader'],
+                    'lang' => $lang,
+                    'user' => $user,
+                    'groups' => $allGroups,
+                    'userGroups' => $userGroupsArr
+                ];
+
+               if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                   // sanitize post data
+                   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                   // prepare groups to be stored
+                   $serializedGroups = serialize($_POST['userGroups']);
+
+                   // assign groups to user
+                   $this->groupModel->assignGroups($serializedGroups, $user['NickName']);
+
+                   // add flash message
+                   flashMessage('success', 'Groups have been successfully updated.');
+
+                   // redirect
+                   redirect('/groups');
+               } else {
+                   // load view
+                   $this->loadView('groups_assign', $data);
+               }
+            } else {
+                echo 'User not found.';
+            }
         }
     }
 }

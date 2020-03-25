@@ -28,7 +28,7 @@ trait ValidateLogin
         if (empty($userData['user_password'])) {
             $errors['user_password_error'] = "Type your password to be able to login.";
             // check if typed password matches the account's one
-        } else if ($userCheck != false && $userData['user_password'] != $userCheck['Password']) {
+        } else if ($userCheck != false && !(password_verify($userData['user_password'], $userCheck['Password']))) {
             $errors['user_password_error'] = "You entered a wrong password.";
         }
 

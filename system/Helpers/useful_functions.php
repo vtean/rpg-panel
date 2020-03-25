@@ -107,3 +107,10 @@ function strLimit($s, $length, $end='...')
 {
     return substr($s, 0, $length) . $end;
 }
+
+function sexyDisplay($arr)
+{
+    echo '<pre>';
+    print_r($arr);
+    echo '</pre>';
+}

@@ -89,7 +89,7 @@
                     <h6 class="dv-nav-title"><?php echo $data['lang']['topics_txt']; ?></h6>
                     <ul class="dv-nav">
                         <li class="dv-nav-item">
-                            <a class="dv-nav-link" href="#">
+                            <a class="dv-nav-link" href="<?php echo BASE_URL . '/tickets'; ?>">
                                 <i class="dv-nav-icon fas fa-ticket-alt"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['tickets_txt']; ?></span>
                             </a>

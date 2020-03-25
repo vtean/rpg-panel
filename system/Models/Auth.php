@@ -105,7 +105,7 @@ class Auth
         // assign user password to a variable
         $user_password = $result['Password'];
         // check if the entered password and the one from database match
-        if (strcasecmp($password, $user_password) == 0) {
+        if (password_verify($password, $user_password)) {
             return $result;
         } else {
             return false;

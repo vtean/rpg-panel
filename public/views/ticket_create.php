@@ -20,7 +20,7 @@
                 <label for="ticket_category">Ticket Category</label>
                 <select type="text" name="ticket_category"
                         class="form-control<?php if (!empty($errors['ticket_category_error'])): ?> is-invalid<?php endif; ?>"
-                        id="ticket_category">
+                        id="ticket_category" multiple="multiple" size="3">
                     <?php
                     foreach ($data['categories'] as $category) {
                         ?>

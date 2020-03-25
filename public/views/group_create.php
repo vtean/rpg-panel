@@ -4,6 +4,7 @@
     <h3 class="dv-page-title">Create New Group</h3>
     <div class="dv-row dv-create-group">
         <form action="" method="post" class="dv-form">
+            <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>">
             <!-- Group Details -->
             <h5 class="dv-row-title">Group Details</h5>
             <div class="form-group">

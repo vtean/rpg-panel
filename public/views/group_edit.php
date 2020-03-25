@@ -5,12 +5,14 @@
     <div class="dv-row">
         <div class="dv-secret-actions">
             <form action="" method="post">
+                <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>">
                 <button type="submit" name="delete_group" class="dv-btn btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Group</button>
             </form>
         </div>
     </div>
     <div class="dv-row dv-create-group">
         <form action="" method="post" class="dv-form">
+            <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>">
             <!-- Group Details -->
             <h5 class="dv-row-title">Group Details</h5>
             <div class="form-group">
@@ -18,6 +20,13 @@
                 <input type="text" name="group_name" class="form-control<?php if (!empty($errors['group_name_error'])): ?> is-invalid<?php endif;?>" id="group_name" value="<?php echo $group['group_name']; ?>">
                 <?php if (!empty($errors['group_name_error'])): ?>
                     <div class="invalid-feedback"><?php echo $errors['group_name_error']; ?></div>
+                <?php endif; ?>
+            </div>
+            <div class="form-group">
+                <label for="group_keyword">Group Keyword</label>
+                <input type="text" name="group_keyword" class="form-control<?php if (!empty($errors['group_keyword_error'])): ?> is-invalid<?php endif;?>" id="group_keyword" value="<?php echo $group['group_keyword']; ?>">
+                <?php if (!empty($errors['group_keyword_error'])): ?>
+                    <div class="invalid-feedback"><?php echo $errors['group_keyword_error']; ?></div>
                 <?php endif; ?>
             </div>
             <!-- General Permissions -->

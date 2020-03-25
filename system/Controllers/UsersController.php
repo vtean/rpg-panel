@@ -30,6 +30,7 @@ class UsersController extends Controller
     public function profile($nickname = '')
     {
         global $lang;
+
         if (empty($nickname)) {
             echo 'nothing to see here';
         } else {
@@ -43,30 +44,44 @@ class UsersController extends Controller
                 $getModelName = $this->userModel->getModelName($userInfo['NickName']);
                 $getBusiness = $this->userModel->getBusiness($userInfo['NickName']);
                 $getHouse = $this->userModel->getHouse($userInfo['NickName']);
+
+                $userGroups = implode($this->userModel->getUserGroups($nickname));
+                $userGroupsArr = unserialize($userGroups);
+
+                $finalGroups = array();
+                if ($userGroupsArr) {
+                    foreach ($userGroupsArr as $key => $value) {
+                        $gInfo = $this->userModel->getUserGroupName($value);
+                        array_push($finalGroups, $gInfo);
+                    }
+                }
+
+                $data = [
+                    'pageTitle' => $userInfo['NickName'] . "'s Profile",
+                    'user' => $userInfo,
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader'],
+                    'userGroups' => $finalGroups,
+                    'job' => $job,
+                    'family' => $family,
+                    'faction' => $faction,
+                    'factionRank' => $factionRank,
+                    'getVehicle' => $getVehicle,
+                    'getModelName' => $getModelName,
+                    'getBusiness' => $getBusiness,
+                    'getHouse' => $getHouse,
+                    'lang' => $lang
+                ];
+
+                // load the profile view
+                $this->loadView('profile', $data);
             } else {
                 // add session message
                 flashMessage('info', 'User not found.');
                 // redirect logged in user to the main page
                 redirect('/');
             }
-            $data = [
-                'pageTitle' => $userInfo['NickName'] . "'s Profile",
-                'user' => $userInfo,
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'job' => $job,
-                'family' => $family,
-                'faction' => $faction,
-                'factionRank' => $factionRank,
-                'getVehicle' => $getVehicle,
-                'getModelName' => $getModelName,
-                'getBusiness' => $getBusiness,
-                'getHouse' => $getHouse,
-                'lang' => $lang
-            ];
-            // load the profile view
-            $this->loadView('profile', $data);
         }
     }
 

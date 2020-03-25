@@ -14,11 +14,13 @@
 })(jQuery);
 
 $(document).ready( function () {
-    $('#dvTable').DataTable();
+    $('#dvTable').DataTable({
+        "pageLength": 25
+    });
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    })
+    });
 });
 
 

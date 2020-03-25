@@ -96,7 +96,7 @@ $lang = [
     'actions_txt' => 'Acțiuni',
 
     // Tickets page
-    'tickets_view_txt' => 'Prezentare Generală ale Ticketelor',
+    'tickets_view_txt' => 'Prezentare Generală a Ticketelor',
     'create_ticket_txt' => 'Creează Ticket Nou',
     'ticket_id_txt' => 'ID Ticket',
     'ticket_body_txt' => 'Descriere Ticket',
