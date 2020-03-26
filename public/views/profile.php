@@ -35,6 +35,8 @@
                 <?php if (isLoggedIn() && ($data['fullAccess'] == true)): ?>
                     <a class="dv-btn btn btn-info" href="#" role="button"><i
                                 class="fas fa-wrench"></i> <?php echo $data['lang']['edit_user_txt']; ?></a>
+                    <a href="<?php echo BASE_URL . '/groups/assign/' . $data['user']['NickName']; ?>"
+                       class="dv-btn btn btn-primary" role="button"><i class="fas fa-user-tag"></i> Assign Groups</a>
                 <?php endif; ?>
             </div>
         </div>

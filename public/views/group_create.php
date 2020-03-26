@@ -314,7 +314,9 @@
                     <span class="dv-switch-slider dv-round"></span>
                 </label>
             </div>
-            <button type="submit" name="create_group" class="dv-btn btn btn-primary m-auto">Submit</button>
+            <div class="text-align-center">
+                <button type="submit" name="create_group" class="dv-btn btn btn-primary m-auto">Submit</button>
+            </div>
         </form>
     </div>
 <?php getFooter();
