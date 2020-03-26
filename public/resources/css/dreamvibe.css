@@ -347,7 +347,7 @@ pre {
 .dv-main-content {
   width: calc(100% - 270px);
   margin-left: 270px;
-  padding: 30px 40px 100px 40px;
+  padding: 30px 40px 140px 40px;
 }
 
 .dv-row {
@@ -1147,6 +1147,98 @@ textarea {
   text-align: right;
 }
 
+/* Page content */
+.dv-topics-block ul li .dv-second {
+  color: #6779c7;
+}
+
+.dv-topics-block .dv-remark {
+  display: block;
+  margin-top: 10px;
+}
+
+.dv-topics-block .dv-remark a:hover {
+  color: var(--text-hover-color);
+}
+
+.dv-topics-block .dv-remark a {
+  font-weight: bold;
+}
+
+/* Page content & Widgets */
+.dv-widget {
+  margin-top: 30px;
+}
+
+.dv-widget:first-child {
+  margin-top: 0;
+}
+
+.dv-page-content,
+.dv-widget {
+  background-color: var(--content-bg);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.dv-page-block .dv-block-title,
+.dv-widget .dv-widget-title {
+  margin-bottom: 15px;
+}
+
+.dv-page-block .dv-block-title {
+  width: fit-content;
+}
+
+.dv-page-block .dv-block-title:after,
+.dv-widget .dv-widget-title:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #6d88f8;
+  margin-top: 5px;
+  box-shadow: 0 0 16px #6d88f8
+}
+
+.dv-page-block .dv-block-content,
+.dv-widget .dv-widget-content {
+  margin-left: 15px;
+}
+
+.dv-widget .dv-widget-content ul li {
+  margin: 3px 0;
+}
+
+.dv-widget .dv-widget-content ul li a {
+  padding: 2px 0;
+  position: relative;
+  left: 0;
+}
+
+.dv-widget .dv-widget-content ul li a:hover {
+  text-shadow: 0 8px 20px var(--text-hover-color);
+  left: 10px;
+}
+
+.dv-widget .dv-widget-content ul li a:before {
+  content: '\f0a4';
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 900;
+  margin-right: 5px;
+}
+
+.dv-widget.dv-manage-sv .dv-widget-content ul li a:before {
+  content: '\f013';
+}
+
+.dv-page-block .dv-block-content ul li:before {
+  content: '\f0da';
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 900;
+  margin-right: 2px;
+}
+
 /* Responsive profile */
 @media screen and (max-width: 1366px) {
   .dv-user-profile .dv-user-profile-info {
@@ -1459,6 +1551,6 @@ textarea {
 
 @media screen and (max-width: 576px) {
   .dv-main-content {
-    padding: 30px 30px 100px 30px;
+    padding: 30px 30px 140px 30px;
   }
 }
