@@ -14,6 +14,13 @@
                     <div class="invalid-feedback"><?php echo $errors['group_name_error']; ?></div>
                 <?php endif; ?>
             </div>
+            <div class="form-group">
+                <label for="group_keyword">Group Keyword</label>
+                <input type="text" name="group_keyword" class="form-control<?php if (!empty($errors['group_keyword_error'])): ?> is-invalid<?php endif;?>" id="group_keyword" value="<?php echo $group['group_keyword']; ?>">
+                <?php if (!empty($errors['group_keyword_error'])): ?>
+                    <div class="invalid-feedback"><?php echo $errors['group_keyword_error']; ?></div>
+                <?php endif; ?>
+            </div>
             <!-- General Permissions -->
             <h5 class="dv-row-title">General Permissions</h5>
             <div class="form-group">

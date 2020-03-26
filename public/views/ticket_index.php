@@ -30,7 +30,7 @@
                             <a href="<?php echo BASE_URL . '/tickets/edit/' . $ticket['ticket_id']; ?>" class="dv-action-btn"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php endforeach;?>
             </tbody>
         </table>
     </div>

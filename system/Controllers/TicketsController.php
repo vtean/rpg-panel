@@ -36,13 +36,20 @@ class TicketsController extends Controller
         global $lang;
 
         $allTickets = $this->ticketModel->getAllTickets();
+        $userTickets = $this->ticketModel->getUserTickets($_SESSION['user_id']);
+
+        if (in_array(1, $this->privileges['canViewTickets'])) {
+            $tickets = $allTickets;
+        } else {
+            $tickets = $userTickets;
+        }
 
         $data = [
             'pageTitle' => 'Panel Tickets',
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
-            'tickets' => $allTickets,
+            'tickets' => $tickets,
             'lang' => $lang,
             'canViewTickets' => $this->privileges['canViewTickets']
         ];

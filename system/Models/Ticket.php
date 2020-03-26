@@ -43,6 +43,24 @@ class Ticket
         return $final_results;
     }
 
+    // get user's tickets
+    public function getUserTickets($id)
+    {
+        $sql = "SELECT * FROM panel_tickets WHERE author_id=:id";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':id', $id);
+        // return result
+        $results = $this->db->getResults();
+        $final_results = array();
+        foreach ($results as $result) {
+            $result['category_name'] = $this->getCategoryName($result['category_id']);
+            array_push($final_results, $result);
+        }
+        return $final_results;
+    }
+
     // create ticket
     public function createTicket($data)
     {
@@ -74,6 +92,22 @@ class Ticket
         // bind params
         $this->db->bind(':body', $data['body']);
         $this->db->bind(':category_id', $data['category_id']);
+        $this->db->bind(':id', $id);
+        // execute query
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // delete group
+    public function deleteTicket($id)
+    {
+        $sql = "DELETE FROM panel_tickets WHERE id = :id";
+        // prepare query
+        $this->db->prepareQuery($sql);
+        // bind params
         $this->db->bind(':id', $id);
         // execute query
         if ($this->db->executeStmt()) {
