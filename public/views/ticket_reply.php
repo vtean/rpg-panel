@@ -1,7 +1,7 @@
 <?php $ticket = $data['ticket']; ?>
 <?php getHeader($data); ?>
 <?php flashMessage(); ?>
-    <h3 class="dv-page-title">Create New Ticket</h3>
+    <h3 class="dv-page-title">Edit Ticket</h3>
     <div class="dv-row dv-create-group">
         <form action="" method="post" class="dv-form">
             <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
@@ -33,7 +33,7 @@
                     <div class="invalid-feedback"><?php echo $errors['ticket_body_error']; ?></div>
                 <?php endif; ?>
             </div>
-            <button type="submit" name="create_ticket" class="dv-btn btn btn-primary m-auto">Submit</button>
+            <button type="submit" name="create_edit" class="dv-btn btn btn-primary m-auto">Submit</button>
         </form>
     </div>
 <?php getFooter();

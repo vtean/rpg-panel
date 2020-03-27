@@ -125,4 +125,89 @@ class TicketsController extends Controller
             $this->loadView('ticket_create', $data);
         }
     }
+
+    public function edit($id = 0)
+    {
+        $ticket = $this->ticketModel->getTicket($id);
+
+        if (empty($id) || $ticket['author_id'] != $_SESSION['user_id'] || $ticket['status'] != 'Open') {
+            echo 'Page not found';
+        } else {
+            global $lang;
+
+            $type = 'ticket';
+            $categories = $this->categoryModel->getAllCategories($type);
+            $category_name = $this->ticketModel->getCategoryName($ticket['category_id']);
+
+            // check if delete group button is set
+            if (isset($_POST['delete_ticket'])) {
+                if ($this->ticketModel->deleteTicket($id)) {
+                    flashMessage('success', 'Ticket has been successfully deleted!');
+                    redirect('/tickets');
+                    unset($_POST);
+                } else {
+                    die('Something went wrong');
+                }
+            }
+
+            // parse data
+            $data = [
+                'pageTitle' => 'Create Ticket',
+                'fullAccess' => $this->privileges['fullAccess'],
+                'isAdmin' => $this->privileges['isAdmin'],
+                'isLeader' => $this->privileges['isLeader'],
+                'ticket' => $ticket,
+                'categories' => $categories,
+                'lang' => $lang,
+            ];
+
+            if (isset($_POST['edit_ticket'])) {
+                // sanitize post data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                $_POST['ticket_body'] = htmlentities($_POST['ticket_body']);
+
+                $dataPost = [
+                    'body' => $_POST['ticket_body'],
+                    'category_id' => $_POST['ticket_category'],
+                    'edit_ip' => getUserIp()
+                ];
+
+                // handle errors
+                $errors = ValidateTicket::validate($dataPost);
+
+                // check if there are no errors
+                if (count(array_filter($errors)) == 0) {
+                    // create group
+                    if ($this->ticketModel->editTicket($dataPost, $id)) {
+                        flashMessage('success', 'The ticket has been successfully edited!');
+                        redirect('/tickets');
+                    } else {
+                        die('Something went wrong.');
+                    }
+                } else {
+                    // load view with errors
+                    $this->loadView('ticket_edit', $data, $errors);
+                }
+            } else {
+                $data = [
+                    'pageTitle' => 'Edit Ticket',
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader'],
+                    'ticketBody' => '',
+                    'ticket' => [
+                        'body' => $ticket['body'],
+                        'category_id' => $ticket['category_id']
+                    ],
+                    'category_name' => $category_name,
+                    'categories' => $categories,
+                    'lang' => $lang
+                ];
+
+                // load view
+                $this->loadView('ticket_edit', $data);
+            }
+        }
+    }
 }

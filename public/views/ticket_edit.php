@@ -1,28 +1,49 @@
-<?php $group = $data['ticket']; ?>
+<?php $ticket = $data['ticket'];
+?>
 <?php getHeader($data); ?>
-    <?php flashMessage(); ?>
-    <h3 class="dv-page-title">Edit Group: <?php echo $group['group_name']; ?></h3>
+<?php flashMessage(); ?>
+    <h3 class="dv-page-title">Edit Ticket</h3>
     <div class="dv-row">
         <div class="dv-secret-actions">
             <form action="" method="post">
-                <button type="submit" name="delete_group" class="dv-btn btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Group</button>
+                <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>">
+                <button type="submit" name="delete_ticket" class="dv-btn btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Ticket</button>
             </form>
         </div>
     </div>
     <div class="dv-row dv-create-group">
         <form action="" method="post" class="dv-form">
-            <!-- Group Details -->
-            <h5 class="dv-row-title">Group Details</h5>
+            <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
+            <!-- Ticket Details -->
+            <h5 class="dv-row-title">Ticket Details</h5>
             <div class="form-group">
-                <label for="group_name">Group Name</label>
-                <input type="text" name="group_name" class="form-control<?php if (!empty($errors['group_name_error'])): ?> is-invalid<?php endif;?>" id="group_name" value="<?php echo $group['group_name']; ?>">
-                <?php if (!empty($errors['group_name_error'])): ?>
-                    <div class="invalid-feedback"><?php echo $errors['group_name_error']; ?></div>
+                <label for="ticket_category">Ticket Category</label>
+                <select type="text" name="ticket_category"
+                        class="d-block form-control<?php if (!empty($errors['ticket_category_error'])): ?> is-invalid<?php endif; ?>"
+                        id="ticket_category">
+                    <option value="<?= $ticket['category_id'] ?>"><?= $data['category_name']['name']; ?></option>
+                    <?php
+                    foreach ($data['categories'] as $category) {
+                        ?>
+                        <option value="<?= $category['id'] ?>"><?= $category['name']; ?></option>
+                        <?php
+                    }
+                    ?>
+                </select>
+                <?php if (!empty($errors['ticket_category_error'])): ?>
+                    <div class="invalid-feedback"><?php echo $errors['ticket_category_error']; ?></div>
                 <?php endif; ?>
             </div>
-            <div class="text-align-center">
-                <button type="submit" name="edit_group" class="dv-btn btn btn-primary m-auto">Submit</button>
+            <div class="form-group">
+                <label for="ticket_body">Ticket Body</label>
+                <textarea type="text" rows="5" name="ticket_body"
+                          class="d-block form-control<?php if (!empty($errors['ticket_body_error'])): ?> is-invalid<?php endif; ?>"
+                          id="ticket_body"><?php echo $ticket['body']; ?></textarea>
+                <?php if (!empty($errors['ticket_body_error'])): ?>
+                    <div class="invalid-feedback"><?php echo $errors['ticket_body_error']; ?></div>
+                <?php endif; ?>
             </div>
+            <button type="submit" name="edit_ticket" class="dv-btn btn btn-primary m-auto">Submit</button>
         </form>
     </div>
 <?php getFooter();
