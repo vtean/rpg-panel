@@ -17,9 +17,13 @@ class StatisticsController extends Controller
         // store user privileges
         $this->privileges = $this->checkPrivileges();
     }
+
     public function online()
     {
         global $lang;
+
+        // get badges
+        $badges = $this->badges();
 
         $query = new SampQuery("rpg.dreamvibe.ro", 7777);
 
@@ -38,7 +42,8 @@ class StatisticsController extends Controller
             'isLeader' => $this->privileges['isLeader'],
             'players' => $players,
             'info' => $info,
-            'lang' => $lang
+            'lang' => $lang,
+            'badges' => $badges
         ];
 
 

@@ -9,6 +9,7 @@
 class Controller
 {
     private $bigBossModel;
+    private $ticketModel;
 
     // load model
     public function loadModel($modelName)
@@ -38,6 +39,27 @@ class Controller
         } else {
             die('View ' . $viewName . ' does not exist');
         }
+    }
+
+    // error handling
+    public function error($code, $msg)
+    {
+        // check if view exists
+        if (file_exists(ROOT_PATH . '/public/views/exception.php')) {
+            // load the exception file
+            require_once ROOT_PATH . '/public/views/exception.php';
+        }
+    }
+
+    // get badges
+    public function badges()
+    {
+        $this->ticketModel = $this->loadModel('Ticket');
+        $ticketBadge = $this->ticketModel->countTickets();
+
+        return [
+          'ticketBadge' => $ticketBadge
+        ];
     }
 
     // check privileges
@@ -220,7 +242,7 @@ class Controller
             'canAccessSite' => $canAccessSite,
             'canViewTickets' => $canViewTickets,
             'canEditTickets' => $canEditTickets,
-            'canDeleteTicktes' => $canDeleteTickets,
+            'canDeleteTickets' => $canDeleteTickets,
             'canDeleteTReplies' => $canDeleteTReplies,
             'canCloseTickets' => $canCloseTickets,
             'canEditUComplaints' => $canEditUComplaints,

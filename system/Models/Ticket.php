@@ -27,6 +27,18 @@ class Ticket
         return $this->db->getResult();
     }
 
+    // get author name
+    public function getAuthorName($id)
+    {
+        $sql = "SELECT NickName FROM sv_accounts WHERE id=:id";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':id', $id);
+        // return result
+        return $this->db->getResult();
+    }
+
     // get all tickets
     public function getAllTickets()
     {
@@ -38,6 +50,7 @@ class Ticket
         $final_results = array();
         foreach ($results as $result) {
             $result['category_name'] = $this->getCategoryName($result['category_id']);
+            $result['author_name'] = $this->getAuthorName($result['author_id']);
             array_push($final_results, $result);
         }
         return $final_results;
@@ -68,6 +81,7 @@ class Ticket
         $final_results = array();
         foreach ($results as $result) {
             $result['category_name'] = $this->getCategoryName($result['category_id']);
+            $result['author_name'] = $this->getAuthorName($result['author_id']);
             array_push($final_results, $result);
         }
         return $final_results;
@@ -76,14 +90,13 @@ class Ticket
     // create ticket
     public function createTicket($data)
     {
-        $sql = "INSERT INTO panel_tickets (body, author_id, author_name, author_ip, category_id, status) 
+        $sql = "INSERT INTO panel_tickets (body, author_id, author_ip, category_id, status) 
                 VALUES (:body, :author_id, :author_name, :author_ip, :category_id, :status)";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params
         $this->db->bind(':body', $data['body']);
         $this->db->bind(':author_id', $data['author_id']);
-        $this->db->bind(':author_name', $data['author_name']);
         $this->db->bind(':author_ip', $data['author_ip']);
         $this->db->bind(':category_id', $data['category_id']);
         $this->db->bind(':status', 'Open');
@@ -131,5 +144,68 @@ class Ticket
         }
     }
 
+    // update ticket's status
+    public function updateStatus($id, $status)
+    {
+        $sql = "UPDATE panel_tickets SET status=:status WHERE id = :id";
+        // prepare query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':status', $status);
+        $this->db->bind(':id', $id);
+        // execute query
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public function createReply($data)
+    {
+        $sql = "INSERT INTO panel_treplies (ticket_id, body, author_id, author_ip, user_status) 
+                VALUES (:ticket_id, :body, :author_id, :author_ip, :user_status)";
+        // prepare query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':ticket_id', $data['ticket_id']);
+        $this->db->bind(':body', $data['body']);
+        $this->db->bind(':author_id', $data['author_id']);
+        $this->db->bind(':author_ip', $data['author_id']);
+        $this->db->bind(':user_status', $data['user_status']);
+        // execute query
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getReplies($id)
+    {
+        $sql = "SELECT * FROM panel_treplies WHERE ticket_id=:id ORDER BY created_at ASC";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':id', $id);
+        // return result
+        $results = $this->db->getResults();
+        $final_results = array();
+        foreach ($results as $result) {
+            $result['author_name'] = $this->getAuthorName($result['author_id']);
+            array_push($final_results, $result);
+        }
+        return $final_results;
+    }
+
+    public function countTickets()
+    {
+        $sql = "SELECT * FROM panel_tickets WHERE status=:status";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':status', 'Open');
+        $this->db->getResults();
+        return $this->db->countRows();
+    }
 }

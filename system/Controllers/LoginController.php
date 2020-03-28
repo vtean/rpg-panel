@@ -27,6 +27,9 @@ class LoginController extends Controller
     {
         global $lang;
 
+        // get badges
+        $badges = $this->badges();
+
         $pageTitle = $_SESSION['user_lang'] == 'ro' ? 'Autentificare' : 'Login';
 
         // check if user is logged in or not
@@ -49,7 +52,8 @@ class LoginController extends Controller
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
                     'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang
+                    'lang' => $lang,
+                    'badges' => $badges
                 ];
 
                 // check if the user with this username exists
@@ -92,7 +96,8 @@ class LoginController extends Controller
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
                     'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang
+                    'lang' => $lang,
+                    'badges' => $badges
                 ];
 
                 $errors = [

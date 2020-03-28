@@ -114,3 +114,9 @@ function sexyDisplay($arr)
     print_r($arr);
     echo '</pre>';
 }
+
+/* Get page error */
+function getError($code, $msg)
+{
+    require_once ROOT_PATH . '/public/views/exception.php';
+}

@@ -4,10 +4,21 @@
 <?php flashMessage(); ?>
     <h3 class="dv-page-title">Edit Ticket</h3>
     <div class="dv-row">
-        <div class="dv-secret-actions">
-            <form action="" method="post">
+         <div class="dv-secret-actions">
+             <form action="" method="post">
                 <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>">
-                <button type="submit" name="delete_ticket" class="dv-btn btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Ticket</button>
+                <?php
+                if (in_array(1, $data['canDeleteTickets'])) {
+                    ?>
+                    <button type="submit" name="delete_ticket" class="dv-btn btn btn-danger"><i
+                                class="fas fa-trash-alt"></i> Delete Ticket
+                    </button>
+                    <?php
+                };
+                ?>
+                <button type="submit" name="close_ticket" class="dv-btn btn btn-warning"><i
+                            class="fas fa-times-circle"></i></i> Close Ticket
+                </button>
             </form>
         </div>
     </div>

@@ -23,6 +23,9 @@ class MainController extends Controller
     {
         global $lang;
 
+        // get badges
+        $badges = $this->badges();
+
         $houses = $this->mainModel->getHouses();
         $business = $this->mainModel->getBusiness();
         $vehicles = $this->mainModel->getVehicles();
@@ -38,7 +41,8 @@ class MainController extends Controller
             'business' => $business,
             'vehicles' => $vehicles,
             'regUsers' => $regUsers,
-            'lang' => $lang
+            'lang' => $lang,
+            'badges' => $badges
         ];
 
         $this->loadView('main', $data);

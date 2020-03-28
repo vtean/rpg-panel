@@ -28,4 +28,20 @@ trait ValidateTicket
 
         return $errors;
     }
+
+    public static function validateReply($reply)
+    {
+        $errors = [
+            'ticket_reply_error' => ''
+        ];
+
+        // check if ticket name field is empty
+        if (empty($reply)) {
+            $errors['ticket_reply_error'] = "Please enter the reply.";
+        } else if (strlen($reply) < 20) {
+            $errors['ticket_reply_error'] = "The reply must have at least 20 characters.";
+        }
+
+        return $errors;
+    }
 }

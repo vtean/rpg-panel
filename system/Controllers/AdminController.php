@@ -27,13 +27,17 @@ class AdminController extends Controller
     {
         global $lang;
 
+        // get badges
+        $badges = $this->badges();
+
         $data = [
             'pageTitle' => 'Admin Panel',
             'name' => $_SESSION['user_name'],
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang
+            'lang' => $lang,
+            'badges' => $badges
         ];
 
         $this->loadView('admin', $data);

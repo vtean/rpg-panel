@@ -27,6 +27,9 @@ class SecurityController extends Controller
     {
         global $lang;
 
+        // get badges
+        $badges = $this->badges();
+
         if (isLoggedIn()) {
             flashMessage('info', $lang['already_logged_txt']);
             redirect('/');
@@ -58,7 +61,8 @@ class SecurityController extends Controller
                     'user' => $user,
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader']
+                    'isLeader' => $this->privileges['isLeader'],
+                    'badges' => $badges
                 ];
                 if ($type == '2fa') {
                     $secret = $user['GoogleCode'];
@@ -86,7 +90,8 @@ class SecurityController extends Controller
                 'user' => $user,
                 'fullAccess' => $this->privileges['fullAccess'],
                 'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader']
+                'isLeader' => $this->privileges['isLeader'],
+                'badges' => $badges
             ];
             $this->loadView('security', $data);
         } else {

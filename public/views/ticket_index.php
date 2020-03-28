@@ -24,7 +24,7 @@
                 <tr>
                     <td><?php echo $ticket['id']; ?></td>
                     <td><?php echo strLimit(html_entity_decode($ticket['body']), 30); ?></td>
-                    <td><?php echo $ticket['author_name']; ?></td>
+                    <td><?php echo $ticket['author_name']['NickName']; ?></td>
                     <td><?php echo $ticket['category_name']['name']; ?></td>
                     <td><?php echo $ticket['status']; ?></td>
                     <td>
@@ -37,9 +37,9 @@
                         };
                         ?>
                         <?php
-                        if (in_array(1, $data['canViewTickets']) || $ticket['status'] == 'Admin Reply') {
+                        if (in_array(1, $data['canViewTickets']) || $ticket['author_id'] == $_SESSION['user_id']) {
                             ?>
-                            <a href="<?php echo BASE_URL . '/tickets/reply/' . $ticket['id']; ?>"
+                            <a href="<?php echo BASE_URL . '/tickets/view/' . $ticket['id']; ?>"
                                class="dv-action-btn"><i class="fas fa-reply"></i></a>
                             <?php
                         };

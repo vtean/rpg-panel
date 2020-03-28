@@ -39,6 +39,9 @@ class GroupsController extends Controller
     {
         global $lang;
 
+        // get badges
+        $badges = $this->badges();
+
         $allGroups = $this->groupModel->getAllGroups();
 
         $data = [
@@ -47,7 +50,8 @@ class GroupsController extends Controller
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
             'groups' => $allGroups,
-            'lang' => $lang
+            'lang' => $lang,
+            'badges' => $badges
         ];
 
         $this->loadView('groups_index', $data);
@@ -56,6 +60,9 @@ class GroupsController extends Controller
     public function create()
     {
         global $lang;
+
+        // get badges
+        $badges = $this->badges();
 
         if (isset($_POST['create_group'])) {
             // sanitize post data
@@ -111,6 +118,7 @@ class GroupsController extends Controller
                 'isLeader' => $this->privileges['isLeader'],
                 'group' => $_POST,
                 'lang' => $lang,
+                'badges' => $badges
             ];
 
             // check if group already exists
@@ -138,55 +146,56 @@ class GroupsController extends Controller
             }
         } else {
             $data = [
-              'pageTitle' => 'Create Group',
-              'fullAccess' => $this->privileges['fullAccess'],
-              'isAdmin' => $this->privileges['isAdmin'],
-              'isLeader' => $this->privileges['isLeader'],
-              'group' => [
-                  'group_name' => '',
-                  'group_keyword' => '',
-                  'is_hidden' => 0,
-                  'can_access_site' => 0,
-                  'can_view_tickets' => 0,
-                  'can_edit_tickets' => 0,
-                  'can_delete_tickets' => 0,
-                  'can_delete_treplies' => 0,
-                  'can_close_tickets' => 0,
-                  'can_edit_ucomplaints' => 0,
-                  'can_delete_ucomplaints' => 0,
-                  'can_delete_ucreplies' => 0,
-                  'can_close_ucomplaints' => 0,
-                  'can_hide_ucomplaints' => 0,
-                  'can_edit_fcomplaints' => 0,
-                  'can_delete_fcomplaints' => 0,
-                  'can_delete_fcreplies' => 0,
-                  'can_close_fcomplaints' => 0,
-                  'can_hide_fcomplaints' => 0,
-                  'can_edit_acomplaints' => 0,
-                  'can_delete_acomplaints' => 0,
-                  'can_delete_acreplies' => 0,
-                  'can_close_acomplaints' => 0,
-                  'can_hide_acomplaints' => 0,
-                  'can_edit_hcomplaints' => 0,
-                  'can_delete_hcomplaints' => 0,
-                  'can_delete_hcreplies' => 0,
-                  'can_close_hcomplaints' => 0,
-                  'can_hide_hcomplaints' => 0,
-                  'can_edit_lcomplaints' => 0,
-                  'can_delete_lcomplaints' => 0,
-                  'can_delete_lcreplies' => 0,
-                  'can_close_lcomplaints' => 0,
-                  'can_hide_lcomplaints' => 0,
-                  'can_view_unbans' => 0,
-                  'can_edit_unbans' => 0,
-                  'can_delete_unbans' => 0,
-                  'can_close_unbans' => 0,
-                  'can_edit_lapps' => 0,
-                  'can_delete_lapps' => 0,
-                  'can_edit_happs' => 0,
-                  'can_delete_happs' => 0
-              ],
-              'lang' => $lang
+                'pageTitle' => 'Create Group',
+                'fullAccess' => $this->privileges['fullAccess'],
+                'isAdmin' => $this->privileges['isAdmin'],
+                'isLeader' => $this->privileges['isLeader'],
+                'group' => [
+                    'group_name' => '',
+                    'group_keyword' => '',
+                    'is_hidden' => 0,
+                    'can_access_site' => 0,
+                    'can_view_tickets' => 0,
+                    'can_edit_tickets' => 0,
+                    'can_delete_tickets' => 0,
+                    'can_delete_treplies' => 0,
+                    'can_close_tickets' => 0,
+                    'can_edit_ucomplaints' => 0,
+                    'can_delete_ucomplaints' => 0,
+                    'can_delete_ucreplies' => 0,
+                    'can_close_ucomplaints' => 0,
+                    'can_hide_ucomplaints' => 0,
+                    'can_edit_fcomplaints' => 0,
+                    'can_delete_fcomplaints' => 0,
+                    'can_delete_fcreplies' => 0,
+                    'can_close_fcomplaints' => 0,
+                    'can_hide_fcomplaints' => 0,
+                    'can_edit_acomplaints' => 0,
+                    'can_delete_acomplaints' => 0,
+                    'can_delete_acreplies' => 0,
+                    'can_close_acomplaints' => 0,
+                    'can_hide_acomplaints' => 0,
+                    'can_edit_hcomplaints' => 0,
+                    'can_delete_hcomplaints' => 0,
+                    'can_delete_hcreplies' => 0,
+                    'can_close_hcomplaints' => 0,
+                    'can_hide_hcomplaints' => 0,
+                    'can_edit_lcomplaints' => 0,
+                    'can_delete_lcomplaints' => 0,
+                    'can_delete_lcreplies' => 0,
+                    'can_close_lcomplaints' => 0,
+                    'can_hide_lcomplaints' => 0,
+                    'can_view_unbans' => 0,
+                    'can_edit_unbans' => 0,
+                    'can_delete_unbans' => 0,
+                    'can_close_unbans' => 0,
+                    'can_edit_lapps' => 0,
+                    'can_delete_lapps' => 0,
+                    'can_edit_happs' => 0,
+                    'can_delete_happs' => 0
+                ],
+                'lang' => $lang,
+                'badges' => $badges
             ];
 
             // load view
@@ -204,13 +213,17 @@ class GroupsController extends Controller
         } else {
             $group = $this->groupModel->getSingleGroup($id);
 
+            // get badges
+            $badges = $this->badges();
+
             $data = [
                 'pageTitle' => $group['group_name'] . ' Group',
                 'group' => $group,
                 'fullAccess' => $this->privileges['fullAccess'],
                 'isAdmin' => $this->privileges['isAdmin'],
                 'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang
+                'lang' => $lang,
+                'badges' => $badges
             ];
 
             $errors = [];
@@ -303,6 +316,9 @@ class GroupsController extends Controller
     {
         global $lang;
 
+        // get badges
+        $badges = $this->badges();
+
         if (empty($name)) {
             echo 'Page not found';
         } else {
@@ -324,28 +340,29 @@ class GroupsController extends Controller
                     'lang' => $lang,
                     'user' => $user,
                     'groups' => $allGroups,
-                    'userGroups' => $userGroupsArr
+                    'userGroups' => $userGroupsArr,
+                    'badges' => $badges
                 ];
 
-               if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                   // sanitize post data
-                   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    // sanitize post data
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                   // prepare groups to be stored
-                   $serializedGroups = serialize($_POST['userGroups']);
+                    // prepare groups to be stored
+                    $serializedGroups = serialize($_POST['userGroups']);
 
-                   // assign groups to user
-                   $this->groupModel->assignGroups($serializedGroups, $user['NickName']);
+                    // assign groups to user
+                    $this->groupModel->assignGroups($serializedGroups, $user['NickName']);
 
-                   // add flash message
-                   flashMessage('success', 'Groups have been successfully updated.');
+                    // add flash message
+                    flashMessage('success', 'Groups have been successfully updated.');
 
-                   // redirect
-                   redirect('/groups');
-               } else {
-                   // load view
-                   $this->loadView('groups_assign', $data);
-               }
+                    // redirect
+                    redirect('/groups');
+                } else {
+                    // load view
+                    $this->loadView('groups_assign', $data);
+                }
             } else {
                 echo 'User not found.';
             }

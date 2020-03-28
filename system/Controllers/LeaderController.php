@@ -31,6 +31,9 @@ class LeaderController extends Controller
     {
         global $lang;
 
+        // get badges
+        $badges = $this->badges();
+
         if ($this->privileges['isLeader'] != 0 ) {
             $factionName = $this->userModel->getFaction($this->privileges['isLeader']);
         }
@@ -42,7 +45,8 @@ class LeaderController extends Controller
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang
+            'lang' => $lang,
+            'badges' => $badges
         ];
 
         $this->loadView('leader', $data);

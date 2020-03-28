@@ -27,13 +27,17 @@ class OwnerController extends Controller
     {
         global $lang;
 
+        // get badges
+        $badges = $this->badges();
+
         $data = [
             'pageTitle' => 'Owner Panel',
             'name' => $_SESSION['user_name'],
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang
+            'lang' => $lang,
+            'badges' => $badges
         ];
 
         $this->loadView('owner', $data);

@@ -34,6 +34,9 @@ class UsersController extends Controller
     {
         global $lang;
 
+        // get badges
+        $badges = $this->badges();
+
         if (empty($nickname)) {
             echo 'nothing to see here';
         } else {
@@ -75,7 +78,8 @@ class UsersController extends Controller
                     'getModelName' => $getModelName,
                     'getBusiness' => $getBusiness,
                     'getHouse' => $getHouse,
-                    'lang' => $lang
+                    'lang' => $lang,
+                    'badges' => $badges
                 ];
 
                 // load the profile view
@@ -92,6 +96,10 @@ class UsersController extends Controller
     public function settings($nickname = '')
     {
         global $lang;
+
+        // get badges
+        $badges = $this->badges();
+
         if (empty($nickname) || $nickname != $_SESSION['user_name']) {
             echo 'nothing to see here';
         } else {
@@ -116,7 +124,8 @@ class UsersController extends Controller
                 'secret' => $secret,
                 'qrCode' => $qrCode,
                 'oneCode' => $oneCode,
-                'verify' => $verify
+                'verify' => $verify,
+                'badges' => $badges
             ];
             // load the profile view
             $this->loadView('settings', $data);

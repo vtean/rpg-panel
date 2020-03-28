@@ -74,7 +74,7 @@ class Core extends UrlHandler
                 echo 'Controller ' . $controllerName . ' cannot be found';
             }
         } else {
-            echo 'Oops baby, page not found';
+           getError('404', 'Page Not Found!');
         }
     }
 }
