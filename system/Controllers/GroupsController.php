@@ -110,7 +110,7 @@ class GroupsController extends Controller
                 'isAdmin' => $this->privileges['isAdmin'],
                 'isLeader' => $this->privileges['isLeader'],
                 'group' => $_POST,
-                'lang' => $lang
+                'lang' => $lang,
             ];
 
             // check if group already exists
@@ -144,6 +144,7 @@ class GroupsController extends Controller
               'isLeader' => $this->privileges['isLeader'],
               'group' => [
                   'group_name' => '',
+                  'group_keyword' => '',
                   'is_hidden' => 0,
                   'can_access_site' => 0,
                   'can_view_tickets' => 0,

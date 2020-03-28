@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * */
-/* MainController css file goes here                         */
+/* Main css file goes here                         */
 /* (c) All rights reserved to DreamVibe Community  */
 /* * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -104,6 +104,10 @@ img {
 
 pre {
   color: var(--text-color);
+}
+
+::placeholder {
+  color: #7174a8 !important;
 }
 
 .list-style-none {
@@ -218,6 +222,27 @@ pre {
 .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-controls ul li a i {
   font-size: 1.6rem;
   margin: 0 7px;
+}
+
+.dv-main-menu .dv-user-bar .dv-search {
+  margin-top: 10px;
+  padding: 0 15px;
+  position: relative;
+}
+
+.dv-main-menu .dv-user-bar .dv-search .form-control {
+  background-color: #323550;
+  position: relative;
+}
+
+.dv-main-menu .dv-user-bar .dv-search .btn {
+  position: absolute;
+  font-size: 1.2rem;
+  padding: 1px 4px;
+  color: #5e6398;
+  background-color: #323550;
+  top: 5px;
+  right: 24px;
 }
 
 /* Navbar */
@@ -1296,7 +1321,7 @@ textarea {
 }
 
 .dv-assign .dv-form {
-  width: 30%;
+  width: 40%;
 }
 
 /* Data tables design */
@@ -1401,13 +1426,14 @@ textarea {
 /* Forms */
 .dv-form label {
   margin-bottom: .275rem;
+  font-weight: 600;
 }
 
 .dv-form .form-control {
   background-color: var(--form-input-bg);
   color: var(--text-color);
-  height: calc(1.5em + 1rem + 2px);
-  border-color: transparent;
+  height: calc(1.5em + 1.15rem + 2px);
+  border: 2px solid transparent;
   padding: .375rem 1rem;
   border-radius: 5px;
 }

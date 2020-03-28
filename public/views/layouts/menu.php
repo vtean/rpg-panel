@@ -31,6 +31,12 @@
                     </div>
                 <?php endif; ?>
             </div>
+            <div class="dv-search">
+                <form action="" class="dv-form">
+                    <input type="search" class="form-control" placeholder="Looking for a player?">
+                    <button class="btn btn-link" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
         </div>
         <nav class="dv-navbar navbar navbar-expand-lg navbar-dark">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dreamvibe-navbar" aria-controls="dreamvibe-navbar" aria-expanded="false" aria-label="Toggle navigation">
