@@ -18,8 +18,8 @@ trait ValidateTicket
         // check if ticket name field is empty
         if (empty($data['body'])) {
             $errors['ticket_body_error'] = "Please enter the ticket body.";
-        } else if (strlen($data['body']) < 50) {
-            $errors['ticket_body_error'] = "The ticket body must have at least 50 characters.";
+        } else if (strlen($data['body']) < 5) {
+            $errors['ticket_body_error'] = "The ticket body must have at least 5 characters.";
         }
 
         if (empty($data['category_id'])) {
@@ -38,8 +38,8 @@ trait ValidateTicket
         // check if ticket name field is empty
         if (empty($reply)) {
             $errors['ticket_reply_error'] = "Please enter the reply.";
-        } else if (strlen($reply) < 20) {
-            $errors['ticket_reply_error'] = "The reply must have at least 20 characters.";
+        } else if (strlen($reply) < 5) {
+            $errors['ticket_reply_error'] = "The reply must have at least 5 characters.";
         }
 
         return $errors;

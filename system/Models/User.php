@@ -31,6 +31,22 @@ class User
         }
     }
 
+    public function searchUserById($user_id)
+    {
+        $sql = "SELECT * FROM sv_accounts WHERE ID=:user_id";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':user_id', $user_id);
+        // get the result
+        $result = $this->db->getResult();
+        if ($this->db->countRows() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     public function getFaction($factionId)
     {
         $sql = "SELECT Name FROM sv_factions WHERE ID=:factionId";

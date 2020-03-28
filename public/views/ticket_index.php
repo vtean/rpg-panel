@@ -24,7 +24,7 @@
                 <tr>
                     <td><?php echo $ticket['id']; ?></td>
                     <td><?php echo strLimit(html_entity_decode($ticket['body']), 30); ?></td>
-                    <td><?php echo $ticket['author_name']['NickName']; ?></td>
+                    <td><?php echo $ticket['author_name']; ?></td>
                     <td><?php echo $ticket['category_name']['name']; ?></td>
                     <td><?php echo $ticket['status']; ?></td>
                     <td>

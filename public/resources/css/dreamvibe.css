@@ -20,6 +20,7 @@
   --text-hover-color: #448aff;
   --nav-title-color: #8e97bf;
   --text-color-secondary: #6273bb;
+  --secondary-text: #8a98d3;
 
   /* info colors */
   --danger-color: #DA6572;
@@ -365,9 +366,7 @@ pre {
 }
 
 .dv-main-menu .dv-nav-item .dv-badge {
-  position: absolute;
-  bottom: 23px;
-  left: -8px;
+  margin-left: 3px;
 }
 
 /* MainController content */
@@ -1436,7 +1435,7 @@ textarea {
 }
 
 .dv-form .form-control {
-  background-color: var(--form-input-bg);
+  background-color: var(--content-bg);
   color: var(--text-color);
   height: calc(1.5em + 1.15rem + 2px);
   border: 2px solid transparent;
@@ -1511,6 +1510,123 @@ textarea {
 
 .dv-switch-slider.dv-round:before {
   border-radius: 50%;
+}
+
+/* Topic view */
+.dv-topic-info .dv-topic-widget {
+  margin-bottom: 30px;
+}
+
+.dv-topic-info .dv-topic-widget,
+.dv-topic-message {
+  background-color: var(--content-bg);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-first {
+  font-weight: 600;
+}
+
+.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second,
+.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second a {
+  color: var(--secondary-text);
+}
+
+.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second a:hover {
+  color: var(--text-hover-color);
+}
+
+.dv-actions .dv-action-buttons .dv-btn {
+  width: 100%;
+}
+
+.dv-actions .dv-action-buttons .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.dv-actions .dv-action-buttons .col {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.dv-actions .dv-action-buttons .w-100 {
+  margin-top: 10px;
+}
+
+.dv-topic-message p {
+  margin-bottom: 0;
+}
+
+.dv-topic-replies {
+  background: var(--content-bg);
+  padding: 20px;
+  border-radius: 5px;
+  margin: 30px 0;
+}
+
+.dv-topic-replies .dv-reply {
+  background: #2c2e43;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-avatar,
+.dv-topic-replies .dv-reply .dv-reply-content {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-content {
+  width: calc(100% - 48px);
+}
+
+.dv-topic-replies .dv-reply .dv-reply-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--text-color-secondary);
+  border-radius: 50%;
+  margin-right: 4px;
+  overflow: hidden;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-avatar img {
+  height: 300%;
+  object-fit: cover;
+  position: relative;
+  top: -3px;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-head .dv-reply-author,
+.dv-topic-replies .dv-reply .dv-reply-head .dv-reply-date {
+  display: inline-block;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-head .dv-reply-author {
+  float: left;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-head .dv-reply-date {
+  float: right;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-head .dv-reply-author .author-name {
+  font-weight: 600;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-head .dv-reply-author .badge {
+  padding: .5em;
+  margin-left: 3px;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-body span {
+  color: var(--secondary-text);
+}
+
+.dv-topic-replies .dv-reply:last-child {
+  margin-bottom: 0;
 }
 
 /* General responsive things */

@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $msg ?> - DreamVibe Panel</title>
+    <link rel="shortcut icon" href="<?php echo BASE_URL . '/public/resources/img/favicon.ico'; ?>" type="image/x-icon" />
 </head>
 <body>
 
@@ -78,7 +79,7 @@
         padding: 0;
         height: 100vh;
         font-family: "Barlow", sans-serif;
-        background: #695681;
+        background: #2b2e44;
     }
 
     nav .menu {
@@ -329,7 +330,8 @@
         position: absolute;
         width: 800px;
         height: 800px;
-        background-color: rgba(54, 24, 79, 0.2);
+        background: linear-gradient(90deg, #8077ea10 13.7%, #eb73ff20 94.65%);
+        /*background-color: rgba(54, 24, 79, 0.2);*/
         border-radius: 100%;
         top: 50%;
         left: 50%;
@@ -357,7 +359,8 @@
         position: absolute;
         width: 600px;
         height: 600px;
-        background-color: rgba(54, 24, 79, 0.3);
+        background: linear-gradient(90deg, #8077ea10 13.7%, #eb73ff20 94.65%);
+        /*background-color: rgba(54, 24, 79, 0.3);*/
         border-radius: 100%;
         box-shadow: inset 5px 20px 40px rgba(54, 24, 79, 0.25), inset 5px 0px 5px rgba(50, 36, 62, 0.3), inset 5px 5px 20px rgba(50, 36, 62, 0.25), 2px 2px 5px rgba(255, 255, 255, 0.2);
         animation: circle 0.8s 0.4s cubic-bezier(1, 0.06, 0.25, 1) backwards;

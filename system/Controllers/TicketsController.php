@@ -244,7 +244,7 @@ class TicketsController extends Controller
     public function view($id = 0)
     {
         $ticket = $this->ticketModel->getTicket($id);
-        $author = $this->userModel->searchExistingUser($ticket['author_id']);
+        $author = $this->userModel->searchUserById($ticket['author_id']);
 
         if (empty($id) || empty($ticket)) {
             $this->error('404', 'Page Not Found!');
@@ -264,7 +264,6 @@ class TicketsController extends Controller
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
                 $_POST['ticket_reply'] = htmlentities($_POST['ticket_reply']);
-
 
                 if ($ticket['author_id'] == $_SESSION['user_id']) {
                     $user_status = 'Author';
@@ -287,6 +286,8 @@ class TicketsController extends Controller
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
                     'isLeader' => $this->privileges['isLeader'],
+                    'canEditTickets' => $this->privileges['canEditTickets'],
+                    'canDeleteTickets' => $this->privileges['canDeleteTickets'],
                     'ticket' => $ticket,
                     'reply' => $_POST['ticket_reply'],
                     'author' => $author,
@@ -302,7 +303,7 @@ class TicketsController extends Controller
                 if (count(array_filter($errors)) == 0) {
                     // create reply
                     if ($this->ticketModel->createReply($dataPost) && $this->ticketModel->updateStatus($id, $status)) {
-                        flashMessage('success', 'The reply has been successfully created!');
+                        flashMessage('success', 'The reply has been successfully posted!');
                         redirect('/tickets/view/' . $id);
                     } else {
                         die('Something went wrong.');
@@ -317,6 +318,8 @@ class TicketsController extends Controller
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
                     'isLeader' => $this->privileges['isLeader'],
+                    'canEditTickets' => $this->privileges['canEditTickets'],
+                    'canDeleteTickets' => $this->privileges['canDeleteTickets'],
                     'ticket' => $ticket,
                     'author' => $author,
                     'lang' => $lang,

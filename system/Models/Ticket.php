@@ -28,9 +28,9 @@ class Ticket
     }
 
     // get author name
-    public function getAuthorName($id)
+    public function getReplyAuthor($id)
     {
-        $sql = "SELECT NickName FROM sv_accounts WHERE id=:id";
+        $sql = "SELECT NickName, Skin FROM sv_accounts WHERE id=:id";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -50,7 +50,7 @@ class Ticket
         $final_results = array();
         foreach ($results as $result) {
             $result['category_name'] = $this->getCategoryName($result['category_id']);
-            $result['author_name'] = $this->getAuthorName($result['author_id']);
+            $result['author_name'] = $this->getReplyAuthor($result['author_id'])['NickName'];
             array_push($final_results, $result);
         }
         return $final_results;
@@ -65,7 +65,9 @@ class Ticket
         // bind params
         $this->db->bind(':id', $id);
         // return result
-        return $this->db->getResult();
+        $result = $this->db->getResult();
+        $result['category_name'] = $this->getCategoryName($result['category_id'])['name'];
+        return $result;
     }
 
     // get user's tickets
@@ -81,7 +83,7 @@ class Ticket
         $final_results = array();
         foreach ($results as $result) {
             $result['category_name'] = $this->getCategoryName($result['category_id']);
-            $result['author_name'] = $this->getAuthorName($result['author_id']);
+            $result['author_name'] = $this->getReplyAuthor($result['author_id'])['NickName'];
             array_push($final_results, $result);
         }
         return $final_results;
@@ -91,7 +93,7 @@ class Ticket
     public function createTicket($data)
     {
         $sql = "INSERT INTO panel_tickets (body, author_id, author_ip, category_id, status) 
-                VALUES (:body, :author_id, :author_name, :author_ip, :category_id, :status)";
+                VALUES (:body, :author_id, :author_ip, :category_id, :status)";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params
@@ -192,7 +194,8 @@ class Ticket
         $results = $this->db->getResults();
         $final_results = array();
         foreach ($results as $result) {
-            $result['author_name'] = $this->getAuthorName($result['author_id']);
+            $result['author_name'] = $this->getReplyAuthor($result['author_id'])['NickName'];
+            $result['author_avatar'] = $this->getReplyAuthor($result['author_id'])['Skin'];
             array_push($final_results, $result);
         }
         return $final_results;

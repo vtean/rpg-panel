@@ -98,8 +98,8 @@
                             <a class="dv-nav-link" href="<?php echo BASE_URL . '/tickets'; ?>">
                                 <i class="dv-nav-icon fas fa-ticket-alt"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['tickets_txt']; ?></span>
+                                <span class="dv-badge badge badge-pill badge-danger"><?= $data['badges']['ticketBadge'] ?></span>
                             </a>
-                            <span class="dv-badge badge badge-pill badge-danger"><?= $data['badges']['ticketBadge'] ?></span>
                         </li>
                         <li class="dv-nav-item">
                             <a class="dv-nav-link" href="#">
