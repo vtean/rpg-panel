@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label for="ticket_category">Ticket Category</label>
                         <select type="text" name="ticket_category"
-                                class="d-block form-control<?php if (!empty($errors['ticket_category_error'])): ?> is-invalid<?php endif; ?>"
+                                class="form-control<?php if (!empty($errors['ticket_category_error'])): ?> is-invalid<?php endif; ?>"
                                 id="ticket_category">
                             <?php
                             foreach ($data['categories'] as $category) {
@@ -29,13 +29,13 @@
                     <div class="form-group">
                         <label for="ticket_body">Ticket Body</label>
                         <textarea type="text" rows="7" name="ticket_body"
-                                  class="d-block form-control<?php if (!empty($errors['ticket_body_error'])): ?> is-invalid<?php endif; ?>"
+                                  class="form-control<?php if (!empty($errors['ticket_body_error'])): ?> is-invalid<?php endif; ?>"
                                   id="ticket_body"><?php echo $data['ticketBody']; ?></textarea>
                         <?php if (!empty($errors['ticket_body_error'])): ?>
                             <div class="invalid-feedback"><?php echo $errors['ticket_body_error']; ?></div>
                         <?php endif; ?>
                     </div>
-                    <button type="submit" name="create_ticket" class="dv-btn btn btn-primary m-auto">Submit</button>
+                    <button type="submit" name="create_ticket" class="dv-btn btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>

@@ -7,15 +7,16 @@
         </div>
     </div>
     <div class="dv-row">
-        <table id="dvTable" class="display">
-            <thead>
+        <div class="dvTable">
+            <table id="dreamTable" class="display">
+                <thead>
                 <tr>
                     <th><?php echo $data['lang']['group_id_txt']; ?></th>
                     <th><?php echo $data['lang']['group_name_txt']; ?></th>
                     <th><?php echo $data['lang']['actions_txt']; ?></th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <?php foreach ($data['groups'] as $group): ?>
                     <tr>
                         <td><?php echo $group['group_id']; ?></td>
@@ -25,7 +26,8 @@
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 <?php getFooter();

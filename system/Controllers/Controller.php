@@ -9,7 +9,6 @@
 class Controller
 {
     private $bigBossModel;
-    private $ticketModel;
 
     // load model
     public function loadModel($modelName)
@@ -54,8 +53,8 @@ class Controller
     // get badges
     public function badges()
     {
-        $this->ticketModel = $this->loadModel('Ticket');
-        $ticketBadge = $this->ticketModel->countTickets();
+        $this->bigBossModel = $this->loadModel('General');
+        $ticketBadge = $this->bigBossModel->countTickets();
 
         return [
           'ticketBadge' => $ticketBadge

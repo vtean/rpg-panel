@@ -18,7 +18,7 @@ class Group
     // get all groups
     public function getAllGroups()
     {
-        $sql = "SELECT * FROM panel_groups";
+        $sql = "SELECT * FROM `panel_groups`";
         // prepare the query
         $this->db->prepareQuery($sql);
         // return result
@@ -28,7 +28,7 @@ class Group
     // get group by user id
     public function getSingleGroup($id)
     {
-        $sql = "SELECT * FROM panel_groups WHERE group_id = :group_id";
+        $sql = "SELECT * FROM `panel_groups` WHERE `group_id`=:group_id";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -40,7 +40,7 @@ class Group
     // search for existing group
     public function searchExistingGroup($name)
     {
-        $sql = "SELECT * FROM panel_groups WHERE group_name = :group_name";
+        $sql = "SELECT * FROM `panel_groups` WHERE `group_name`=:group_name";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params
@@ -58,7 +58,7 @@ class Group
     // create group
     public function createGroup($data)
     {
-        $sql = "INSERT INTO panel_groups (";
+        $sql = "INSERT INTO `panel_groups` (";
         $i = 0;
         foreach ($data as $key => $value) {
             if ($i == 0) {
@@ -96,7 +96,7 @@ class Group
     // edit group
     public function editGroup($data, $id)
     {
-        $sql = "UPDATE panel_groups SET ";
+        $sql = "UPDATE `panel_groups` SET ";
         $i = 0;
         foreach ($data as $key => $value) {
             if ($i == 0) {
@@ -125,7 +125,7 @@ class Group
     // delete group
     public function deleteGroup($id)
     {
-        $sql = "DELETE FROM panel_groups WHERE group_id = :id";
+        $sql = "DELETE FROM `panel_groups` WHERE `group_id`=:id";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params
@@ -141,7 +141,7 @@ class Group
     // assign groups
     public function assignGroups($groups, $username)
     {
-        $sql = "UPDATE sv_accounts SET PanelGroups = :groups WHERE NickName = :username";
+        $sql = "UPDATE `sv_accounts` SET `PanelGroups`=:groups WHERE `NickName`=:username";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params

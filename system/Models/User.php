@@ -17,7 +17,7 @@ class User
 
     public function searchExistingUser($nickname)
     {
-        $sql = "SELECT * FROM sv_accounts WHERE NickName=:user_nick";
+        $sql = "SELECT * FROM `sv_accounts` WHERE `NickName`=:user_nick";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -33,7 +33,7 @@ class User
 
     public function searchUserById($user_id)
     {
-        $sql = "SELECT * FROM sv_accounts WHERE ID=:user_id";
+        $sql = "SELECT * FROM `sv_accounts` WHERE `ID`=:user_id";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -49,7 +49,7 @@ class User
 
     public function getFaction($factionId)
     {
-        $sql = "SELECT Name FROM sv_factions WHERE ID=:factionId";
+        $sql = "SELECT `Name` FROM `sv_factions` WHERE `ID`=:factionId";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -66,7 +66,7 @@ class User
 
     public function getJob($jobId)
     {
-        $sql = "SELECT * FROM sv_jobs WHERE ID=:jobId";
+        $sql = "SELECT * FROM `sv_jobs` WHERE `ID`=:jobId";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -83,7 +83,7 @@ class User
 
     public function getFamily($familyId)
     {
-        $sql = "SELECT * FROM sv_families WHERE ID=:familyId";
+        $sql = "SELECT * FROM `sv_families` WHERE `ID`=:familyId";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -101,7 +101,7 @@ class User
     public function getFactionRank($factionId, $rankId)
     {
         if ($rankId == 0) return false;
-        $sql = "SELECT Rank_$rankId FROM sv_Factions WHERE ID=:factionId";
+        $sql = "SELECT `Rank_$rankId` FROM `sv_Factions` WHERE `ID`=:factionId";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -118,7 +118,7 @@ class User
 
     public function getVehicle($nickName)
     {
-        $sql = "SELECT * FROM sv_vehicles WHERE Owner=:nickname";
+        $sql = "SELECT * FROM `sv_vehicles` WHERE `Owner`=:nickname";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -134,7 +134,7 @@ class User
 
     public function getModelName($nickName)
     {
-        $sql = "SELECT * FROM sv_vehicles JOIN sv_modellimit ON sv_vehicles.Model = sv_modellimit.Model WHERE sv_vehicles.Owner=:nickname";
+        $sql = "SELECT * FROM `sv_vehicles` JOIN `sv_modellimit` ON sv_vehicles.Model = sv_modellimit.Model WHERE sv_vehicles.Owner=:nickname";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -150,7 +150,7 @@ class User
 
     public function getBusiness($nickName)
     {
-        $sql = "SELECT * FROM sv_businesses WHERE Owner=:nickname";
+        $sql = "SELECT * FROM `sv_businesses` WHERE `Owner`=:nickname";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -166,7 +166,7 @@ class User
 
     public function getHouse($nickName)
     {
-        $sql = "SELECT * FROM sv_houses WHERE Owner=:nickname";
+        $sql = "SELECT * FROM `sv_houses` WHERE `Owner`=:nickname";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -183,7 +183,7 @@ class User
     // get user groups
     public function getUserGroups($username)
     {
-        $sql = "SELECT PanelGroups FROM sv_accounts WHERE NickName = :nickname";
+        $sql = "SELECT `PanelGroups` FROM `sv_accounts` WHERE `NickName`=:nickname";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params
@@ -200,7 +200,7 @@ class User
     // get user group name
     public function getUserGroupName($id)
     {
-        $sql = "SELECT group_name, group_keyword FROM panel_groups WHERE group_id = :id";
+        $sql = "SELECT `group_name`, `group_keyword` FROM `panel_groups` WHERE `group_id`=:id";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params

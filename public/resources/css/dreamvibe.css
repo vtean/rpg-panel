@@ -107,6 +107,10 @@ pre {
   color: var(--text-color);
 }
 
+textarea {
+  white-space: pre-wrap;
+}
+
 ::placeholder {
   color: #7174a8 !important;
 }
@@ -1330,7 +1334,15 @@ textarea {
 }
 
 /* Data tables design */
-#dvTable_wrapper .dataTables_length select {
+.dvTable {
+  margin: 15px 0;
+}
+
+.dvTable table {
+  width: 100%;
+}
+
+.dvTable .dataTables_length select {
   background: var(--form-input-bg);
   color: var(--text-color);
   padding: .375rem .5rem;
@@ -1339,18 +1351,18 @@ textarea {
   margin: 0 3px;
 }
 
-#dvTable_wrapper .dataTables_length select:focus {
+.dvTable .dataTables_length select:focus {
   outline: none;
   box-shadow: none;
   border-color: var(--text-hover-color);
 }
 
-#dvTable_wrapper .dataTables_filter label {
+.dvTable .dataTables_filter label {
   color: var(--text-color);
   margin-bottom: 15px;
 }
 
-#dvTable_wrapper .dataTables_filter input {
+.dvTable .dataTables_filter input {
   background-color: var(--form-input-bg);
   color: var(--text-color);
   padding: .375rem .5rem;
@@ -1358,70 +1370,71 @@ textarea {
   border-radius: 3px;
 }
 
-#dvTable {
-  margin: 15px 0;
-}
-
-#dvTable_wrapper .dataTables_filter input:focus {
+.dvTable .dataTables_filter input:focus {
   outline: none;
   box-shadow: none;
   border-color: var(--text-hover-color);
 }
 
-#dvTable.no-footer {
+.dvTable table.dataTable.no-footer {
   border: 0;
 }
 
-#dvTable thead {
+.dvTable table thead {
   background-color: var(--form-input-bg);
 }
 
-#dvTable thead th,
-#dvTable thead td {
+.dvTable table thead th,
+.dvTable table thead td {
   padding: 1.1rem 1.5rem;
   border: 0;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-#dvTable tbody th,
-#dvTable tbody td {
+.dvTable table tbody th,
+.dvTable table tbody td {
   padding: .85rem 1.5rem;
 }
 
-#dvTable.display tbody tr.odd>.sorting_1,
-#dvTable.order-column.stripe tbody tr.odd>.sorting_1,
-#dvTable.stripe tbody tr.odd,
-#dvTable.display tbody tr.odd,
-#dvTable.display tbody tr.even>.sorting_1,
-#dvTable.order-column.stripe tbody tr.even>.sorting_1,
-#dvTable tbody tr{
+.dvTable table.display tbody tr.odd>.sorting_1,
+.dvTable table.order-column.stripe tbody tr.odd>.sorting_1,
+.dvTable table.stripe tbody tr.odd,
+.dvTable table.display tbody tr.odd,
+.dvTable table.display tbody tr.even>.sorting_1,
+.dvTable table.order-column.stripe tbody tr.even>.sorting_1,
+.dvTable table tbody tr{
   background-color: var(--content-bg);
 }
 
-#dvTable.row-border tbody th,
-#dvTable.row-border tbody td,
-#dvTable.display tbody th,
-#dvTable.display tbody td {
+.dvTable table.row-border tbody th,
+.dvTable table.row-border tbody td,
+.dvTable table.display tbody th,
+.dvTable table.display tbody td {
   border-color: #3d4261;
 }
 
-#dvTable_wrapper .dataTables_length,
-#dvTable_wrapper .dataTables_filter,
-#dvTable_wrapper .dataTables_info,
-#dvTable_wrapper .dataTables_processing,
-#dvTable_wrapper .dataTables_paginate,
-#dvTable_wrapper .dataTables_paginate .paginate_button.disabled,
-#dvTable_wrapper .dataTables_paginate .paginate_button.disabled:hover,
-#dvTable_wrapper .dataTables_paginate .paginate_button.disabled:active {
+.dvTable .dataTables_length,
+.dvTable .dataTables_filter,
+.dvTable .dataTables_info,
+.dvTable .dataTables_processing,
+.dvTable .dataTables_paginate,
+.dvTable .dataTables_paginate .paginate_button.disabled,
+.dvTable .dataTables_paginate .paginate_button.disabled:hover,
+.dvTable .dataTables_paginate .paginate_button.disabled:active {
   color: var(--text-color) !important;
 }
 
-#dvTable_wrapper .dataTables_paginate .paginate_button.current,
-#dvTable_wrapper .dataTables_paginate .paginate_button.current:hover {
+.dvTable .dataTables_paginate .paginate_button.current,
+.dvTable .dataTables_paginate .paginate_button.current:hover {
   color: var(--text-color) !important;
   background: var(--text-hover-color);
   border: 0;
+}
+
+.dvTable table.dataTable.hover tbody tr:hover,
+.dvTable table.dataTable.display tbody tr:hover {
+  background-color: var(--content-bg);
 }
 
 .dv-action-btn {
@@ -1450,7 +1463,7 @@ textarea {
 }
 
 .dv-form button[type="submit"] {
-  padding: .6rem 3.6rem;
+  padding: .5rem 1.25rem;
 }
 
 /* The switch - the box around the slider */
@@ -1524,12 +1537,14 @@ textarea {
   border-radius: 5px;
 }
 
-.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-first {
-  font-weight: 600;
+.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-first,
+.dv-topic-message .dv-single .dv-first {
+  font-weight: bold;
 }
 
 .dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second,
-.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second a {
+.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second a,
+.dv-topic-message .dv-single .dv-second {
   color: var(--secondary-text);
 }
 

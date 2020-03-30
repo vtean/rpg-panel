@@ -50,12 +50,18 @@
         <div class="text">
             <article>
                 <p><?= $msg; ?><br>Go back to the homepage!</p>
-                <button><a href="#">Go Back!</a></button>
+                <button onclick="goBack()"><a href="#">Go Back!</a></button>
             </article>
         </div>
 
     </div>
 </section>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 
 <style>
     @import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:300,400,500,600,700,800,900|Barlow:300,400,500,600,700,800,900&display=swap");

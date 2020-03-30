@@ -102,7 +102,7 @@
                             </a>
                         </li>
                         <li class="dv-nav-item">
-                            <a class="dv-nav-link" href="#">
+                            <a class="dv-nav-link" href="<?php echo BASE_URL . '/complaints'; ?>">
                                 <i class="dv-nav-icon fas fa-user-times"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['complaints_txt']; ?></span>
                             </a>

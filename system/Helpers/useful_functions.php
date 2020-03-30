@@ -70,7 +70,7 @@ function convertMinutes($time, $format = '%02dh %02dm')
 
 function sendMail($to, $from, $name, $subject, $message)
 {
-    $url = "http://dreamvibe.ro/dvmailer.php";
+    $url = "http://support.dreamvibe.ro/dvmailer.php";
     $dataPost = array (
         "t" => $to,
         "f" => $from,

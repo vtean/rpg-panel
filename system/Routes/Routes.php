@@ -43,3 +43,6 @@ Route::set('en', 'MainController', 'en');
 
 // tickets page
 Route::set('tickets', 'TicketsController', 'index');
+
+// complaints page
+Route::set('complaints', 'ComplaintsController', 'index');

@@ -18,7 +18,7 @@ class Category
     // get all categories
     public function getAllCategories($type)
     {
-        $sql = "SELECT * FROM panel_categories WHERE type=:type";
+        $sql = "SELECT * FROM `panel_categories` WHERE `type`=:type";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -30,8 +30,8 @@ class Category
     // create category
     public function createCategory($data)
     {
-        $sql = "INSERT INTO panel_categories ('name', 'type') 
-                VALUES (':name', ':type')";
+        $sql = "INSERT INTO `panel_categories` (`name`, `type`) 
+                VALUES (:name, :type)";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params
@@ -48,7 +48,7 @@ class Category
     // edit category
     public function editCategory($data, $id)
     {
-        $sql = "UPDATE panel_categories SET name:name, type:type WHERE id=:id";
+        $sql = "UPDATE `panel_categories` SET `name`=:name, `type`=:type WHERE `id`=:id";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params
@@ -62,6 +62,4 @@ class Category
             return false;
         }
     }
-
-
 }

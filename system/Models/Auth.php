@@ -39,7 +39,7 @@ class Auth
 
     public function getUser($id)
     {
-        $sql = "SELECT * FROM sv_accounts WHERE ID=:id";
+        $sql = "SELECT * FROM `sv_accounts` WHERE `ID`=:id";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -57,7 +57,7 @@ class Auth
     // check for existing users with an username
     public function searchExistingUsername($username)
     {
-        $sql = "SELECT * FROM sv_accounts WHERE NickName=:username";
+        $sql = "SELECT * FROM `sv_accounts` WHERE `NickName`=:username";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -75,7 +75,7 @@ class Auth
     // check for existing users with an email
     public function searchExistingEmail($email)
     {
-        $sql = "SELECT * FROM sv_accounts WHERE Mail=:email";
+        $sql = "SELECT * FROM `sv_accounts` WHERE `Mail`=:email";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -93,7 +93,7 @@ class Auth
     // login user
     public function loginUser($username, $password)
     {
-        $sql = "SELECT * FROM sv_accounts WHERE NickName=:username";
+        $sql = "SELECT * FROM `sv_accounts` WHERE `NickName`=:username";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params

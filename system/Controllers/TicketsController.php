@@ -10,6 +10,7 @@ require_once ROOT_PATH . '/system/Validations/ValidateTicket.php';
 
 class TicketsController extends Controller
 {
+    use ValidateTicket;
     private $ticketModel;
     private $privileges;
     private $categoryModel;
@@ -78,6 +79,7 @@ class TicketsController extends Controller
             // sanitize post data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+            $_POST['ticket_body'] = str_replace(PHP_EOL, "<br>", $_POST['ticket_body']);
             $_POST['ticket_body'] = htmlentities($_POST['ticket_body']);
 
             $dataPost = [
@@ -141,7 +143,7 @@ class TicketsController extends Controller
     {
         $ticket = $this->ticketModel->getTicket($id);
 
-        if (empty($id)) {
+        if ($id == 0) {
             $this->error('404', 'Page Not Found!');
         } else if ($ticket['author_id'] != $_SESSION['user_id'] || $ticket['status'] != 'Open') {
             $this->error('403', 'Forbidden!');
@@ -150,7 +152,6 @@ class TicketsController extends Controller
 
             // get badges
             $badges = $this->badges();
-
             $type = 'ticket';
             $categories = $this->categoryModel->getAllCategories($type);
             $category_name = $this->ticketModel->getCategoryName($ticket['category_id']);
@@ -179,7 +180,7 @@ class TicketsController extends Controller
 
             // parse data
             $data = [
-                'pageTitle' => 'Create Ticket',
+                'pageTitle' => 'Edit Ticket',
                 'fullAccess' => $this->privileges['fullAccess'],
                 'isAdmin' => $this->privileges['isAdmin'],
                 'isLeader' => $this->privileges['isLeader'],
@@ -194,6 +195,7 @@ class TicketsController extends Controller
                 // sanitize post data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+                $_POST['ticket_body'] = str_replace(PHP_EOL, "<br>", $_POST['ticket_body']);
                 $_POST['ticket_body'] = htmlentities($_POST['ticket_body']);
 
                 $dataPost = [
@@ -263,6 +265,7 @@ class TicketsController extends Controller
                 // sanitize post data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+                $_POST['ticket_reply'] = str_replace(PHP_EOL, "<br>", $_POST['ticket_reply']);
                 $_POST['ticket_reply'] = htmlentities($_POST['ticket_reply']);
 
                 if ($ticket['author_id'] == $_SESSION['user_id']) {

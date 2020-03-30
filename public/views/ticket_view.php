@@ -1,7 +1,9 @@
-<?php $ticket = $data['ticket']; ?>
-<?php $author = $data['author']; ?>
+<?php
+    $ticket = $data['ticket'];
+    $author = $data['author'];
+?>
 <?php getHeader($data); ?>
-<?php flashMessage(); ?>
+    <?php flashMessage(); ?>
     <h3 class="dv-page-title">Ticket #<?= $ticket['id'] ?></h3>
     <div class="dv-row">
         <div class="row">
@@ -51,9 +53,13 @@
                         <h4 class="dv-row-title">Ticket actions</h4>
                         <div class="dv-action-buttons">
                             <div class="row">
-                                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $author['ID']) || (in_array(1, $data['canEditTickets']))): ?>
+                                <?php if ((isLoggedIn() && ($_SESSION['user_id'] == $author['ID']) && ($ticket['status'] == 'Open')) || ((in_array(1, $data['canEditTickets']) && ($ticket['status'] == 'Open')))): ?>
                                     <div class="col">
                                         <button class="dv-btn btn btn-warning"><i class="fas fa-lock"></i> Close ticket</button>
+                                    </div>
+                                <?php elseif (in_array(1, $data['canEditTickets']) && ($ticket['status'] == 'Closed')): ?>
+                                    <div class="col">
+                                        <button class="dv-btn btn btn-success"><i class="fas fa-unlock"></i> Open ticket</button>
                                     </div>
                                 <?php endif; ?>
                                 <?php if (in_array(1, $data['canEditTickets'])): ?>
@@ -82,42 +88,48 @@
                 </div>
                 <div class="dv-topic-replies">
                     <h4 class="dv-row-title">Ticket replies</h4>
-                    <?php foreach ($data['replies'] as $reply): ?>
-                        <div class="dv-reply">
-                            <div class="dv-reply-avatar">
-                                <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $reply['author_avatar'] . '.png'; ?>" alt="<?php echo $reply['author_name'] . "'s avatar"; ?>">
-                            </div>
-                            <div class="dv-reply-content">
-                                <div class="dv-reply-head clearfix">
-                                    <div class="dv-reply-author">
-                                        <a class="author-name" href="<?php echo BASE_URL . '/users/profile/' . $reply['author_name']; ?>"><?php echo $reply['author_name']; ?></a>
-                                        <span class="badge <?php if ($reply['user_status'] == 'Author'): ?>badge-secondary<?php else: ?>badge-danger<?php endif;?>"><?php echo $reply['user_status']; ?></span>
+                    <?php if (empty($data['replies'])): ?>
+                        <span>There are currently no replies.</span>
+                    <?php else: ?>
+                        <?php foreach ($data['replies'] as $reply): ?>
+                            <div class="dv-reply">
+                                <div class="dv-reply-avatar">
+                                    <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $reply['author_avatar'] . '.png'; ?>" alt="<?php echo $reply['author_name'] . "'s avatar"; ?>">
+                                </div>
+                                <div class="dv-reply-content">
+                                    <div class="dv-reply-head clearfix">
+                                        <div class="dv-reply-author">
+                                            <a class="author-name" href="<?php echo BASE_URL . '/users/profile/' . $reply['author_name']; ?>"><?php echo $reply['author_name']; ?></a>
+                                            <span class="badge <?php if ($reply['user_status'] == 'Author'): ?>badge-secondary<?php else: ?>badge-danger<?php endif;?>"><?php echo $reply['user_status']; ?></span>
+                                        </div>
+                                        <div class="dv-reply-date">
+                                            <span><i class="far fa-clock"></i> <?php echo $reply['created_at']; ?></span>
+                                        </div>
                                     </div>
-                                    <div class="dv-reply-date">
-                                        <span><i class="far fa-clock"></i> <?php echo $reply['created_at']; ?></span>
+                                    <div class="dv-reply-body">
+                                        <span><?php echo html_entity_decode($reply['body']); ?></span>
                                     </div>
                                 </div>
-                                <div class="dv-reply-body">
-                                    <span><?php echo $reply['body']; ?></span>
-                                </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
-                <form action="" method="post" class="dv-form">
-                    <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
-                    <!-- Ticket Details -->
-                    <h4 class="dv-row-title">Leave a reply</h4>
-                    <div class="form-group">
+                <?php if ($ticket['status'] != 'Closed'): ?>
+                    <form action="" method="post" class="dv-form">
+                        <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
+                        <!-- Ticket Details -->
+                        <h4 class="dv-row-title">Leave a reply</h4>
+                        <div class="form-group">
                         <textarea type="text" rows="5" name="ticket_reply"
                                   class="d-block form-control<?php if (!empty($errors['ticket_reply_error'])): ?> is-invalid<?php endif; ?>"
                                   id="ticket_reply"></textarea>
-                        <?php if (!empty($errors['ticket_reply_error'])): ?>
-                            <div class="invalid-feedback"><?php echo $errors['ticket_reply_error']; ?></div>
-                        <?php endif; ?>
-                    </div>
-                    <button type="submit" name="reply_ticket" class="dv-btn btn btn-primary m-auto">Submit</button>
-                </form>
+                            <?php if (!empty($errors['ticket_reply_error'])): ?>
+                                <div class="invalid-feedback"><?php echo $errors['ticket_reply_error']; ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <button type="submit" name="reply_ticket" class="dv-btn btn btn-primary m-auto">Submit</button>
+                    </form>
+                <?php endif; ?>
             </div>
         </div>
     </div>

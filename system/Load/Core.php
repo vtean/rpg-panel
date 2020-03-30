@@ -60,14 +60,14 @@ class Core extends UrlHandler
                         // call a callback with params
                         call_user_func_array([$this->activeController, $this->activeMethod], $this->params);
                     } else {
-                        echo 'Method ' . $url[1] . ' not found';
+                        getError('404', 'Page Not Found!');
                     }
                 } else {
                     // call a callback with params if the active method exists in the controller
                     if (method_exists($this->activeController, $this->activeMethod)) {
                         call_user_func_array([$this->activeController, $this->activeMethod], $this->params);
                     } else {
-                        echo 'Method ' . $this->activeMethod . ' not found';
+                        getError('404', 'Page Not Found!');
                     }
                 }
             } else {

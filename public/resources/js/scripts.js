@@ -14,8 +14,18 @@
 })(jQuery);
 
 $(document).ready( function () {
-    $('#dvTable').DataTable({
+    $('#dreamTable').DataTable({
         "pageLength": 25
+    });
+
+    $('#dvTicketsTable').DataTable({
+        "pageLength": 25,
+        "order": [[ 4, "desc" ]]
+    });
+
+    $('#dvComplaintsTable').DataTable({
+        "pageLength": 25,
+        "order": [[ 3, "desc" ]]
     });
 
     $(function () {
