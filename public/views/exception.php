@@ -12,7 +12,7 @@
 
 <nav>
     <div class="menu">
-        <p class="website_name"><a href="#">DREAMVIBE</a></p>
+        <p class="website_name"><a href="<?php echo BASE_URL; ?>">DREAMVIBE</a></p>
     </div>
 </nav>
 <section class="wrapper">

@@ -30,7 +30,7 @@ class MainController extends Controller
         $business = $this->mainModel->getBusiness();
         $vehicles = $this->mainModel->getVehicles();
         $regUsers= $this->mainModel->getRegUsers();
-        $pageTitle = $_SESSION['user_lang'] == 'ro' ? 'Acasă' : 'Home';
+        $pageTitle = $_COOKIE["user_lang"] == "ro" ? 'Acasă' : 'Home';
 
         $data = [
             'pageTitle' => $pageTitle,
@@ -51,7 +51,9 @@ class MainController extends Controller
     public function ro()
     {
         // set language to romanian
-        $_SESSION['user_lang'] = 'ro';
+        $cookieName = "user_lang";
+        $cookieValue = "ro";
+        setcookie($cookieName, $cookieValue, time() + (86400 * 30), "/");
 
         // add flash message
         flashMessage('success', 'Limba a fost modificată cu succes în Română.');
@@ -63,7 +65,9 @@ class MainController extends Controller
     public function en()
     {
         // set language to english
-        $_SESSION['user_lang'] = 'en';
+        $cookieName = "user_lang";
+        $cookieValue = "en";
+        setcookie($cookieName, $cookieValue, time() + (86400 * 30), "/");
 
         // add flash message
         flashMessage('success', 'Site language has been changed successfully to English.');

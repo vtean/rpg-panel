@@ -34,7 +34,12 @@ class ComplaintsController extends Controller
         global $lang;
 
         $badge = $this->badges();
-        $complaints = $this->complaintModel->getAllComplaints();
+
+        if ($this->privileges['fullAccess'] == 1) {
+            $complaints = $this->complaintModel->getAllComplaints();
+        } else {
+            $complaints = $this->complaintModel->getUnhiddenComplaints();
+        }
 
         $data = [
             'pageTitle' => 'Complaints',
@@ -148,7 +153,7 @@ class ComplaintsController extends Controller
 
         if (($id == 0) || ($complaint == false)) {
             $this->error('404', 'Page Not Found!');
-        } else if (($complaint['author_id'] != $_SESSION['user_id'] && $complaint['status'] != 'Open') || (!in_array(1, $this->privileges['canEditAComplaints']))) {
+        } else if (($complaint['author_id'] != $_SESSION['user_id'] && $complaint['status'] != 'Open' && $this->privileges['isAdmin'] < 1 && !in_array(1, $this->privileges['canEditAComplaints'])) || (($this->privileges['isAdmin'] > 0) && !in_array(1, $this->privileges['canEditAComplaints']))) {
             $this->error('403', 'Forbidden!');
         } else {
             global $lang;
@@ -212,7 +217,7 @@ class ComplaintsController extends Controller
 
                     if ($this->complaintModel->editComplaint($postData, $id)) {
                         flashMessage('success', 'Complaint has been successfully edited!');
-                        redirect('/complaints');
+                        redirect('/complaints/view/' . $id);
                     } else {
                         die('Something went wrong.');
                     }
@@ -234,59 +239,180 @@ class ComplaintsController extends Controller
 
         $complaint = $this->complaintModel->getComplaint($id);
 
-        if ($id == 0 || $complaint == false) {
+        if ($id == 0 || $complaint == false || ($complaint['is_hidden'] == 1) && ($this->privileges['fullAccess'] == 0)) {
             $this->error('404', 'Page Not Found!');
         } else {
             $complaint['description'] = html_entity_decode($complaint['description']);
             $complaint['proof'] = html_entity_decode($complaint['proof']);
             $complaint['other_info'] = html_entity_decode($complaint['other_info']);
+            $categories = $this->categoryModel->getAllCategories('complaint');
 
             $data = [
                 'pageTitle' => 'Complaint against ' . $complaint['against_user']['NickName'],
                 'fullAccess' => $this->privileges['fullAccess'],
                 'isAdmin' => $this->privileges['isAdmin'],
                 'isLeader' => $this->privileges['isLeader'],
+                'canEditAComplaints' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canEditAComplaints']),
+                'canDeleteAComplaints' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canDeleteAComplaints']),
+                'canDeleteACReplies' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canDeleteACReplies']),
+                'canCloseAComplaints' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canCloseAComplaints']),
+                'canHideAComplaints' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canHideAComplaints']),
+                'canEditHComplaints' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canEditHComplaints']),
+                'canDeleteHComplaints' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canDeleteHComplaints']),
+                'canDeleteHCReplies' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canDeleteHCReplies']),
+                'canCloseHComplaints' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canCloseHComplaints']),
+                'canHideHComplaints' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canHideHComplaints']),
+                'canEditLComplaints' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canEditLComplaints']),
+                'canDeleteLComplaints' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canDeleteLComplaints']),
+                'canDeleteLCReplies' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canDeleteLCReplies']),
+                'canCloseLComplaints' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canCloseLComplaints']),
+                'canHideLComplaints' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canHideLComplaints']),
+                'canEditUComplaints' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canEditUComplaints']),
+                'canDeleteUComplaints' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canDeleteUComplaints']),
+                'canDeleteUCReplies' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canDeleteUCReplies']),
+                'canCloseUComplaints' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canCloseUComplaints']),
+                'canHideUComplaints' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canHideUComplaints']),
                 'lang' => $lang,
                 'badges' => $badges,
-                'complaint' => $complaint
+                'complaint' => $complaint,
+                'categories' => $categories
             ];
 
-            if (isset($_POST['post_reply'])) {
-                // sanitize post data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if ($data['canCloseAComplaints'] || $data['canCloseHComplaints'] || $data['canCloseLComplaints'] || $data['canCloseUComplaints'] || ($_SESSION['user_id'] == $complaint['author_id'])) {
+                    if (isset($_POST['close_complaint'])) {
+                        $closeData = [
+                            'status' => 'Closed',
+                            'closed_by' => $_SESSION['user_id']
+                        ];
 
-                $_POST['complaint_reply'] = str_replace(PHP_EOL, '<br>', $_POST['complaint_reply']);
-                $_POST['complaint_reply'] = htmlentities($_POST['complaint_reply']);
-
-                if ($_SESSION['user_id'] == $complaint['author_id']) {
-                    $user_status = 'Complaint Creator';
-                } else if ($_SESSION['user_id'] == $complaint['against_id']) {
-                    $user_status = 'Reported Player';
+                        // close complaint
+                        if ($this->complaintModel->closeComplaint($closeData, $id)) {
+                            flashMessage('success', 'Complaint has been successfully locked.');
+                            redirect('/complaints/view/' . $id);
+                        } else {
+                            die('Something went wrong.');
+                        }
+                    }
                 }
 
-                $postData = [
-                    'complaint_id' => $complaint['id'],
-                    'body' => $_POST['complaint_reply'],
-                    'author_id' => $_SESSION['user_id'],
-                    'author_ip' => getUserIp(),
-                ];
+                if ($data['canCloseAComplaints'] || $data['canCloseHComplaints'] || $data['canCloseLComplaints'] || $data['canCloseUComplaints']) {
+                    if (isset($_POST['open_complaint'])) {
+                        $closeData = [
+                            'status' => 'Open',
+                            'closed_by' => 0
+                        ];
 
-                // handle errors
-                $errors = ValidateComplaint::validateReply($postData);
-
-                // check if there are no errors
-                if (count(array_filter($errors)) == 0) {
-                    $postData['user_status'] = $user_status;
-                    // post reply
-                    if ($this->complaintModel->postReply($postData)) {
-                        flashMessage('success', "Your reply has been successfully posted!");
-                        redirect('/complaints/view/' . $id);
-                    } else {
-                        die('Something went wrong.');
+                        // open complaint
+                        if ($this->complaintModel->closeComplaint($closeData, $id)) {
+                            flashMessage('success', 'Complaint has been successfully unlocked.');
+                            redirect('/complaints/view/' . $id);
+                        } else {
+                            die('Something went wrong.');
+                        }
                     }
-                } else {
-                    // load view with errors
-                    $this->loadView('complaint_view', $data, $errors);
+
+                    if (isset($_POST['change_category'])) {
+                        // filter post
+                        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                        $cID = $_POST['new_category_id'];
+                        // change category
+                        if ($this->complaintModel->changeCategory($cID, $id)) {
+                            flashMessage('success', 'Complaint category has been successfully changed.');
+                            redirect('/complaints/view/' . $id);
+                        } else {
+                            die('Something went wrong');
+                        }
+                    }
+                }
+
+                if ($data['canDeleteAComplaints'] || $data['canDeleteHComplaints'] || $data['canDeleteLComplaints'] || $data['canDeleteUComplaints']) {
+                    if (isset($_POST['delete_complaint'])) {
+                        // delete complaint
+                        if ($this->complaintModel->deleteComplaint($id)) {
+                            flashMessage('success', 'Complaint has been successfully deleted.');
+                            redirect('/complaints');
+                        } else {
+                            die('Something went wrong.');
+                        }
+                    }
+                }
+
+                if ($data['canHideAComplaints'] || $data['canHideHComplaints'] || $data['canHideLComplaints'] || $data['canHideUComplaints']) {
+                    if (isset($_POST['hide_complaint'])) {
+                        $isHidden = 1;
+                        // hide complaint
+                        if ($this->complaintModel->hideComplaint($isHidden, $id)) {
+                            flashMessage('success', 'Complaint has been successfully hidden.');
+                            redirect('/complaints/view/' . $id);
+                        } else {
+                            die('Something went wrong.');
+                        }
+                    }
+
+                    if (isset($_POST['unhide_complaint'])) {
+                        $isHidden = 0;
+                        // hide complaint
+                        if ($this->complaintModel->hideComplaint($isHidden, $id)) {
+                            flashMessage('success', 'Complaint has been successfully unhidden.');
+                            redirect('/complaints/view/' . $id);
+                        } else {
+                            die('Something went wrong.');
+                        }
+                    }
+                }
+
+                if ($data['canDeleteACReplies'] || $data['canDeleteHCReplies'] || $data['canDeleteLCReplies'] || $data['canDeleteUCReplies']) {
+                    if (isset($_POST['delete_reply'])) {
+                        // filter post
+                        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                        $reply_id = $_POST['reply_id'];
+                        if ($this->complaintModel->deleteReply($reply_id)) {
+                            flashMessage('success', 'Reply has been successfully deleted.');
+                            redirect('/complaints/view/' . $id);
+                        } else {
+                            die('Something went wrong.');
+                        }
+                    }
+                }
+
+                if (isset($_POST['post_reply'])) {
+                    // sanitize post data
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                    $_POST['complaint_reply'] = str_replace(PHP_EOL, '<br>', $_POST['complaint_reply']);
+                    $_POST['complaint_reply'] = htmlentities($_POST['complaint_reply']);
+
+                    if ($_SESSION['user_id'] == $complaint['author_id']) {
+                        $user_status = 'Complaint Creator';
+                    } else if ($_SESSION['user_id'] == $complaint['against_id']) {
+                        $user_status = 'Reported Player';
+                    }
+
+                    $postData = [
+                        'complaint_id' => $complaint['id'],
+                        'body' => $_POST['complaint_reply'],
+                        'author_id' => $_SESSION['user_id'],
+                        'author_ip' => getUserIp(),
+                    ];
+
+                    // handle errors
+                    $errors = ValidateComplaint::validateReply($postData);
+
+                    // check if there are no errors
+                    if (count(array_filter($errors)) == 0) {
+                        $postData['user_status'] = $user_status;
+                        // post reply
+                        if ($this->complaintModel->postReply($postData)) {
+                            flashMessage('success', "Your reply has been successfully posted!");
+                            redirect('/complaints/view/' . $id);
+                        } else {
+                            die('Something went wrong.');
+                        }
+                    } else {
+                        // load view with errors
+                        $this->loadView('complaint_view', $data, $errors);
+                    }
                 }
             } else {
                 // load view

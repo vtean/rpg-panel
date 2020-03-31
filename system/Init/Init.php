@@ -15,21 +15,8 @@ require_once 'config.php';
 // load csrf token
 require_once ROOT_PATH . '/system/Session/Csrf.php';
 
-// language configuration
-if (!isset($_SESSION['user_lang'])) {
-    $_SESSION['user_lang'] = 'ro';
-}
-
-switch ($_SESSION['user_lang']) {
-    case 'en':
-        require_once ROOT_PATH . '/public/languages/en.php';
-        break;
-    case 'ro':
-        require_once ROOT_PATH . '/public/languages/ro.php';
-        break;
-    default:
-        require_once ROOT_PATH . '/public/languages/ro.php';
-}
+// load language configuration
+require_once ROOT_PATH . '/system/Cookies/Language.php';
 
 // connect to the database
 require_once ROOT_PATH . '/system/Db/Connect.php';

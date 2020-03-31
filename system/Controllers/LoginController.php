@@ -30,7 +30,7 @@ class LoginController extends Controller
         // get badges
         $badges = $this->badges();
 
-        $pageTitle = $_SESSION['user_lang'] == 'ro' ? 'Autentificare' : 'Login';
+        $pageTitle = $_COOKIE["user_lang"] == "ro" ? 'Autentificare' : 'Login';
 
         // check if user is logged in or not
         if (isLoggedIn()) {

@@ -8,7 +8,7 @@
     </div>
     <div class="dv-row">
         <div class="dvTable">
-            <table id="dreamTable" class="display">
+            <table id="dreamTable">
                 <thead>
                 <tr>
                     <th><?php echo $data['lang']['group_id_txt']; ?></th>

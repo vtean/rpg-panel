@@ -54,5 +54,4 @@ class Main
         $this->db->getResult();
         return $this->db->countRows();
     }
-
 }

@@ -46,6 +46,21 @@ class Complaint
         return $final_results;
     }
 
+    public function getUnhiddenComplaints()
+    {
+        $sql = "SELECT * FROM `panel_complaints` WHERE `is_hidden`=0";
+        $this->db->prepareQuery($sql);
+        $results = $this->db->getResults();
+        $final_results = array();
+        foreach ($results as $result) {
+            $result['author_name'] = $this->getUser($result['author_id'])['NickName'];
+            $result['against_name'] = $this->getUser($result['against_id'])['NickName'];
+            $result['category_name'] = $this->getCategoryName($result['category_id'])['name'];
+            array_push($final_results, $result);
+        }
+        return $final_results;
+    }
+
     public function getComplaintReplies($id)
     {
         $sql = "SELECT * FROM `panel_creplies` WHERE `complaint_id`=:id ORDER BY `created_at` ASC";
@@ -75,6 +90,9 @@ class Complaint
                 $result['replies'] = $final_replies;
             } else {
                 $result['replies'] = $replies;
+            }
+            if ($result['closed_by'] != 0) {
+                $result['closed_by_name'] = $this->getUser($result['closed_by'])['NickName'];
             }
             return $result;
         } else {
@@ -131,6 +149,70 @@ class Complaint
         $this->db->bind(':author_id', $data['author_id']);
         $this->db->bind(':author_ip', $data['author_ip']);
         $this->db->bind(':user_status', $data['user_status']);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function closeComplaint($data, $id)
+    {
+        $sql = "UPDATE `panel_complaints` SET `status`=:status, `closed_by`=:closed_by WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':status', $data['status']);
+        $this->db->bind(':closed_by', $data['closed_by']);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteComplaint($id)
+    {
+        $sql = "DELETE FROM `panel_complaints` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function hideComplaint($isHidden, $id)
+    {
+        $sql = "UPDATE `panel_complaints` SET `is_hidden`=:is_hidden WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':is_hidden', $isHidden);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function changeCategory($cID, $id)
+    {
+        $sql = "UPDATE `panel_complaints` SET `category_id`=:cat_id WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':cat_id', $cID);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteReply($id)
+    {
+        $sql = "DELETE FROM `panel_creplies` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
         if ($this->db->executeStmt()) {
             return true;
         } else {

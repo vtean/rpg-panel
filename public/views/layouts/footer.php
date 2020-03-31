@@ -2,8 +2,8 @@
     </main>
     <footer class="dv-footer">
         <div class="dv-choose-lang">
-            <a href="<?php echo BASE_URL . '/ro'; ?>"<?php if ($_SESSION['user_lang'] == 'ro'): ?>class="active"<?php endif; ?>><img src="<?php echo BASE_URL . '/public/resources/img/lang/ro.png'; ?>" alt="RO"></a>
-            <a href="<?php echo BASE_URL . '/en'; ?>"<?php if ($_SESSION['user_lang'] == 'en'): ?>class="active"<?php endif; ?>><img src="<?php echo BASE_URL . '/public/resources/img/lang/en.png'; ?>" alt="EN"></a>
+            <a href="<?php echo BASE_URL . '/ro'; ?>"<?php if ($_COOKIE["user_lang"] == "ro"): ?>class="active"<?php endif; ?>><img src="<?php echo BASE_URL . '/public/resources/img/lang/ro.png'; ?>" alt="RO"></a>
+            <a href="<?php echo BASE_URL . '/en'; ?>"<?php if ($_COOKIE["user_lang"] == "en"): ?>class="active"<?php endif; ?>><img src="<?php echo BASE_URL . '/public/resources/img/lang/en.png'; ?>" alt="EN"></a>
         </div>
         <div class="dv-copyright">
             <p>Developed with <i class="fas fa-heart"></i> and a lot of <i class="fas fa-coffee"></i> by <a href="<?php echo BASE_URL . '/users/profile/Lust'; ?>">Lust</a> and <a href="<?php echo BASE_URL . '/users/profile/Indigo'; ?>">Indigo</a></p>

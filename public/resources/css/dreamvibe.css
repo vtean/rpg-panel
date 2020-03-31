@@ -145,6 +145,22 @@ textarea {
   border: 0;
 }
 
+.dv-hidden td:first-child {
+  border-left: 3px solid #ea5664 !important;
+}
+
+.dv-hidden-text {
+  color: #ea5664;
+  display: block;
+  width: 100%;
+  background-color: var(--content-bg);
+  font-weight: bold;
+  padding: 10px 15px;
+  border-left: 3px solid #ea5664;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
 /* MainController menu */
 .dv-main-menu {
   background-color: var(--menu-bg);
@@ -555,28 +571,28 @@ textarea {
 .dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(1) .dv-server-stats-item {
   border-left-color: var(--info-border);
   background: linear-gradient(to right, var(--content-bg) 50%, #0ba3bb 50%);
-  background-size: 200% 100%;
+  background-size: 202% 100%;
   background-position: left bottom;
 }
 
 .dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(2) .dv-server-stats-item {
   border-left-color: var(--danger-border);
   background: linear-gradient(to right, var(--content-bg) 50%, #b9434f 50%);
-  background-size: 200% 100%;
+  background-size: 202% 100%;
   background-position: left bottom;
 }
 
 .dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(3) .dv-server-stats-item {
   border-left-color: var(--warning-border);
   background: linear-gradient(to right, var(--content-bg) 50%, #ca9805 50%);
-  background-size: 200% 100%;
+  background-size: 202% 100%;
   background-position: left bottom;
 }
 
 .dv-server-stats .row .col-lg-3.col-md-6.col-sm-12:nth-child(4) .dv-server-stats-item {
   border-left-color: var(--success-border);
   background: linear-gradient(to right, var(--content-bg) 50%, #25a750 50%);
-  background-size: 200% 100%;
+  background-size: 202% 100%;
   background-position: left bottom;
 }
 
@@ -1397,21 +1413,13 @@ textarea {
   padding: .85rem 1.5rem;
 }
 
-.dvTable table.display tbody tr.odd>.sorting_1,
-.dvTable table.order-column.stripe tbody tr.odd>.sorting_1,
-.dvTable table.stripe tbody tr.odd,
-.dvTable table.display tbody tr.odd,
-.dvTable table.display tbody tr.even>.sorting_1,
-.dvTable table.order-column.stripe tbody tr.even>.sorting_1,
-.dvTable table tbody tr{
+.dvTable table tbody tr {
   background-color: var(--content-bg);
 }
 
-.dvTable table.row-border tbody th,
-.dvTable table.row-border tbody td,
-.dvTable table.display tbody th,
-.dvTable table.display tbody td {
-  border-color: #3d4261;
+.dvTable table tbody th,
+.dvTable table tbody td {
+  border-top: 1px solid #3d4261;
 }
 
 .dvTable .dataTables_length,
@@ -1432,8 +1440,7 @@ textarea {
   border: 0;
 }
 
-.dvTable table.dataTable.hover tbody tr:hover,
-.dvTable table.dataTable.display tbody tr:hover {
+.dvTable table.dataTable.hover tbody tr:hover {
   background-color: var(--content-bg);
 }
 
@@ -1570,6 +1577,22 @@ textarea {
   margin-top: 10px;
 }
 
+.dv-collapse-actions .dv-form {
+  width: 100%;
+}
+
+.dv-collapse-actions .dv-form .form-group {
+  margin-bottom: 0.75rem;
+}
+
+.dv-collapse-actions .form-control {
+  background-color: #404468;
+}
+
+.dv-collapse-actions .dv-form .btn {
+  margin-left: 2px;
+}
+
 .dv-topic-message p {
   margin-bottom: 0;
 }
@@ -1627,6 +1650,10 @@ textarea {
   float: right;
 }
 
+.dv-topic-replies .dv-reply .dv-reply-head .dv-reply-date span {
+  vertical-align: middle;
+}
+
 .dv-topic-replies .dv-reply .dv-reply-head .dv-reply-author .author-name {
   font-weight: 600;
 }
@@ -1642,6 +1669,15 @@ textarea {
 
 .dv-topic-replies .dv-reply:last-child {
   margin-bottom: 0;
+}
+
+.dv-closed-topic {
+  font-weight: bold;
+  text-align: center;
+  color: #e24958;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 20px;
 }
 
 /* General responsive things */

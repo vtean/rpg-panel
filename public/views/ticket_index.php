@@ -11,7 +11,7 @@
     </div>
     <div class="dv-row">
         <div class="dvTable">
-            <table id="dvTicketsTable" class="display">
+            <table id="dvTicketsTable">
                 <thead>
                 <tr>
                     <th><?php echo $data['lang']['ticket_id_txt']; ?></th>

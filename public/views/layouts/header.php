@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<?php echo $_SESSION['user_lang']; ?>">
+<html lang="<?php echo $_COOKIE["user_lang"]; ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
