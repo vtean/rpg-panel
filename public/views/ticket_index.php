@@ -43,7 +43,7 @@
                             if (in_array(1, $data['canViewTickets']) || $ticket['author_id'] == $_SESSION['user_id']) {
                                 ?>
                                 <a href="<?php echo BASE_URL . '/tickets/view/' . $ticket['id']; ?>"
-                                   class="dv-action-btn"><i class="fas fa-reply"></i></a>
+                                   class="dv-action-btn"><i class="fas fa-eye"></i></a>
                                 <?php
                             };
                             ?>

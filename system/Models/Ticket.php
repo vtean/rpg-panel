@@ -66,7 +66,9 @@ class Ticket
         $this->db->bind(':id', $id);
         // return result
         $result = $this->db->getResult();
-        $result['category_name'] = $this->getCategoryName($result['category_id'])['name'];
+        if (!empty($result)){
+            $result['category_name'] = $this->getCategoryName($result['category_id'])['name'];
+        }
         return $result;
     }
 
@@ -199,5 +201,30 @@ class Ticket
             array_push($final_results, $result);
         }
         return $final_results;
+    }
+
+    public function changeCategory($cID, $id)
+    {
+        $sql = "UPDATE `panel_tickets` SET `category_id`=:cat_id WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':cat_id', $cID);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteReply($id)
+    {
+        $sql = "DELETE FROM `panel_treplies` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
