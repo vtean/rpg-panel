@@ -17,10 +17,10 @@ class Complaint
 
     public function getUser($id)
     {
-        $sql = "SELECT `NickName`, `Level`, `PlayedTime`, `Member`, `Skin`, `Warns` FROM `sv_accounts` WHERE `ID`=:id";
+        $sql = "SELECT `NickName`, `Level`, `Admin`, `PlayedTime`, `Member`, `Skin`, `Warns` FROM `sv_accounts` WHERE `ID`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
-       return $this->db->getResult();
+        return $this->db->getResult();
     }
 
     public function getCategoryName($id)
@@ -66,7 +66,17 @@ class Complaint
         $sql = "SELECT * FROM `panel_creplies` WHERE `complaint_id`=:id ORDER BY `created_at` ASC";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
-        return $this->db->getResults();
+        $results = $this->db->getResults();
+        $final_results = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                $result['author_name'] = $this->getUser($result['author_id'])['NickName'];
+                $result['author_skin'] = $this->getUser($result['author_id'])['Skin'];
+                $result['admin_level'] = $this->getUser($result['author_id'])['Admin'];
+                array_push($final_results, $result);
+            }
+        }
+        return $final_results;
     }
 
     public function getComplaint($id)
@@ -79,18 +89,6 @@ class Complaint
             $result['author'] = $this->getUser($result['author_id']);
             $result['against_user'] = $this->getUser($result['against_id']);
             $result['category_name'] = $this->getCategoryName($result['category_id'])['name'];
-            $replies = $this->getComplaintReplies($id);
-            if (!empty($replies)) {
-                $final_replies = array();
-                foreach ($replies as $reply) {
-                    $reply['author_name'] = $this->getUser($reply['author_id'])['NickName'];
-                    $reply['author_skin'] = $this->getUser($reply['author_id'])['Skin'];
-                    array_push($final_replies, $reply);
-                }
-                $result['replies'] = $final_replies;
-            } else {
-                $result['replies'] = $replies;
-            }
             if ($result['closed_by'] != 0) {
                 $result['closed_by_name'] = $this->getUser($result['closed_by'])['NickName'];
             }

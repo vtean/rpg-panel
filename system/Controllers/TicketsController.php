@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief TicketsController controller.
+ * @brief Tickets controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
@@ -260,6 +260,9 @@ class TicketsController extends Controller
 
             // get replies
             $replies = $this->ticketModel->getReplies($id);
+
+            $ticket['body'] = str_replace('<br>', PHP_EOL, $ticket['body']);
+            $ticket['body'] = html_entity_decode($ticket['body']);
 
             if (isset($_POST['reply_ticket'])) {
                 // sanitize post data

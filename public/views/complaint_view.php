@@ -2,7 +2,7 @@
 $complaint = $data['complaint'];
 $author = $complaint['author'];
 $against_user = $complaint['against_user'];
-$replies = $complaint['replies'];
+$replies = $data['cReplies'];
 $categories = $data['categories'];
 ?>
 <?php getHeader($data); ?>
@@ -76,7 +76,7 @@ $categories = $data['categories'];
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="close_complaint" class="dv-btn btn btn-warning"><i
+                                                <button name="close_complaint" class="dv-btn btn btn-warning text-white"><i
                                                             class="fas fa-lock"></i> Close
                                                 </button>
                                             </form>
@@ -150,7 +150,7 @@ $categories = $data['categories'];
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="hide_complaint" class="dv-btn btn btn-secondary"><i
+                                                <button name="hide_complaint" class="dv-btn btn dv-btn-secondary"><i
                                                             class="fas fa-eye-slash"></i> Hide
                                                 </button>
                                             </form>
@@ -158,7 +158,7 @@ $categories = $data['categories'];
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="unhide_complaint" class="dv-btn btn btn-secondary"><i
+                                                <button name="unhide_complaint" class="dv-btn btn dv-btn-secondary"><i
                                                             class="fas fa-eye"></i> Unhide
                                                 </button>
                                             </form>
@@ -215,7 +215,7 @@ $categories = $data['categories'];
                                     <div class="dv-reply-author">
                                         <a href="<?php echo BASE_URL . '/users/profile/' . $reply['author_name']; ?>"
                                            class="author-name"><?php echo $reply['author_name']; ?></a>
-                                        <?php if ($data['isAdmin']): ?>
+                                        <?php if ($reply['admin_level'] > 0): ?>
                                             <span class="badge badge-danger"><i
                                                         class="fas fa-shield-alt"></i> Admin</span>
                                         <?php endif; ?>
@@ -237,7 +237,7 @@ $categories = $data['categories'];
                                     </div>
                                 </div>
                                 <div class="dv-reply-body">
-                                    <span><?php echo html_entity_decode($reply['body']); ?></span>
+                                    <span><?php echo $reply['body']; ?></span>
                                 </div>
                             </div>
                         </div>
@@ -263,7 +263,7 @@ $categories = $data['categories'];
                                 <div class="invalid-feedback"><?php echo $errors['reply_error']; ?></div>
                             <?php endif; ?>
                         </div>
-                        <button type="submit" name="post_reply" class="dv-btn btn btn-primary">Submit</button>
+                        <button type="submit" name="post_reply" class="dv-btn btn btn-primary"><i class="fas fa-paper-plane"></i> Submit</button>
                     </form>
                 <?php endif; ?>
             <?php endif; ?>

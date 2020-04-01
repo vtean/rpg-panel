@@ -46,3 +46,6 @@ Route::set('tickets', 'TicketsController', 'index');
 
 // complaints page
 Route::set('complaints', 'ComplaintsController', 'index');
+
+// unban requests page
+Route::set('unbans', 'UnbansController', 'index');

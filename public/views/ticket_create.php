@@ -35,7 +35,7 @@
                             <div class="invalid-feedback"><?php echo $errors['ticket_body_error']; ?></div>
                         <?php endif; ?>
                     </div>
-                    <button type="submit" name="create_ticket" class="dv-btn btn btn-primary">Submit</button>
+                    <button type="submit" name="create_ticket" class="dv-btn btn btn-primary"><i class="fas fa-paper-plane"></i> Submit</button>
                 </form>
             </div>
         </div>

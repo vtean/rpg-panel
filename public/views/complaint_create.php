@@ -48,7 +48,7 @@
                     <textarea type="text" name="other_info" class="form-control" id="other_info" rows="2"
                               placeholder="Leave this field empty if you don't have any other mentions"><?php echo $complaint['other_info']; ?></textarea>
                 </div>
-                <button type="submit" name="create_complaint" class="dv-btn btn btn-primary">Post Complaint</button>
+                <button type="submit" name="create_complaint" class="dv-btn btn btn-primary"><i class="fas fa-paper-plane"></i> Post Complaint</button>
             </form>
         </div>
     </div>
