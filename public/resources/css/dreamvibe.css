@@ -1169,6 +1169,44 @@ textarea {
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 0.5rem 0.75rem;
+  transition: all .2s ease-in-out;
+}
+
+.dv-btn:hover {
+  box-shadow: 0 3px 0 0 #4a4f77;
+  transform: translateY(-3px) scale(1.05, 1.05);
+}
+
+.btn-warning:hover {
+  box-shadow: 0 3px 0 0 #b08505;
+}
+
+.btn-danger:hover {
+  box-shadow: 0 3px 0 0 #981b27;
+}
+
+.btn-success:hover {
+  box-shadow: 0 3px 0 0 #1e7b34;
+}
+
+.btn-info:hover {
+  box-shadow: 0 3px 0 0 #0c6673;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 3px 0 0 #0a4eb9;
+}
+
+.dv-btn-secondary {
+  color: #fff;
+  background-color: #484d77;
+  border-color: #484d77;
+}
+
+.dv-btn-secondary:hover {
+  color: #fff;
+  background-color: #434770;
+  border-color: #434770;
 }
 
 .dv-user-weapon-skills {

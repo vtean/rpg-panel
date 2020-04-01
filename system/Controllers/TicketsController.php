@@ -145,7 +145,7 @@ class TicketsController extends Controller
 
         if ($id == 0) {
             $this->error('404', 'Page Not Found!');
-        } else if (($ticket['author_id'] != $_SESSION['user_id'] && $ticket['status'] != 'Open') || in_array(1, $this->privileges['canEditTickets'])) {
+        } else if ($ticket['author_id'] != $_SESSION['user_id'] || $ticket['status'] != 'Open') {
             $this->error('403', 'Forbidden!');
         } else {
             global $lang;
@@ -156,7 +156,7 @@ class TicketsController extends Controller
             $categories = $this->categoryModel->getAllCategories($type);
             $category_name = $this->ticketModel->getCategoryName($ticket['category_id']);
 
-            // check if delete ticket button is set
+            // check if delete group button is set
             if (isset($_POST['delete_ticket'])) {
                 if ($this->ticketModel->deleteTicket($id)) {
                     flashMessage('success', 'Ticket has been successfully deleted!');
@@ -167,7 +167,7 @@ class TicketsController extends Controller
                 }
             }
 
-            // check if close ticket button is set
+            // check if close group button is set
             if (isset($_POST['close_ticket'])) {
                 if ($this->ticketModel->updateStatus($id, 'Closed')) {
                     flashMessage('success', 'Ticket has been successfully closed!');
@@ -247,9 +247,8 @@ class TicketsController extends Controller
     {
         $ticket = $this->ticketModel->getTicket($id);
         $author = $this->userModel->searchUserById($ticket['author_id']);
-        $categories = $this->categoryModel->getAllCategories('ticket');
 
-        if ($id == 0 || empty($ticket)) {
+        if (empty($id) || empty($ticket)) {
             $this->error('404', 'Page Not Found!');
         } else if ($ticket['author_id'] != $_SESSION['user_id'] && !in_array(1, $this->privileges['canViewTickets'])) {
             $this->error('403', 'Forbidden!');
@@ -261,6 +260,9 @@ class TicketsController extends Controller
 
             // get replies
             $replies = $this->ticketModel->getReplies($id);
+
+            $ticket['body'] = str_replace('<br>', PHP_EOL, $ticket['body']);
+            $ticket['body'] = html_entity_decode($ticket['body']);
 
             if (isset($_POST['delete_ticket'])) {
                 if ($this->ticketModel->deleteTicket($id)) {
@@ -346,18 +348,14 @@ class TicketsController extends Controller
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
                     'isLeader' => $this->privileges['isLeader'],
+                    'canEditTickets' => $this->privileges['canEditTickets'],
+                    'canDeleteTickets' => $this->privileges['canDeleteTickets'],
                     'ticket' => $ticket,
                     'reply' => $_POST['ticket_reply'],
                     'author' => $author,
                     'lang' => $lang,
                     'badges' => $badges,
-                    'replies' => $replies,
-                    'canViewTickets' => in_array(1, $this->privileges['canViewTickets']),
-                    'canEditTickets' => in_array(1, $this->privileges['canEditTickets']),
-                    'canDeleteTickets' => in_array(1, $this->privileges['canDeleteTickets']),
-                    'canDeleteTReplies' => in_array(1, $this->privileges['canDeleteTReplies']),
-                    'canCloseTickets' => in_array(1, $this->privileges['canCloseTickets']),
-                    'categories' => $categories
+                    'replies' => $replies
                 ];
 
                 // handle errors
@@ -382,17 +380,13 @@ class TicketsController extends Controller
                     'fullAccess' => $this->privileges['fullAccess'],
                     'isAdmin' => $this->privileges['isAdmin'],
                     'isLeader' => $this->privileges['isLeader'],
+                    'canEditTickets' => $this->privileges['canEditTickets'],
+                    'canDeleteTickets' => $this->privileges['canDeleteTickets'],
                     'ticket' => $ticket,
                     'author' => $author,
                     'lang' => $lang,
                     'badges' => $badges,
                     'replies' => $replies,
-                    'canViewTickets' => in_array(1, $this->privileges['canViewTickets']),
-                    'canEditTickets' => in_array(1, $this->privileges['canEditTickets']),
-                    'canDeleteTickets' => in_array(1, $this->privileges['canDeleteTickets']),
-                    'canDeleteTReplies' => in_array(1, $this->privileges['canDeleteTReplies']),
-                    'canCloseTickets' => in_array(1, $this->privileges['canCloseTickets']),
-                    'categories' => $categories
                 ];
                 $this->loadView('ticket_view', $data);
             }

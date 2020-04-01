@@ -327,7 +327,7 @@ class GroupsController extends Controller
             if ($user) {
                 $allGroups = $this->groupModel->getAllGroups();
                 $userGroups = implode($this->userModel->getUserGroups($name));
-                $pageTitle = $_SESSION['user_lang'] == 'ro' ? 'Atribuire Grupuri' : 'Assign Groups';
+                $pageTitle = $_COOKIE["user_lang"] == "ro" ? 'Atribuire Grupuri' : 'Assign Groups';
 
                 // unserialize user groups
                 $userGroupsArr = unserialize($userGroups);

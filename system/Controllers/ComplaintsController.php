@@ -247,6 +247,16 @@ class ComplaintsController extends Controller
             $complaint['other_info'] = html_entity_decode($complaint['other_info']);
             $categories = $this->categoryModel->getAllCategories('complaint');
 
+            $cReplies = $this->complaintModel->getComplaintReplies($id);
+            $finalReplies = array();
+            if (!empty($cReplies)) {
+                foreach ($cReplies as $reply) {
+                    $reply['body'] = str_replace('<br>', PHP_EOL, $reply['body']);
+                    $reply['body'] = html_entity_decode($reply['body']);
+                    array_push($finalReplies, $reply);
+                }
+            }
+
             $data = [
                 'pageTitle' => 'Complaint against ' . $complaint['against_user']['NickName'],
                 'fullAccess' => $this->privileges['fullAccess'],
@@ -275,7 +285,8 @@ class ComplaintsController extends Controller
                 'lang' => $lang,
                 'badges' => $badges,
                 'complaint' => $complaint,
-                'categories' => $categories
+                'categories' => $categories,
+                'cReplies' => $finalReplies
             ];
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {

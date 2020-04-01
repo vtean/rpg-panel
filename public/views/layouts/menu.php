@@ -108,7 +108,7 @@
                             </a>
                         </li>
                         <li class="dv-nav-item">
-                            <a class="dv-nav-link" href="#">
+                            <a class="dv-nav-link" href="<?php echo BASE_URL . '/unbans'; ?>">
                                 <i class="dv-nav-icon fas fa-ban"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['unban_requests_txt']; ?></span>
                             </a>

@@ -174,7 +174,7 @@ $author = $data['author'];
                                         </div>
                                     </div>
                                     <div class="dv-reply-body">
-                                        <span><?php echo html_entity_decode($reply['body']); ?></span>
+                                        <span><?php echo $reply['body']; ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@ $author = $data['author'];
                                 <div class="invalid-feedback"><?php echo $errors['ticket_reply_error']; ?></div>
                             <?php endif; ?>
                         </div>
-                        <button type="submit" name="reply_ticket" class="dv-btn btn btn-primary m-auto">Submit</button>
+                        <button type="submit" name="reply_ticket" class="dv-btn btn btn-primary m-auto"><i class="fas fa-paper-plane"></i> Submit</button>
                     </form>
                 <?php endif; ?>
             </div>

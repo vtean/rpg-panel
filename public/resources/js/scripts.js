@@ -28,6 +28,11 @@ $(document).ready( function () {
         "order": [[ 3, "desc" ]]
     });
 
+    $('#dvUnbansTable').DataTable({
+        "pageLength": 25,
+        "order": [[ 3, "desc" ]]
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
