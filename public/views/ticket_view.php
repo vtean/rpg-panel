@@ -155,7 +155,11 @@ $author = $data['author'];
                                         <div class="dv-reply-author">
                                             <a class="author-name"
                                                href="<?php echo BASE_URL . '/users/profile/' . $reply['author_name']; ?>"><?php echo $reply['author_name']; ?></a>
-                                            <span class="badge <?php if ($reply['user_status'] == 'Author'): ?>badge-secondary<?php else: ?>badge-danger<?php endif; ?>"><?php echo $reply['user_status']; ?></span>
+                                            <?php if ($reply['admin_level'] > 0): ?>
+                                                <span class="badge badge-danger"><i
+                                                            class="fas fa-shield-alt"></i> Admin</span>
+                                            <?php endif; ?>
+                                            <span class="badge<?php if ($reply['user_status'] == 'Author'): ?> badge-secondary<?php elseif ($reply['user_status'] == 'Ticket Manager'): ?> badge-info<?php endif; ?>"><?php echo $reply['user_status'] ?></span>
                                         </div>
                                         <div class="dv-reply-date">
                                             <span><i class="far fa-clock"></i> <?php echo $reply['created_at']; ?></span>
@@ -179,6 +183,12 @@ $author = $data['author'];
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                    <?php endif; ?>
+                    <?php if ($ticket['closed_by'] != 0): ?>
+                        <div class="dv-closed-topic">
+                        <span><i class="fas fa-lock"></i> This ticket has been closed by <a
+                                href="<?php echo BASE_URL . '/users/profile/' . $ticket['closed_by_name']; ?>"><?php echo $ticket['closed_by_name']; ?></a>.</span>
+                        </div>
                     <?php endif; ?>
                 </div>
                 <?php if ($ticket['status'] != 'Closed'): ?>

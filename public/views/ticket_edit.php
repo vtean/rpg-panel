@@ -8,7 +8,7 @@
              <form action="" method="post">
                 <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>">
                 <?php
-                if (in_array(1, $data['canDeleteTickets'])) {
+                if ($data['canDeleteTickets']) {
                     ?>
                     <button type="submit" name="delete_ticket" class="dv-btn btn btn-danger"><i
                                 class="fas fa-trash-alt"></i> Delete Ticket

@@ -12,15 +12,18 @@ $cookieValue = "ro";
 
 if (!isset($_COOKIE[$cookieName])) {
     setcookie($cookieName, $cookieValue, time() + (86400 * 30), "/");
+    redirect('/');
 }
 
-switch ($_COOKIE[$cookieName]) {
-    case "en":
-        require_once ROOT_PATH . '/public/languages/en.php';
-        break;
-    case "ro":
-        require_once ROOT_PATH . '/public/languages/ro.php';
-        break;
-    default:
-        require_once ROOT_PATH . '/public/languages/ro.php';
+if (isset($_COOKIE[$cookieName])) {
+    switch ($_COOKIE[$cookieName]) {
+        case "en":
+            require_once ROOT_PATH . '/public/languages/en.php';
+            break;
+        case "ro":
+            require_once ROOT_PATH . '/public/languages/ro.php';
+            break;
+        default:
+            require_once ROOT_PATH . '/public/languages/ro.php';
+    }
 }

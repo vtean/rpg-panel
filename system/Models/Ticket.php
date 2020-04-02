@@ -30,7 +30,7 @@ class Ticket
     // get author name
     public function getReplyAuthor($id)
     {
-        $sql = "SELECT `NickName`, `Skin` FROM `sv_accounts` WHERE `id`=:id";
+        $sql = "SELECT `NickName`, `Skin`, `Admin` FROM `sv_accounts` WHERE `id`=:id";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params
@@ -68,6 +68,7 @@ class Ticket
         $result = $this->db->getResult();
         if (!empty($result)){
             $result['category_name'] = $this->getCategoryName($result['category_id'])['name'];
+            $result['closed_by_name'] = $this->getReplyAuthor($result['closed_by'])['NickName'];
         }
         return $result;
     }
@@ -149,13 +150,14 @@ class Ticket
     }
 
     // update ticket's status
-    public function updateStatus($id, $status)
+    public function updateStatus($id, $status, $closedBy = 0)
     {
-        $sql = "UPDATE `panel_tickets` SET `status`=:status WHERE `id`=:id";
+        $sql = "UPDATE `panel_tickets` SET `status`=:status, `closed_by`=:user_id WHERE `id`=:id";
         // prepare query
         $this->db->prepareQuery($sql);
         // bind params
         $this->db->bind(':status', $status);
+        $this->db->bind(':user_id', $closedBy);
         $this->db->bind(':id', $id);
         // execute query
         if ($this->db->executeStmt()) {
@@ -199,6 +201,7 @@ class Ticket
         foreach ($results as $result) {
             $result['author_name'] = $this->getReplyAuthor($result['author_id'])['NickName'];
             $result['author_avatar'] = $this->getReplyAuthor($result['author_id'])['Skin'];
+            $result['admin_level'] = $this->getReplyAuthor($result['author_id'])['Admin'];
             array_push($final_results, $result);
         }
         return $final_results;
