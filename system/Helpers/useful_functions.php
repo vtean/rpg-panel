@@ -52,7 +52,12 @@ function flashMessage($type = '', $message = '')
         $_SESSION['message'] = $message;
     } else if (isset($_SESSION['message_type']) && isset($_SESSION['message'])) {
         // display the message
-        echo '<div class="dv-message ' . $_SESSION['message_type'] . '"><i class="fas fa-info-circle"></i><span>' . $_SESSION['message'] . '</span></div>';
+        echo '<div class="dv-message ' . $_SESSION['message_type'] . '"><i class="fas fa-info-circle"></i><span>' . $_SESSION['message'] . '</span><div class="dv-countdown">6</div>
+        <div class="dv-progress-bar-container">
+            <div class="dv-progress-bar"
+                 style="display: flex; transition: width 6s linear 0s; width: 100%;"></div>
+        </div>
+    </div>';
         // unset session message
         unset($_SESSION['message_type'], $_SESSION['message']);
     }
@@ -71,7 +76,7 @@ function convertMinutes($time, $format = '%02dh %02dm')
 function sendMail($to, $from, $name, $subject, $message)
 {
     $url = "http://support.dreamvibe.ro/dvmailer.php";
-    $dataPost = array (
+    $dataPost = array(
         "t" => $to,
         "f" => $from,
         "n" => $name,
@@ -82,28 +87,29 @@ function sendMail($to, $from, $name, $subject, $message)
     $fields_string = http_build_query($dataPost);
     $ch = curl_init();
 
-    curl_setopt($ch,CURLOPT_URL, $url);
-    curl_setopt($ch,CURLOPT_POST, 1);
-    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
     $result = curl_exec($ch);
 
     curl_close($ch);
 }
 
-function getUserIp(){
-    if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+function getUserIp()
+{
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         //ip from share internet
         $ip = $_SERVER['HTTP_CLIENT_IP'];
-    }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         //ip pass from proxy
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    }else{
+    } else {
         $ip = $_SERVER['REMOTE_ADDR'];
     }
     return $ip;
 }
 
-function strLimit($s, $length, $end='...')
+function strLimit($s, $length, $end = '...')
 {
     return substr($s, 0, $length) . $end;
 }
