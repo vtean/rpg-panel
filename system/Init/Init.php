@@ -6,11 +6,17 @@
  * @version 0.1
  */
 
+// set timezone
+date_default_timezone_set('Europe/Bucharest');
+
 // initiate the session
 session_start();
 
 // load the main config
 require_once 'config.php';
+
+// load useful functions
+require_once ROOT_PATH . '/system/Helpers/useful_functions.php';
 
 // load csrf token
 require_once ROOT_PATH . '/system/Session/Csrf.php';
@@ -35,9 +41,6 @@ require_once ROOT_PATH . '/system/Routes/Route.php';
 
 // load routes
 require_once ROOT_PATH . '/system/Routes/Routes.php';
-
-// load useful functions
-require_once ROOT_PATH . '/system/Helpers/useful_functions.php';
 
 // load the main controller
 require_once ROOT_PATH . '/system/Controllers/Controller.php';

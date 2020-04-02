@@ -11,6 +11,22 @@
         })
     })
 
+    const doUpdate = function () {
+        $('.dv-countdown').each(function () {
+            $('.dv-progress-bar').width('0%');
+            const count = parseInt($(this).html());
+            if (count !== 0) {
+                $(this).html(count - 1);
+            }
+            if (count === 0) {
+                $('.dv-message').remove()
+            }
+        });
+    };
+
+    // Schedule the update to happen once every second
+    setInterval(doUpdate, 1000);
+
 })(jQuery);
 
 $(document).ready( function () {

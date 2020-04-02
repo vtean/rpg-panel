@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief Tickets controller.
+ * @brief TicketsController controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1
@@ -263,6 +263,62 @@ class TicketsController extends Controller
 
             $ticket['body'] = str_replace('<br>', PHP_EOL, $ticket['body']);
             $ticket['body'] = html_entity_decode($ticket['body']);
+
+            if (isset($_POST['delete_ticket'])) {
+                if ($this->ticketModel->deleteTicket($id)) {
+                    flashMessage('success', 'Ticket has been successfully deleted!');
+                    redirect('/tickets');
+                    unset($_POST);
+                } else {
+                    die('Something went wrong');
+                }
+            }
+
+            if (isset($_POST['close_ticket'])) {
+                if ($this->ticketModel->updateStatus($id, 'Closed')) {
+                    flashMessage('success', 'Ticket has been successfully closed!');
+                    redirect('/tickets/view/' . $id);
+                    unset($_POST);
+                } else {
+                    die('Something went wrong');
+                }
+            }
+
+            if (isset($_POST['open_ticket'])) {
+                if ($this->ticketModel->updateStatus($id, 'Open')) {
+                    flashMessage('success', 'Ticket has been successfully closed!');
+                    redirect('/tickets/view/' . $id);
+                    unset($_POST);
+                } else {
+                    die('Something went wrong');
+                }
+            }
+
+            if (isset($_POST['change_category'])) {
+                // filter post
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $cID = $_POST['new_category_id'];
+                // change category
+                if ($this->ticketModel->changeCategory($cID, $id)) {
+                    flashMessage('success', 'Ticket category has been successfully changed.');
+                    redirect('/tickets/view/' . $id);
+                } else {
+                    die('Something went wrong');
+                }
+            }
+
+            if (isset($_POST['delete_reply'])) {
+                // filter post
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $reply_id = $_POST['reply_id'];
+                if ($this->ticketModel->deleteReply($reply_id)) {
+                    flashMessage('success', 'Reply has been successfully deleted.');
+                    redirect('/tickets/view/' . $id);
+                } else {
+                    die('Something went wrong.');
+                }
+            }
+
 
             if (isset($_POST['reply_ticket'])) {
                 // sanitize post data

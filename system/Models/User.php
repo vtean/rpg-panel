@@ -101,7 +101,7 @@ class User
     public function getFactionRank($factionId, $rankId)
     {
         if ($rankId == 0) return false;
-        $sql = "SELECT `Rank_$rankId` FROM `sv_Factions` WHERE `ID`=:factionId";
+        $sql = "SELECT `Rank_$rankId` FROM `sv_factions` WHERE `ID`=:factionId";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params

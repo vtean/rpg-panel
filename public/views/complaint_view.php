@@ -228,9 +228,12 @@ $categories = $data['categories'];
                                         <?php if ($data['canDeleteACReplies'] || $data['canDeleteHCReplies'] || $data['canDeleteLCReplies'] || $data['canDeleteUCReplies']): ?>
                                             <div class="dv-reply-actions float-right">
                                                 <form action="" method="post">
-                                                    <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
-                                                    <input type="hidden" name="reply_id" value="<?php echo $reply['id']; ?>">
-                                                    <button name="delete_reply" class="btn btn-link p-0 mx-2"><i class="fas fa-trash"></i></button>
+                                                    <input type="hidden" name="csrfToken"
+                                                           value="<?php echo $_SESSION['csrfToken']; ?>"/>
+                                                    <input type="hidden" name="reply_id"
+                                                           value="<?php echo $reply['id']; ?>">
+                                                    <button name="delete_reply" class="btn btn-link p-0 mx-2"><i
+                                                                class="fas fa-trash"></i></button>
                                                 </form>
                                             </div>
                                         <?php endif; ?>
