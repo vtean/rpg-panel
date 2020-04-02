@@ -35,13 +35,6 @@ trait ValidateComplaint
             $errors['description_error'] = "Description must have at least 5 characters.";
         }
 
-        // check if complaint proof is empty
-        if (empty($complaintData['complaint_proof'])) {
-            $errors['proof_error'] = "You can't post a complaint without proof.";
-        } else if (strlen($complaintData['complaint_proof']) < 5) {
-            $errors['proof_error'] = "Your link must have at least 5 characters.";
-        }
-
         return $errors;
     }
 

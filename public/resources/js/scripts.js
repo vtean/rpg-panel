@@ -52,6 +52,15 @@ $(document).ready( function () {
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
+
+    tinymce.init({
+        selector: "textarea",
+        menubar: false,
+        statusbar: false,
+        plugins: "link",
+        content_style: "body.mce-content-body { color: #fff; font-size: 12px; } a { color: #fff; } .mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before { color: #7174a8 !important; }",
+        toolbar: 'undo redo | bold italic | link blockquote removeformat'
+    });
 });
 
 

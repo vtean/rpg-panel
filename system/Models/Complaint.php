@@ -100,11 +100,9 @@ class Complaint
 
     public function postComplaint($data)
     {
-        $sql = "INSERT INTO `panel_complaints` (`description`, `proof`, `other_info`, `author_id`, `author_ip`, `against_id`, `category_id`, `status`, `is_hidden`) VALUES (:description, :proof, :other_info, :author_id, :author_ip, :against_id, :category_id, :status, :is_hidden)";
+        $sql = "INSERT INTO `panel_complaints` (`description`, `author_id`, `author_ip`, `against_id`, `category_id`, `status`, `is_hidden`) VALUES (:description, :author_id, :author_ip, :against_id, :category_id, :status, :is_hidden)";
         $this->db->prepareQuery($sql);
         $this->db->bind(':description', $data['complaint_desc']);
-        $this->db->bind(':proof', $data['complaint_proof']);
-        $this->db->bind(':other_info', $data['other_info']);
         $this->db->bind(':author_id', $data['author_id']);
         $this->db->bind(':author_ip', $data['author_ip']);
         $this->db->bind(':against_id', $data['against_id']);

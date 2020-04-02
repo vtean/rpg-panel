@@ -73,9 +73,8 @@ class User
         $this->db->bind(':jobId', $jobId);
         // get the result
         $result = $this->db->getResult();
-        $job = $result['name'];
         if ($this->db->countRows() > 0) {
-            return $job;
+            return $result['name'];
         } else {
             return false;
         }

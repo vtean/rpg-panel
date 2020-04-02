@@ -34,21 +34,6 @@
                         <div class="invalid-feedback"><?php echo $errors['description_error']; ?></div>
                     <?php endif; ?>
                 </div>
-                <div class="form-group">
-                    <label for="complaint_proof">Proof</label>
-                    <textarea type="text" name="complaint_proof"
-                              class="form-control <?php if (!empty($errors['proof_error'])): ?> is-invalid<?php endif; ?>"
-                              id="complaint_proof" rows="3"
-                              placeholder="Here goes your proof (only links accepted)"><?php echo $complaint['proof']; ?></textarea>
-                    <?php if (!empty($errors['proof_error'])): ?>
-                        <div class="invalid-feedback"><?php echo $errors['proof_error']; ?></div>
-                    <?php endif; ?>
-                </div>
-                <div class="form-group">
-                    <label for="other_info">Additional Information</label>
-                    <textarea type="text" name="other_info" class="form-control" id="other_info" rows="2"
-                              placeholder="Leave this field empty if you don't have any other mentions"><?php echo $complaint['other_info']; ?></textarea>
-                </div>
                 <button type="submit" name="edit_complaint" class="dv-btn btn btn-primary">Edit Complaint</button>
             </form>
         </div>

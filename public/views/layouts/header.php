@@ -10,6 +10,7 @@
     <script src="https://kit.fontawesome.com/e6f74534ae.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="<?php echo BASE_URL . '/public/resources/3rd_party/bootstrap/bootstrap.min.css'; ?>" />
     <link rel="stylesheet" href="<?php echo BASE_URL . '/public/resources/3rd_party/datatables/datatables.min.css'; ?>" />
+    <script src="https://cdn.tiny.cloud/1/vj36fa0dxhvz9w4jt55nkwwl51ob172kxxf1k2y46vqvo2ds/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <link rel="stylesheet" href="<?php echo BASE_URL . '/public/resources/css/dreamvibe.css'; ?>" />
 </head>
 <body>

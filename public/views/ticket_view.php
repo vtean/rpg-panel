@@ -137,7 +137,7 @@ $author = $data['author'];
             <div class="col-lg-8 col-sm-12 col-12">
                 <div class="dv-topic-message">
                     <h4 class="dv-row-title">User message</h4>
-                    <p><?php echo html_entity_decode($ticket['body']); ?></p>
+                    <p><?php echo $ticket['body']; ?></p>
                 </div>
                 <div class="dv-topic-replies">
                     <h4 class="dv-row-title">Ticket replies</h4>
@@ -198,7 +198,7 @@ $author = $data['author'];
                         <h4 class="dv-row-title">Leave a reply</h4>
                         <div class="form-group">
                         <textarea type="text" rows="5" name="ticket_reply"
-                                  class="d-block form-control<?php if (!empty($errors['ticket_reply_error'])): ?> is-invalid<?php endif; ?>"
+                                  class="form-control<?php if (!empty($errors['ticket_reply_error'])): ?> is-invalid<?php endif; ?>"
                                   id="ticket_reply"></textarea>
                             <?php if (!empty($errors['ticket_reply_error'])): ?>
                                 <div class="invalid-feedback"><?php echo $errors['ticket_reply_error']; ?></div>

@@ -19,8 +19,12 @@ class UrlHandler
 
             // create an array from the url
             $url = explode('/', $url);
-
-            return $url;
+        } else if (!isset($_GET['url'])) {
+            $url = [
+                '0' => ''
+            ];
         }
+
+        return $url;
     }
 }

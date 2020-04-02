@@ -77,9 +77,8 @@ class TicketsController extends Controller
 
         if (isset($_POST['create_ticket'])) {
             // sanitize post data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST['ticket_category'] = filter_var($_POST['ticket_category'], FILTER_SANITIZE_NUMBER_INT);
 
-            $_POST['ticket_body'] = str_replace(PHP_EOL, "<br>", $_POST['ticket_body']);
             $_POST['ticket_body'] = htmlentities($_POST['ticket_body']);
 
             $dataPost = [
@@ -196,9 +195,7 @@ class TicketsController extends Controller
 
             if (isset($_POST['edit_ticket'])) {
                 // sanitize post data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                $_POST['ticket_body'] = str_replace(PHP_EOL, "<br>", $_POST['ticket_body']);
+                $_POST['ticket_category'] = filter_var($_POST['ticket_category'], FILTER_SANITIZE_NUMBER_INT);
                 $_POST['ticket_body'] = htmlentities($_POST['ticket_body']);
 
                 $dataPost = [
@@ -263,8 +260,14 @@ class TicketsController extends Controller
 
             // get replies
             $replies = $this->ticketModel->getReplies($id);
+            $finalReplies = array();
+            if (!empty($replies)) {
+                foreach ($replies as $reply) {
+                    $reply['body'] = html_entity_decode($reply['body']);
+                    array_push($finalReplies, $reply);
+                }
+            }
 
-            $ticket['body'] = str_replace('<br>', PHP_EOL, $ticket['body']);
             $ticket['body'] = html_entity_decode($ticket['body']);
 
             // get categories
@@ -284,7 +287,7 @@ class TicketsController extends Controller
                 'author' => $author,
                 'lang' => $lang,
                 'badges' => $badges,
-                'replies' => $replies,
+                'replies' => $finalReplies,
                 'categories' => $categories
             ];
 
@@ -347,10 +350,6 @@ class TicketsController extends Controller
             }
 
             if (isset($_POST['reply_ticket'])) {
-                // sanitize post data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                $_POST['ticket_reply'] = str_replace(PHP_EOL, "<br>", $_POST['ticket_reply']);
                 $_POST['ticket_reply'] = htmlentities($_POST['ticket_reply']);
 
                 if ($ticket['author_id'] == $_SESSION['user_id']) {

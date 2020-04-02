@@ -66,23 +66,14 @@ class ComplaintsController extends Controller
 
             if (isset($_POST['create_complaint'])) {
                 // sanitize post data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                $_POST['complaint_desc'] = str_replace(PHP_EOL, '<br>', $_POST['complaint_desc']);
+                $_POST['against_name'] = filter_var($_POST['against_name'], FILTER_SANITIZE_STRING);
+                $_POST['complaint_category'] = filter_var($_POST['complaint_category'], FILTER_SANITIZE_NUMBER_INT);
                 $_POST['complaint_desc'] = htmlentities($_POST['complaint_desc']);
-
-                $_POST['complaint_proof'] = str_replace(PHP_EOL, '<br>', $_POST['complaint_proof']);
-                $_POST['complaint_proof'] = htmlentities($_POST['complaint_proof']);
-
-                $_POST['other_info'] = str_replace(PHP_EOL, '<br>', $_POST['other_info']);
-                $_POST['other_info'] = htmlentities($_POST['other_info']);
 
                 $postData = [
                     'against_name' => $_POST['against_name'],
                     'complaint_category' => $_POST['complaint_category'],
                     'complaint_desc' => $_POST['complaint_desc'],
-                    'complaint_proof' => $_POST['complaint_proof'],
-                    'other_info' => $_POST['other_info'],
                     'author_id' => $_SESSION['user_id'],
                     'author_ip' => getUserIp(),
                     'status' => 'Open',
@@ -130,8 +121,6 @@ class ComplaintsController extends Controller
                     'complaint' => [
                         'against_name' => '',
                         'complaint_desc' => '',
-                        'complaint_proof' => '',
-                        'other_info' => ''
                     ],
                     'lang' => $lang,
                     'badges' => $badge,
@@ -159,13 +148,6 @@ class ComplaintsController extends Controller
             global $lang;
 
             $complaint['description'] = html_entity_decode($complaint['description']);
-            $complaint['description'] = str_replace('<br>', PHP_EOL, $complaint['description']);
-
-            $complaint['proof'] = html_entity_decode($complaint['proof']);
-            $complaint['proof'] = str_replace('<br>', PHP_EOL, $complaint['description']);
-
-            $complaint['other_info'] = html_entity_decode($complaint['other_info']);
-            $complaint['other_info'] = str_replace('<br>', PHP_EOL, $complaint['other_info']);
 
             $badges = $this->badges();
             $categories = $this->categoryModel->getAllCategories('complaint');
@@ -183,21 +165,12 @@ class ComplaintsController extends Controller
 
             if (isset($_POST['edit_complaint'])) {
                 // sanitize post data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                $_POST['complaint_desc'] = str_replace(PHP_EOL, '<br>', $_POST['complaint_desc']);
+                $_POST['against_name'] = filter_var($_POST['against_name'], FILTER_SANITIZE_STRING);
+                $_POST['complaint_category'] = filter_var($_POST['complaint_category'], FILTER_SANITIZE_NUMBER_INT);
                 $_POST['complaint_desc'] = htmlentities($_POST['complaint_desc']);
-
-                $_POST['complaint_proof'] = str_replace(PHP_EOL, '<br>', $_POST['complaint_proof']);
-                $_POST['complaint_proof'] = htmlentities($_POST['complaint_proof']);
-
-                $_POST['other_info'] = str_replace(PHP_EOL, '<br>', $_POST['other_info']);
-                $_POST['other_info'] = htmlentities($_POST['other_info']);
 
                 $postData = [
                     'complaint_desc' => $_POST['complaint_desc'],
-                    'complaint_proof' => $_POST['complaint_proof'],
-                    'other_info' => $_POST['other_info'],
                     'against_name' => $_POST['against_name'],
                     'complaint_category' => $_POST['complaint_category'],
                     'is_edited' => 1,
@@ -243,15 +216,12 @@ class ComplaintsController extends Controller
             $this->error('404', 'Page Not Found!');
         } else {
             $complaint['description'] = html_entity_decode($complaint['description']);
-            $complaint['proof'] = html_entity_decode($complaint['proof']);
-            $complaint['other_info'] = html_entity_decode($complaint['other_info']);
             $categories = $this->categoryModel->getAllCategories('complaint');
 
             $cReplies = $this->complaintModel->getComplaintReplies($id);
             $finalReplies = array();
             if (!empty($cReplies)) {
                 foreach ($cReplies as $reply) {
-                    $reply['body'] = str_replace('<br>', PHP_EOL, $reply['body']);
                     $reply['body'] = html_entity_decode($reply['body']);
                     array_push($finalReplies, $reply);
                 }
@@ -389,9 +359,6 @@ class ComplaintsController extends Controller
 
                 if (isset($_POST['post_reply'])) {
                     // sanitize post data
-                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                    $_POST['complaint_reply'] = str_replace(PHP_EOL, '<br>', $_POST['complaint_reply']);
                     $_POST['complaint_reply'] = htmlentities($_POST['complaint_reply']);
 
                     if ($_SESSION['user_id'] == $complaint['author_id']) {

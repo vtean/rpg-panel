@@ -115,6 +115,12 @@ textarea {
   color: #7174a8 !important;
 }
 
+blockquote {
+  border-left: 3px solid var(--text-color-secondary);
+  padding: 5px 0 5px 10px;
+  margin: 1rem;
+}
+
 .list-style-none {
   list-style: none;
 }
@@ -1422,6 +1428,60 @@ textarea {
   width: 40%;
 }
 
+/* Textarea */
+.dv-form .tox-tinymce {
+  border: 0;
+}
+
+.dv-form .tox .tox-editor-container {
+  border-radius: 5px;
+}
+
+.dv-form .tox .tox-edit-area__iframe,
+.dv-form .tox .tox-toolbar-overlord,
+.dv-form .tox .tox-toolbar,
+.dv-form .tox .tox-toolbar__overflow,
+.dv-form .tox .tox-toolbar__primary {
+  background-color: var(--content-bg);
+}
+
+.dv-form .tox .tox-toolbar,
+.dv-form .tox .tox-toolbar__overflow,
+.dv-form .tox .tox-toolbar__primary {
+  background: none;
+  border-bottom: 1px solid #3d4261;
+}
+
+.dv-form .tox:not([dir=rtl]) .tox-toolbar__group:not(:last-of-type){
+  border-right: 1px solid #3d4261;
+}
+
+.dv-form .tox .tox-tbtn svg {
+  fill: var(--text-color-secondary);
+}
+
+.dv-form .tox .tox-tbtn {
+  color: var(--text-color-secondary);
+}
+
+.dv-form .tox .tox-tbtn--disabled svg,
+.dv-form .tox .tox-tbtn--disabled:hover svg,
+.dv-form .tox .tox-tbtn:disabled svg,
+.dv-form .tox .tox-tbtn:disabled:hover svg {
+  fill: #4d598d;
+}
+
+.dv-form .tox .tox-tbtn:hover,
+.dv-form .tox .tox-tbtn--enabled,
+.dv-form .tox .tox-tbtn--enabled:hover {
+  background: var(--form-input-bg);
+  color: #fff;
+}
+
+.dv-form .tox .tox-tbtn:hover svg {
+  fill: #fff;
+}
+
 /* Data tables design */
 .dvTable {
   margin: 15px 0;
@@ -1679,7 +1739,7 @@ textarea {
 
 .dv-topic-replies .dv-reply {
   background: #2c2e43;
-  padding: 10px;
+  padding: 10px 15px;
   margin: 10px 0;
   border-radius: 5px;
 }
@@ -1691,7 +1751,11 @@ textarea {
 }
 
 .dv-topic-replies .dv-reply .dv-reply-content {
-  width: calc(100% - 48px);
+  width: calc(100% - 52px);
+}
+
+.dv-topic-replies .dv-reply .dv-reply-content p {
+  margin-bottom: 0;
 }
 
 .dv-topic-replies .dv-reply .dv-reply-avatar {
@@ -1699,7 +1763,7 @@ textarea {
   height: 40px;
   background: var(--text-color-secondary);
   border-radius: 50%;
-  margin-right: 4px;
+  margin-right: 8px;
   overflow: hidden;
 }
 
@@ -1742,6 +1806,14 @@ textarea {
 
 .dv-topic-replies .dv-reply:last-child {
   margin-bottom: 0;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-actions .btn {
+  color: #fff;
+}
+
+.dv-topic-replies .dv-reply .dv-reply-actions .btn:hover {
+  color: var(--text-hover-color);
 }
 
 .dv-closed-topic {

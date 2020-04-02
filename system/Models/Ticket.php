@@ -68,7 +68,9 @@ class Ticket
         $result = $this->db->getResult();
         if (!empty($result)){
             $result['category_name'] = $this->getCategoryName($result['category_id'])['name'];
-            $result['closed_by_name'] = $this->getReplyAuthor($result['closed_by'])['NickName'];
+            if ($result['closed_by'] != 0) {
+                $result['closed_by_name'] = $this->getReplyAuthor($result['closed_by'])['NickName'];
+            }
         }
         return $result;
     }

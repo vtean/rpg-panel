@@ -119,6 +119,9 @@ class Unban
         if (!empty($result)) {
             $result['author_name'] = $this->getUser($result['author_id'])['NickName'];
             $result['admin_name'] = $this->getUser($result['banned_by'])['NickName'];
+            if ($result['closed_by'] != 0) {
+                $result['closed_by_name'] = $this->getUser($result['closed_by'])['NickName'];
+            }
         }
         return $result;
     }

@@ -89,9 +89,6 @@ class UnbansController extends Controller
         } else {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // sanitize post data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                $_POST['unban_comment'] = str_replace(PHP_EOL, '<br>', $_POST['unban_comment']);
                 $_POST['unban_comment'] = htmlentities($_POST['unban_comment']);
 
                 $postData = [
@@ -142,13 +139,11 @@ class UnbansController extends Controller
 
             if (!empty($uReplies)) {
                 foreach ($uReplies as $reply) {
-                    $reply['body'] = str_replace('<br>', PHP_EOL, $reply['body']);
                     $reply['body'] = html_entity_decode($reply['body']);
                     array_push($finalReplies, $reply);
                 }
             }
 
-            $unbanRequest['description'] = str_replace('<br>', PHP_EOL, $unbanRequest['description']);
             $unbanRequest['description'] = html_entity_decode($unbanRequest['description']);
 
             $data = [
@@ -169,9 +164,6 @@ class UnbansController extends Controller
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (isset($_POST['post_reply'])) {
                     // sanitize post data
-                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                    $_POST['unban_reply'] = str_replace(PHP_EOL, '<br>', $_POST['unban_reply']);
                     $_POST['unban_reply'] = htmlentities($_POST['unban_reply']);
 
                     $postData = [

@@ -81,7 +81,7 @@
                 <?php if ($unban['closed_by'] != 0): ?>
                     <div class="dv-closed-topic">
                         <span><i class="fas fa-lock"></i> This topic has been closed by <a
-                                    href="<?php echo BASE_URL . '/users/profile/' . $complaint['closed_by_name']; ?>"><?php echo $complaint['closed_by_name']; ?></a>.</span>
+                                    href="<?php echo BASE_URL . '/users/profile/' . $unban['closed_by_name']; ?>"><?php echo $unban['closed_by_name']; ?></a>.</span>
                     </div>
                 <?php endif; ?>
             </div>

@@ -187,16 +187,6 @@ $categories = $data['categories'];
                         <span class="dv-first">Description:</span>
                         <span class="dv-second"><?php echo $complaint['description']; ?></span>
                     </li>
-                    <li class="dv-single">
-                        <span class="dv-first">Proof:</span>
-                        <span class="dv-second"><?php echo $complaint['proof']; ?></span>
-                    </li>
-                    <?php if (!empty($complaint['other_info'])): ?>
-                        <li class="dv-single">
-                            <span class="dv-first">Other information:</span>
-                            <span class="dv-second"><?php echo $complaint['other_info']; ?></span>
-                        </li>
-                    <?php endif; ?>
                 </ul>
             </div>
             <div class="dv-topic-replies">
@@ -254,14 +244,14 @@ $categories = $data['categories'];
                 <?php endif; ?>
             </div>
             <?php if ($complaint['status'] != 'Closed'): ?>
-                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || (isLoggedIn() && $_SESSION['user_id'] == $complaint['against_id']) || ($data['isAdmin'] > 0) || ($data['isLeader'] > 0)): ?>
+                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || (isLoggedIn() && $_SESSION['user_id'] == $complaint['against_id']) || ($data['isAdmin'] > 0)): ?>
                     <form action="" method="post" class="dv-form">
                         <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
                         <h4 class="dv-row-title">Leave a reply</h4>
                         <div class="form-group">
                             <textarea type="text" name="complaint_reply" id="complaint_reply" rows="5"
                                       class="form-control<?php if (!empty($errors['reply_error'])): ?> is-invalid<?php endif; ?>"
-                                      placeholder="Only complaint creator, reporter player, admins and leaders can post replies"></textarea>
+                                      placeholder="Only complaint creator, reported player and admins can post replies"></textarea>
                             <?php if (!empty($errors['reply_error'])): ?>
                                 <div class="invalid-feedback"><?php echo $errors['reply_error']; ?></div>
                             <?php endif; ?>
