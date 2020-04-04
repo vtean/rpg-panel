@@ -27,8 +27,79 @@
                             <span class="dv-first">Duration:</span>
                             <span class="dv-second"><?php echo $unban['ban_time']/3600 . ' hours'; ?></span>
                         </li>
+                        <li class="dv-single">
+                            <span class="dv-first">Status:</span>
+                            <span class="dv-second"><?php echo $unban['status']; ?></span>
+                        </li>
                     </ul>
                 </div>
+                <?php if ($data['isAdmin'] > 0 || isLoggedIn() && $_SESSION['user_id'] == $unban['author_id']): ?>
+                    <div class="dv-topic-widget dv-actions">
+                        <h4 class="dv-row-title">Request actions</h4>
+                        <div class="dv-action-buttons">
+                            <div class="row">
+                                <?php if ($unban['status'] != 'Closed'): ?>
+                                    <?php if (isLoggedIn() && $_SESSION['user_id'] == $unban['author_id'] || $data['canCloseUnbans']): ?>
+                                        <div class="col">
+                                            <form action="" method="post">
+                                                <input type="hidden" name="csrfToken"
+                                                       value="<?php echo $_SESSION['csrfToken']; ?>">
+                                                <button name="close_unban" class="dv-btn btn btn-warning text-white"><i
+                                                            class="fas fa-lock"></i> Close
+                                                </button>
+                                            </form>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php elseif ($unban['status'] == 'Closed'): ?>
+                                    <?php if ($data['canCloseUnbans']): ?>
+                                        <div class="col">
+                                            <form action="" method="post">
+                                                <input type="hidden" name="csrfToken"
+                                                       value="<?php echo $_SESSION['csrfToken']; ?>">
+                                                <button name="open_unban" class="dv-btn btn btn-success text-white"><i
+                                                            class="fas fa-unlock"></i> Open
+                                                </button>
+                                            </form>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $unban['author_id'] && $unban['status'] == 'Open') || $data['canEditUnbans']): ?>
+                                    <div class="col">
+                                        <form action="" method="post">
+                                            <input type="hidden" name="csrfToken"
+                                                   value="<?php echo $_SESSION['csrfToken']; ?>">
+                                            <a href="<?php echo BASE_URL . '/unbans/edit/' . $unban['id']; ?>"
+                                               class="dv-btn btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($data['canCloseUnbans']): ?>
+                                    <div class="w-100"></div>
+                                    <div class="col">
+                                        <form action="" method="post">
+                                            <input type="hidden" name="csrfToken"
+                                                   value="<?php echo $_SESSION['csrfToken']; ?>">
+                                            <button name="needs_owner" class="dv-btn btn btn-danger"><i
+                                                        class="fas fa-shield-alt"></i> Needs Owner
+                                            </button>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($data['canDeleteUnbans']): ?>
+                                    <div class="col">
+                                        <form action="" method="post">
+                                            <input type="hidden" name="csrfToken"
+                                                   value="<?php echo $_SESSION['csrfToken']; ?>">
+                                            <button name="delete_unban" class="dv-btn btn btn-danger"><i
+                                                        class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
         <div class="col-lg-8 col-sm-12 col-12">

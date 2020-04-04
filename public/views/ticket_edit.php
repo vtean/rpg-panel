@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <label for="ticket_body">Ticket Body</label>
                         <textarea type="text" rows="7" name="ticket_body"
-                                  class="d-block form-control<?php if (!empty($errors['ticket_body_error'])): ?> is-invalid<?php endif; ?>"
+                                  class="form-control<?php if (!empty($errors['ticket_body_error'])): ?> is-invalid<?php endif; ?>"
                                   id="ticket_body"><?php echo $ticket['body']; ?></textarea>
                         <?php if (!empty($errors['ticket_body_error'])): ?>
                             <div class="invalid-feedback"><?php echo $errors['ticket_body_error']; ?></div>

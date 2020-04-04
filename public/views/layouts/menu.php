@@ -114,7 +114,7 @@
                             </a>
                         </li>
                         <li class="dv-nav-item">
-                            <a class="dv-nav-link" href="#">
+                            <a class="dv-nav-link" href="<?php echo BASE_URL . '/apps'; ?>">
                                 <i class="dv-nav-icon fas fa-graduation-cap"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['apps_txt']; ?></span>
                             </a>

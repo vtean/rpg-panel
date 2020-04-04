@@ -260,7 +260,7 @@ class ComplaintsController extends Controller
             ];
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if ($data['canCloseAComplaints'] || $data['canCloseHComplaints'] || $data['canCloseLComplaints'] || $data['canCloseUComplaints'] || ($_SESSION['user_id'] == $complaint['author_id'])) {
+                if ((isLoggedIn() && $_SESSION['user_id'] == $data['complaint']['author_id']) || $data['canCloseAComplaints'] || $data['canCloseHComplaints'] || $data['canCloseLComplaints'] || $data['canCloseUComplaints']) {
                     if (isset($_POST['close_complaint'])) {
                         $closeData = [
                             'status' => 'Closed',

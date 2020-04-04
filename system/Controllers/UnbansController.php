@@ -162,6 +162,51 @@ class UnbansController extends Controller
             ];
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if ((isLoggedIn() && $_SESSION['user_id'] == $data['unban']['author_id']) || $data['canCloseUnbans']) {
+                    if (isset($_POST['close_unban'])) {
+                        $status = 'Closed';
+                        $closedBy = $_SESSION['user_id'];
+
+                        if ($this->unbanModel->updateStatus($id, $status, $closedBy)) {
+                            flashMessage('success', 'Unban request has been successfully closed.');
+                            redirect('/unbans/view/' . $id);
+                        } else {
+                            die('Something went wrong.');
+                        }
+                    }
+                }
+
+                if ($data['canCloseUnbans'] && isset($_POST['open_unban'])) {
+                    $status = 'Open';
+
+                    if ($this->unbanModel->updateStatus($id, $status)) {
+                        flashMessage('success', 'Unban request has been successfully opened.');
+                        redirect('/unbans/view/' . $id);
+                    } else {
+                        die('Something went wrong.');
+                    }
+                }
+
+                if ($data['canCloseUnbans'] && isset($_POST['needs_owner'])) {
+                    $status = 'Needs Owner Involvement';
+
+                    if ($this->unbanModel->updateStatus($id, $status)) {
+                        flashMessage('success', 'Request has been sent to an owner for moderation.');
+                        redirect('/unbans/view/' . $id);
+                    } else {
+                        die('Something went wrong.');
+                    }
+                }
+
+                if ($data['canDeleteUnbans'] && isset($_POST['delete_unban'])) {
+                    if ($this->unbanModel->deleteUnban($id)) {
+                        flashMessage('success', 'Request has been successfully deleted.');
+                        redirect('/unbans');
+                    } else {
+                        die('Something went wrong.');
+                    }
+                }
+
                 if (isset($_POST['post_reply'])) {
                     // sanitize post data
                     $_POST['unban_reply'] = htmlentities($_POST['unban_reply']);

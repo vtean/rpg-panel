@@ -49,3 +49,6 @@ Route::set('complaints', 'ComplaintsController', 'index');
 
 // unban requests page
 Route::set('unbans', 'UnbansController', 'index');
+
+// applications page
+Route::set('apps', 'AppsController', 'index');

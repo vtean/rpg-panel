@@ -96,7 +96,7 @@ a:hover {
 
 ul {
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 40px;
 }
 
 img {
@@ -165,6 +165,13 @@ blockquote {
   border-left: 3px solid #ea5664;
   border-radius: 5px;
   margin-bottom: 15px;
+}
+
+.dv-special {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 3px solid var(--text-hover-color);
+  text-shadow: 0 0 30px var(--text-hover-color);
 }
 
 /* MainController menu */
@@ -1428,7 +1435,7 @@ textarea {
   width: 40%;
 }
 
-/* Textarea */
+/* Tinymce */
 .dv-form .tox-tinymce {
   border: 0;
 }
@@ -1480,6 +1487,39 @@ textarea {
 
 .dv-form .tox .tox-tbtn:hover svg {
   fill: #fff;
+}
+
+.tox .tox-dialog-wrap__backdrop {
+  background-color: #23253599 !important;
+}
+
+.tox .tox-dialog,
+.tox .tox-dialog__header,
+.tox .tox-dialog__footer {
+  background-color: var(--content-bg) !important;
+  border-color: var(--content-bg) !important;
+  color: #fff !important;
+}
+
+.tox .tox-label,
+.tox .tox-toolbar-label,
+.tox .tox-button--naked {
+  color: #fff !important;
+}
+
+.tox .tox-selectfield select,
+.tox .tox-textarea,
+.tox .tox-textfield,
+.tox .tox-toolbar-textfield {
+  background-color: var(--form-input-bg) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+}
+
+.tox .tox-button--naked:active:not(:disabled),
+.tox .tox-button--naked.tox-button--icon:hover:not(:disabled) {
+  background-color: var(--form-input-bg);
+  border-color: var(--form-input-bg);
 }
 
 /* Data tables design */
@@ -1823,6 +1863,91 @@ textarea {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: 20px;
+}
+
+/* Magic block */
+.dv-magic-block {
+  background-color: var(--content-bg);
+  padding: 40px 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.dv-magic-title {
+  padding: 10px 0;
+  background-image: url(../img/brush.png);
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  letter-spacing: 1px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.dv-magic-title,
+.dv-magic-desc {
+  margin-bottom: 20px;
+}
+
+.dv-magic-desc {
+  text-align: justify;
+  font-size: 1.1rem;
+  padding: 0 30px;
+}
+
+.dv-magic-btn {
+  background-color: var(--text-color-secondary);
+  color: var(--text-color);
+  padding: .65rem 2rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.dv-btn-sm {
+  padding: .35rem 1.2rem !important;
+}
+
+.dv-magic-btn:hover {
+  background-color: var(--text-color);
+  color: var(--text-color-secondary)
+}
+
+.dv-magic-group {
+  margin-top: 20px;
+}
+
+.dv-magic-group h5 {
+  margin-bottom: 10px;
+}
+
+.dv-magic-group ul {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.dv-magic-group ul li {
+  margin: 5px 0;
+}
+
+.dv-magic-group ul li a {
+  font-size: 1.1rem;
+}
+
+.dv-magic-group ul li a:before {
+  content: '\f0da';
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 900;
+  margin-right: 3px;
+}
+
+.dv-desc {
+  background-color: var(--content-bg);
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
 }
 
 /* General responsive things */

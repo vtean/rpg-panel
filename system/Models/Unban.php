@@ -160,4 +160,32 @@ class Unban
             return false;
         }
     }
+
+    // close unban request
+    public function updateStatus($id, $status, $closedBy = 0)
+    {
+        $sql = "UPDATE `panel_unbans` SET `status`=:status, `closed_by`=:closedBy WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':status', $status);
+        $this->db->bind(':closedBy', $closedBy);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // delete unban request
+    public function deleteUnban($id)
+    {
+        $sql = "DELETE FROM `panel_unbans` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

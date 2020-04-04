@@ -291,7 +291,7 @@ class TicketsController extends Controller
                 'categories' => $categories
             ];
 
-            if (isset($_POST['delete_ticket'])) {
+            if ($data['canDeleteTickets'] && isset($_POST['delete_ticket'])) {
                 if ($this->ticketModel->deleteTicket($id)) {
                     flashMessage('success', 'Ticket has been successfully deleted!');
                     redirect('/tickets');
@@ -324,7 +324,7 @@ class TicketsController extends Controller
                 }
             }
 
-            if (isset($_POST['change_category'])) {
+            if ($data['canCloseTickets'] && isset($_POST['change_category'])) {
                 // filter post
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $cID = $_POST['new_category_id'];
@@ -337,7 +337,7 @@ class TicketsController extends Controller
                 }
             }
 
-            if (isset($_POST['delete_reply'])) {
+            if ($data['canDeleteTReplies'] && isset($_POST['delete_reply'])) {
                 // filter post
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $reply_id = $_POST['reply_id'];
