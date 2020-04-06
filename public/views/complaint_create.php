@@ -3,7 +3,7 @@
 <h3 class="dv-page-title">Create New Complaint</h3>
 <div class="dv-row">
     <div class="row">
-        <div class="col-lg-6 col-sm-12 col-12">
+        <div class="col-lg-8 col-sm-12 col-12">
             <form action="" method="post" class="dv-form">
                 <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
                 <h5 class="dv-row-title">Complaint Details</h5>

@@ -6,7 +6,7 @@
  * @version 0.1
  */
 
-class App
+class Application
 {
     private $db;
 
@@ -17,12 +17,43 @@ class App
 
     public function getUserInfo($id)
     {
-        $sql = "SELECT `NickName`, `Level`, `Member`, `Rank`, `Warns`, `BlackList`, `ZKP`, `PlayedTime` FROM `sv_accounts` WHERE `ID`=:id";
+        $sql = "SELECT `NickName`, `Level`, `Member`, `Rank`, `Warns`, `Skin`, `BlackList`, `ZKP`, `PlayedTime` FROM `sv_accounts` WHERE `ID`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
         $result = $this->db->getResult();
         if ($this->db->countRows() > 0) {
             return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function getFactionInfo($id)
+    {
+        $sql = "SELECT `Name`, `Leader` FROM `sv_factions` WHERE `ID`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        return $this->db->getResult();
+    }
+
+    public function factionsWithoutLeader()
+    {
+        $sql = "SELECT `ID`, `Name` FROM `sv_factions` WHERE `Leader`=:leaderName";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':leaderName', 'None');
+        return $this->db->getResults();
+    }
+
+    public function alreadyApplied($id, $appType, $extra)
+    {
+        $sql = "SELECT * FROM `panel_apps` WHERE `author_id`=:id AND `type`=:appType AND `extra`=:extra";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        $this->db->bind(':appType', $appType);
+        $this->db->bind(':extra', $extra);
+        $this->db->executeStmt();
+        if ($this->db->countRows() > 0) {
+            return true;
         } else {
             return false;
         }
@@ -79,26 +110,42 @@ class App
         return $final_results;
     }
 
-    public function getApp($id)
+    public function getApplication($id)
     {
         $sql = "SELECT * FROM `panel_apps` WHERE `id`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
         $result = $this->db->getResult();
         if ($this->db->countRows() > 0) {
+            $result['account_details'] = $this->getUserInfo($result['author_id']);
+            if ($result['account_details']['Member'] != 0) {
+                $result['account_details']['faction_name'] = $this->getFactionInfo($result['account_details']['Member'])['Name'];
+            }
             return $result;
         } else {
             return false;
         }
     }
 
-    public function editApp($postData, $id)
+    public function editApplication($postData, $id)
     {
         $sql = "UPDATE `panel_apps` SET `body`=:body, `is_edited`=:isEdited, `edited_by`=:editedBy WHERE `id`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':body', $postData['body']);
         $this->db->bind(':isEdited', $postData['isEdited']);
         $this->db->bind(':editedBy', $postData['editedBy']);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteApplication($id)
+    {
+        $sql = "DELETE FROM `panel_apps` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
         if ($this->db->executeStmt()) {
             return true;

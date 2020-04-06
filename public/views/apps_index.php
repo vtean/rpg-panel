@@ -49,10 +49,13 @@
             <div class="collapse" id="collapseFactions">
                 <div class="dv-magic-group">
                     <ul class="list-style-none">
-                        <li><a href="<?php echo BASE_URL . '/apps/create/leader/lspd'; ?>">Lost Santos Police
-                                Department</a></li>
-                        <li><a href="<?php echo BASE_URL . '/apps/create/leader/instructors'; ?>">School Instructors</a>
-                        </li>
+                        <?php if (empty($data['fWithoutLeader'])): ?>
+                            <li>All the factions have leaders.</li>
+                        <?php else: ?>
+                            <?php foreach ($data['fWithoutLeader'] as $faction): ?>
+                                <li><a href="<?php echo BASE_URL . '/apps/create/leader/' . $faction['ID']; ?>"><?php echo $faction['Name']; ?></a></li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -92,7 +95,7 @@
                 <tr>
                     <th>Player Name</th>
                     <th>Played Time</th>
-                    <th>Faction Key</th>
+                    <th>Faction</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -104,7 +107,7 @@
                                 <a href="<?php echo BASE_URL . '/users/profile/' . $app['author_name']; ?>"><?php echo $app['author_name']; ?></a>
                             </td>
                             <td><?php echo convertMinutes($app['played_time']); ?></td>
-                            <td><?php echo $app['extra']; ?></td>
+                            <td><?php echo $app['faction_name']; ?></td>
                             <td><a href="<?php echo BASE_URL . '/apps/view/' . $app['id']; ?>"><i
                                             class="fas fa-eye"></i></a></td>
                         </tr>

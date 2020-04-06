@@ -137,7 +137,7 @@ $author = $data['author'];
             <div class="col-lg-8 col-sm-12 col-12">
                 <div class="dv-topic-message">
                     <h4 class="dv-row-title">User message</h4>
-                    <p><?php echo $ticket['body']; ?></p>
+                    <div><?php echo $ticket['body']; ?></div>
                 </div>
                 <div class="dv-topic-replies">
                     <h4 class="dv-row-title">Ticket replies</h4>

@@ -224,8 +224,8 @@
             </div>
             <div class="dv-row">
                 <h4 class="dv-row-title"><?php echo $data['lang']['fh_txt']; ?></h4>
-                <ul class="dv-user-fh list-style-none">
-                    <li class="dv-user-fh-item">
+                <div class="dv-user-fh">
+                    <div class="dv-user-fh-item">
                         <div class="dv-user-fh-avatar">
                             <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>"
                                  alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
@@ -234,8 +234,8 @@
                             <p>Lust has joined the faction School Instructors (invited by Indigo).</p>
                             <span><i class="far fa-clock"></i> 15/03/2020 05:25</span>
                         </div>
-                    </li>
-                    <li class="dv-user-fh-item">
+                    </div>
+                    <div class="dv-user-fh-item">
                         <div class="dv-user-fh-avatar">
                             <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>"
                                  alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
@@ -245,8 +245,8 @@
                                 without FP. Reason: Cerere de demisie!</p>
                             <span><i class="far fa-clock"></i> 15/03/2020 02:25</span>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
             <div class="dv-row">
                 <h4 class="dv-row-title"><?php echo $data['lang']['weapon_skills_txt']; ?></h4>

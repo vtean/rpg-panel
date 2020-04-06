@@ -118,11 +118,9 @@ class Complaint
 
     public function editComplaint($data, $id)
     {
-        $sql = "UPDATE `panel_complaints` SET `description`=:description, `proof`=:proof, `other_info`=:other_info, `against_id`=:against_id, `category_id`=:category_id, `is_edited`=:is_edited, `edit_ip`=:edit_ip, `edited_by`=:edited_by WHERE `id`=:id";
+        $sql = "UPDATE `panel_complaints` SET `description`=:description, `against_id`=:against_id, `category_id`=:category_id, `is_edited`=:is_edited, `edit_ip`=:edit_ip, `edited_by`=:edited_by WHERE `id`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':description', $data['complaint_desc']);
-        $this->db->bind(':proof', $data['complaint_proof']);
-        $this->db->bind(':other_info', $data['other_info']);
         $this->db->bind(':against_id', $data['against_id']);
         $this->db->bind(':category_id', $data['complaint_category']);
         $this->db->bind(':is_edited', $data['is_edited']);

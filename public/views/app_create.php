@@ -1,11 +1,11 @@
 <?php getHeader($data); ?>
 <?php flashMessage(); ?>
-    <h3 class="dv-page-title">Apply for function</h3>
     <div class="dv-row">
         <div class="row">
-            <div class="col-lg-6 col-sm-12 col-12">
+            <div class="col-lg-8 col-sm-12 col-12">
+                <h3 class="dv-page-title">Apply for function</h3>
+                <h5 class="dv-row-title">Posting model</h5>
                 <div class="dv-desc">
-                    <h5 class="dv-row-title">Posting Model:</h5>
                     <ul>
                         <li>Nume real:</li>
                         <li>Vârsta reală:</li>

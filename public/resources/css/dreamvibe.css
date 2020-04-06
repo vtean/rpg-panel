@@ -16,8 +16,9 @@
   --form-input-bg: #3d4160;
 
   /* Text colors */
-  --text-color: #fff;
+  --text-color: #bdc8f6;
   --text-hover-color: #448aff;
+  --heading-color: #ffffff;
   --nav-title-color: #8e97bf;
   --text-color-secondary: #6273bb;
   --secondary-text: #8a98d3;
@@ -86,7 +87,7 @@ a:hover {
 }
 
 a {
-  color: var(--text-color);
+  color: var(--heading-color);
   transition: all .2s ease-in-out;
 }
 
@@ -94,9 +95,13 @@ a:hover {
   color: var(--text-hover-color);
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+}
+
 ul {
   margin: 0;
-  padding: 0 0 0 40px;
+  padding: 0;
 }
 
 img {
@@ -172,6 +177,18 @@ blockquote {
   letter-spacing: 2px;
   border-bottom: 3px solid var(--text-hover-color);
   text-shadow: 0 0 30px var(--text-hover-color);
+}
+
+.dv-desc ul {
+  padding: 0 0 0 40px;
+}
+
+.dv-mb-30 {
+  margin-bottom: 30px;
+}
+
+.dv-first {
+  color: var(--heading-color);
 }
 
 /* MainController menu */
@@ -445,7 +462,7 @@ blockquote {
 .dv-main-feed .nav-tabs .nav-item.show .nav-link,
 .dv-main-feed .nav-tabs .nav-link.active {
   background: var(--text-hover-color);
-  color: var(--text-color);
+  color: var(--heading-color);
 }
 
 .dv-main-feed .nav-tabs .nav-link {
@@ -457,36 +474,7 @@ blockquote {
 }
 
 /* Latest actions */
-.dv-main-feed .dv-general-fh {
-  padding: 0;
-  margin: 0;
-}
 
-.dv-main-feed .dv-general-fh .dv-general-fh-item {
-  margin-bottom: 15px;
-}
-
-.dv-main-feed .dv-general-fh .dv-general-fh-item:last-child {
-  margin-bottom: 0;
-}
-
-.dv-main-feed .dv-general-fh .dv-general-fh-item img {
-  width: 45px;
-  height: 45px;
-  object-fit: cover;
-  display: inline-block;
-  margin-right: 3px;
-}
-
-.dv-main-feed .dv-general-fh .dv-general-fh-item img,
-.dv-main-feed .dv-general-fh .dv-general-fh-item .dv-general-fh-text {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.dv-main-feed .dv-general-fh .dv-general-fh-item p {
-  margin: 0;
-}
 
 /* Flash messages */
 .dv-message {
@@ -583,6 +571,10 @@ blockquote {
   vertical-align: middle;
   margin-right: 3px;
   transition: all .2s ease-in-out;
+}
+
+.dv-server-stats .dv-server-stats-item {
+  color: var(--heading-color);
 }
 
 .dv-server-stats .dv-server-stats-item .dv-first {
@@ -1219,6 +1211,7 @@ textarea {
   letter-spacing: 1px;
   padding: 0.5rem 0.75rem;
   transition: all .2s ease-in-out;
+  color: var(--heading-color);
 }
 
 .dv-btn:hover {
@@ -1573,6 +1566,7 @@ textarea {
 
 .dvTable table thead {
   background-color: var(--form-input-bg);
+  color: var(--heading-color);
 }
 
 .dvTable table thead th,
@@ -1597,6 +1591,10 @@ textarea {
   border-top: 1px solid #3d4261;
 }
 
+.dvTable .dataTables_paginate .paginate_button {
+  border: 0 !important;
+}
+
 .dvTable .dataTables_length,
 .dvTable .dataTables_filter,
 .dvTable .dataTables_info,
@@ -1604,15 +1602,18 @@ textarea {
 .dvTable .dataTables_paginate,
 .dvTable .dataTables_paginate .paginate_button.disabled,
 .dvTable .dataTables_paginate .paginate_button.disabled:hover,
-.dvTable .dataTables_paginate .paginate_button.disabled:active {
+.dvTable .dataTables_paginate .paginate_button.disabled:active,
+.dvTable .dataTables_paginate .paginate_button,
+.dvTable .dataTables_paginate .paginate_button:hover,
+.dvTable .dataTables_paginate .paginate_button:active {
   color: var(--text-color) !important;
 }
 
 .dvTable .dataTables_paginate .paginate_button.current,
-.dvTable .dataTables_paginate .paginate_button.current:hover {
-  color: var(--text-color) !important;
+.dvTable .dataTables_paginate .paginate_button.current:hover,
+.dvTable .dataTables_paginate .paginate_button:hover {
+  color: var(--heading-color) !important;
   background: var(--text-hover-color);
-  border: 0;
 }
 
 .dvTable table.dataTable.hover tbody tr:hover {
@@ -1726,11 +1727,13 @@ textarea {
 
 .dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second,
 .dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second a,
-.dv-topic-message .dv-single .dv-second {
+.dv-topic-message .dv-single .dv-second,
+.dv-topic-message .dv-single .dv-second a{
   color: var(--secondary-text);
 }
 
-.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second a:hover {
+.dv-topic-info .dv-topic-widget .dv-details .dv-single .dv-second a:hover,
+.dv-topic-message .dv-single .dv-second a:hover {
   color: var(--text-hover-color);
 }
 
@@ -1923,7 +1926,7 @@ textarea {
 
 .dv-magic-btn {
   background-color: var(--text-color-secondary);
-  color: var(--text-color);
+  color: var(--heading-color);
   padding: .65rem 2rem;
   border-radius: 20px;
   text-transform: uppercase;
@@ -1937,7 +1940,7 @@ textarea {
 }
 
 .dv-magic-btn:hover {
-  background-color: var(--text-color);
+  background-color: var(--heading-color);
   color: var(--text-color-secondary)
 }
 

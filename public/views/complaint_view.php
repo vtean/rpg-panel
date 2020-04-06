@@ -174,20 +174,18 @@ $categories = $data['categories'];
         <div class="col-lg-8 col-sm-12 col-12">
             <div class="dv-topic-message">
                 <h4 class="dv-row-title">Complaint details</h4>
-                <ul class="list-style-none">
-                    <li class="dv-single">
-                        <span class="dv-first">Category:</span>
-                        <span class="dv-second"><?php echo $complaint['category_name']; ?></span>
-                    </li>
-                    <li class="dv-single">
-                        <span class="dv-first">Created on:</span>
-                        <span class="dv-second"><?php echo $complaint['created_at']; ?></span>
-                    </li>
-                    <li class="dv-single">
-                        <span class="dv-first">Description:</span>
-                        <span class="dv-second"><?php echo $complaint['description']; ?></span>
-                    </li>
-                </ul>
+                <div class="dv-single">
+                    <span class="dv-first">Category</span>
+                    <span class="dv-second"><?php echo $complaint['category_name']; ?></span>
+                </div>
+                <div class="dv-single">
+                    <span class="dv-first">Created on:</span>
+                    <span class="dv-second"><?php echo $complaint['created_at']; ?></span>
+                </div>
+                <div class="dv-single">
+                    <div class="dv-first">Description:</div>
+                    <div class="dv-second"><?php echo $complaint['description']; ?></div>
+                </div>
             </div>
             <div class="dv-topic-replies">
                 <h4 class="dv-row-title">Complaint replies</h4>

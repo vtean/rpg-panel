@@ -57,31 +57,37 @@
             <div class="tab-content" id="dvTabContent">
                 <div class="tab-pane fade show active" id="latest-actions" role="tabpanel"
                      aria-labelledby="latest-actions-tab">
-                    <ul class="dv-general-fh list-style-none">
-                        <li class="dv-general-fh-item">
-                            <img src="<?php echo BASE_URL . '/public/resources/img/avatar2.png'; ?>" alt="">
-                            <div class="dv-general-fh-text">
+                    <div class="dv-user-fh">
+                        <div class="dv-user-fh-item">
+                            <div class="dv-user-fh-avatar">
+                                <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-200.png'; ?>" alt="">
+                            </div>
+                            <div class="dv-user-fh-text">
                                 <p>Indigo was uninvited by Admin Lust from faction School Instructors (rank 10) after 69
                                     days, without FP. Reason: Renuntare la functie!</p>
                                 <span><i class="far fa-clock"></i> 15/03/2020 03:19</span>
                             </div>
-                        </li>
-                        <li class="dv-general-fh-item">
-                            <img src="<?php echo BASE_URL . '/public/resources/img/avatar.png'; ?>" alt="">
-                            <div class="dv-general-fh-text">
+                        </div>
+                        <div class="dv-user-fh-item">
+                            <div class="dv-user-fh-avatar">
+                                <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-200.png'; ?>" alt="">
+                            </div>
+                            <div class="dv-user-fh-text">
                                 <p>Lust was uninvited by Indigo from faction School Instructors (rank 9) after 69 days,
                                     without FP. Reason: Cerere de demisie!</p>
                                 <span><i class="far fa-clock"></i> 15/03/2020 02:25</span>
                             </div>
-                        </li>
-                        <li class="dv-general-fh-item">
-                            <img src="<?php echo BASE_URL . '/public/resources/img/avatar.png'; ?>" alt="">
-                            <div class="dv-general-fh-text">
+                        </div>
+                        <div class="dv-user-fh-item">
+                            <div class="dv-user-fh-avatar">
+                                <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-200.png'; ?>" alt="">
+                            </div>
+                            <div class="dv-user-fh-text">
                                 <p>Lust has joined the faction School Instructors (invited by Indigo).</p>
                                 <span><i class="far fa-clock"></i> 15/03/2020 00:15</span>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="server-news" role="tabpanel" aria-labelledby="server-news-tab">
                     Server news

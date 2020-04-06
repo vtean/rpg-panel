@@ -105,7 +105,7 @@
         <div class="col-lg-8 col-sm-12 col-12">
             <div class="dv-topic-message">
                 <h4 class="dv-row-title">Request description</h4>
-                <p><?php echo $unban['description']; ?></p>
+                <div><?php echo $unban['description']; ?></div>
             </div>
             <div class="dv-topic-replies">
                 <h4 class="dv-row-title">Request replies</h4>

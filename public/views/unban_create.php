@@ -6,12 +6,11 @@
                 class="fas fa-ban"></i> Your account has been banned by <?php echo $bannedUser['admin_name']; ?> for <?php echo $bannedUser['BanSeconds'] / 3600; ?> hours. Reason: <?php echo $bannedUser['BanReason']; ?></span>
     <div class="dv-row">
         <div class="row">
-            <div class="col-lg-6 col-sm-12 col-12">
+            <div class="col-lg-8 col-sm-12 col-12">
                 <form action="" method="post" class="dv-form">
                     <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
                     <h5 class="dv-row-title">Unban details</h5>
                     <div class="form-group">
-                        <label for="unban_comment">Request comment</label>
                         <textarea type="text" name="unban_comment" id="unban_comment"
                                   class="form-control<?php if (!empty($errors['message_error'])): ?> is-invalid<?php endif; ?>"
                                   rows="5" placeholder="Type here some information about your request"></textarea>
