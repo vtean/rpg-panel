@@ -21,6 +21,11 @@ class AppsController extends Controller
 
         // store privileges
         $this->privileges = $this->checkPrivileges();
+
+        if (!isLoggedIn()) {
+            flashMessage('danger', 'You must log in to be able to post an application.');
+            redirect('/');
+        }
     }
 
     public function index()
@@ -29,13 +34,23 @@ class AppsController extends Controller
 
         $badges = $this->badges();
 
+        if ($this->privileges['isAdmin'] > 2) {
+            $helperApps = $this->appModel->getAllApps('helper');
+            $leaderApps = $this->appModel->getAllApps('leader');
+        } else {
+            $helperApps = $this->appModel->getUserApps($_SESSION['user_id'], 'helper');
+            $leaderApps = $this->appModel->getUserApps($_SESSION['user_id'], 'leader');
+        }
+
         $data = [
             'pageTitle' => 'Applications',
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
             'lang' => $lang,
-            'badges' => $badges
+            'badges' => $badges,
+            'helperApps' => $helperApps,
+            'leaderApps' => $leaderApps
         ];
 
         // load view
@@ -105,6 +120,68 @@ class AppsController extends Controller
             }
         } else {
             $this->error('404', 'Page not found!');
+        }
+    }
+
+    public function edit($id = 0)
+    {
+        global $lang;
+        $userApp = $this->appModel->getApp($id);
+        $badges = $this->badges();
+
+        if ($id = 0 || empty($userApp)) {
+            $this->error('404', 'Application not found!');
+        } else if (in_array(1, $this->privileges['canEditLApps']) || in_array(1, $this->privileges['canEditHApps']) || $_SESSION['user_id'] == $userApp['author_id']) {
+            $data = [
+                'pageTitle' => 'Edit App',
+                'fullAccess' => $this->privileges['fullAccess'],
+                'isAdmin' => $this->privileges['isAdmin'],
+                'isLeader' => $this->privileges['isLeader'],
+                'canEditHApps' => in_array(1, $this->privileges['canEditHApps']),
+                'canEditLApps' => in_array(1, $this->privileges['canEditLApps']),
+                'lang' => $lang,
+                'badges' => $badges,
+                'userApp' => $userApp
+            ];
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if ($data['canEditLApps'] || $data['canEditHApps'] || $_SESSION['user_id'] == $userApp['author_id']) {
+                    if (isset($_POST['edit_application'])) {
+                        // sanitize post data
+                        $_POST['app_body'] = htmlentities($_POST['app_body']);
+
+                        $postData = [
+                            'body' => $_POST['app_body'],
+                            'isEdited' => 1,
+                            'editedBy' => $_SESSION['user_id']
+                        ];
+
+                        // handle errors
+                        $errors = ValidateApplication::validate($postData);
+
+                        // check if there are no errors
+                        if (count(array_filter($errors)) == 0) {
+                            // edit app
+                            if ($this->appModel->editApp($postData, $id)) {
+                                flashMessage('success', 'Application has been successfully edited.');
+                                redirect('/apps');
+                            } else {
+                                die('Something went wrong');
+                            }
+                        } else {
+                            // load view with errors
+                            $this->loadView('app_edit', $data, $errors);
+                        }
+                    }
+                } else {
+                    die('No no no');
+                }
+            } else {
+                // load view
+                $this->loadView('app_edit', $data);
+            }
+        } else {
+            $this->error('403', 'Forbidden!');
         }
     }
 }

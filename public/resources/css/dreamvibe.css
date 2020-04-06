@@ -414,6 +414,7 @@ blockquote {
 }
 
 .dv-row {
+  width: 100%;
   margin-bottom: 20px;
 }
 
@@ -1525,6 +1526,7 @@ textarea {
 /* Data tables design */
 .dvTable {
   margin: 15px 0;
+  overflow-x: auto;
 }
 
 .dvTable table {
@@ -1865,6 +1867,29 @@ textarea {
   margin-top: 20px;
 }
 
+.dv-grid-2 {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.dv-grid-2 div:nth-child(1) {
+  margin-right: 15px;
+}
+
+.dv-grid-2 div:nth-child(2) {
+  margin-left: 15px;
+}
+
+.dv-grid-2 .dvTable {
+  margin-right: 0 !important;
+}
+
+@media screen and (max-width: 991px) {
+  .dv-grid-2 {
+    grid-template-columns: 100%;
+  }
+}
+
 /* Magic block */
 .dv-magic-block {
   background-color: var(--content-bg);
@@ -1890,6 +1915,7 @@ textarea {
 }
 
 .dv-magic-desc {
+  color: #aeb9e8;
   text-align: justify;
   font-size: 1.1rem;
   padding: 0 30px;
