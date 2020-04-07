@@ -10,10 +10,14 @@ require_once ROOT_PATH . '/system/API/SampQuery.class.php';
 
 class StatisticsController extends Controller
 {
+    private $statisticModel;
     private $privileges;
 
     public function __construct()
     {
+        // load model
+        $this->statisticModel = $this->loadModel('Statistic');
+
         // store user privileges
         $this->privileges = $this->checkPrivileges();
     }
@@ -48,5 +52,42 @@ class StatisticsController extends Controller
 
 
         $this->loadView('online', $data);
+    }
+
+    public function staff()
+    {
+        global $lang;
+        $badges = $this->badges();
+        $admins = $this->statisticModel->getAdmins();
+        $finalAdmins = array();
+        $leaders = $this->statisticModel->getLeaders();
+
+        if (!empty($admins)) {
+            foreach ($admins as $admin) {
+                $admin['groups'] = array();
+                $adminGroupsArr = unserialize($admin['PanelGroups']);
+                if (!empty($adminGroupsArr)) {
+                    foreach ($adminGroupsArr as $key => $value) {
+                        $gInfo = $this->statisticModel->getAdminGroup($value);
+                        array_push($admin['groups'], $gInfo);
+                    }
+                }
+                array_push($finalAdmins, $admin);
+            }
+        }
+
+        $data = [
+            'pageTitle' => 'Staff',
+            'fullAccess' => $this->privileges['fullAccess'],
+            'isAdmin' => $this->privileges['isAdmin'],
+            'isLeader' => $this->privileges['isLeader'],
+            'lang' => $lang,
+            'badges' => $badges,
+            'admins' => $finalAdmins,
+            'leaders' => $leaders
+        ];
+
+        // load view
+        $this->loadView('staff', $data);
     }
 }

@@ -125,19 +125,19 @@
                     <h6 class="dv-nav-title"><?php echo $data['lang']['groups_txt']; ?></h6>
                     <ul class="dv-nav">
                         <li class="dv-nav-item">
-                            <a class="dv-nav-link" href="#">
+                            <a class="dv-nav-link" href="<?php echo BASE_URL . '/staff'; ?>">
                                 <i class="dv-nav-icon fas fa-users-cog"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['staff_txt']; ?></span>
                             </a>
                         </li>
                         <li class="dv-nav-item">
-                            <a class="dv-nav-link" href="#">
+                            <a class="dv-nav-link" href="<?php echo BASE_URL . '/factions'; ?>">
                                 <i class="dv-nav-icon fas fa-user-friends"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['factions_txt']; ?></span>
                             </a>
                         </li>
                         <li class="dv-nav-item">
-                            <a class="dv-nav-link" href="#">
+                            <a class="dv-nav-link" href="<?php echo BASE_URL . '/families'; ?>">
                                 <i class="dv-nav-icon fas fa-users"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['families_txt']; ?></span>
                             </a>
@@ -148,7 +148,7 @@
                     <h6 class="dv-nav-title"><?php echo $data['lang']['other_txt']; ?></h6>
                     <ul class="dv-nav">
                         <li class="dv-nav-item">
-                            <a class="dv-nav-link" href="#">
+                            <a class="dv-nav-link" href="<?php echo BASE_URL . '/shop'; ?>">
                                 <i class="dv-nav-icon fas fa-shopping-bag"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['shop_txt']; ?></span>
                             </a>
@@ -168,31 +168,31 @@
                             </a>
                         </li>
                         <li class="dv-nav-collapse-item">
-                            <a href="" class="dv-nav-collapse-link">
+                            <a href="<?php echo BASE_URL . '/top'; ?>" class="dv-nav-collapse-link">
                                 <i class="dv-nav-collapse-icon fas fa-user-friends"></i>
                                 <span class="dv-nav-collapse-text"><?php echo $data['lang']['top_players_txt']; ?></span>
                             </a>
                         </li>
                         <li class="dv-nav-collapse-item">
-                            <a href="" class="dv-nav-collapse-link">
+                            <a href="<?php echo BASE_URL . '/bans'; ?>" class="dv-nav-collapse-link">
                                 <i class="dv-nav-collapse-icon fas fa-user-slash"></i>
                                 <span class="dv-nav-collapse-text"><?php echo $data['lang']['bans_txt']; ?></span>
                             </a>
                         </li>
                         <li class="dv-nav-collapse-item">
-                            <a href="" class="dv-nav-collapse-link">
+                            <a href="<?php echo BASE_URL . '/houses'; ?>" class="dv-nav-collapse-link">
                                 <i class="dv-nav-collapse-icon fas fa-home"></i>
                                 <span class="dv-nav-collapse-text"><?php echo $data['lang']['houses_txt']; ?></span>
                             </a>
                         </li>
                         <li class="dv-nav-collapse-item">
-                            <a href="" class="dv-nav-collapse-link">
+                            <a href="<?php echo BASE_URL . '/businesses'; ?>" class="dv-nav-collapse-link">
                                 <i class="dv-nav-collapse-icon fas fa-building"></i>
                                 <span class="dv-nav-collapse-text"><?php echo $data['lang']['businesses_txt']; ?></span>
                             </a>
                         </li>
                         <li class="dv-nav-collapse-item">
-                            <a href="" class="dv-nav-collapse-link">
+                            <a href="<?php echo BASE_URL . '/vehicles'; ?>" class="dv-nav-collapse-link">
                                 <i class="dv-nav-collapse-icon fas fa-car"></i>
                                 <span class="dv-nav-collapse-text"><?php echo $data['lang']['vehicles_txt']; ?></span>
                             </a>

@@ -489,6 +489,7 @@ blockquote {
 .dv-message i,
 .dv-message span {
   vertical-align: middle;
+  color: var(--heading-color);
 }
 
 .dv-message i {
@@ -886,7 +887,7 @@ blockquote {
 }
 
 .login .login-btn {
-  color: var(--text-color);
+  color: var(--heading-color);
   background: #448aff99;
   font-size: 1.2rem;
   text-transform: uppercase;
@@ -1057,6 +1058,7 @@ textarea {
 
 .dv-user-groups .dv-user-single-group {
   background-color: #5060a2;
+  color: var(--heading-color);
   padding: 4px 10px;
   width: fit-content;
   border-radius: 5px;
@@ -1189,6 +1191,7 @@ textarea {
 
 .dv-user-fh .dv-user-fh-item .dv-user-fh-text {
   width: calc(100% - 52px);
+  color: var(--heading-color);
 }
 
 .dv-user-fh .dv-user-fh-item .dv-user-fh-text p {
@@ -1977,6 +1980,24 @@ textarea {
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 30px;
+}
+
+/* Staff page */
+.dv-staff-table {
+  width: 100%;
+}
+
+.dv-staff-table thead tr td {
+  background-color: var(--content-bg);
+  padding: 1rem;
+  color: var(--heading-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dv-staff-table tbody tr td {
+  padding: 0.8rem 1rem;
 }
 
 /* General responsive things */

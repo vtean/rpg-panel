@@ -52,3 +52,6 @@ Route::set('unbans', 'UnbansController', 'index');
 
 // applications page
 Route::set('apps', 'ApplicationsController', 'index');
+
+// staff page
+Route::set('staff', 'StatisticsController', 'staff');
