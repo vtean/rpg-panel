@@ -53,4 +53,36 @@ trait ValidateComplaint
 
         return $errors;
     }
+
+    public static function validateForFaction($complaintData, $userCheck, $factionId)
+    {
+        $errors = [
+            'username_error' => '',
+            'description_error' => '',
+            'proof_error' => '',
+        ];
+
+        // check if user field is empty
+        if (empty($complaintData['against_name'])) {
+            $errors['username_error'] = "Please type player's username.";
+        }
+        else if (strlen($complaintData['against_name']) < 3) {
+            $errors['username_error'] = "Username must have at least 3 characters.";
+        } else if ($userCheck == false) {
+            $errors['username_error'] = "Sorry, we couldn't find any account with this username";
+        } else if ((strcasecmp($userCheck['ID'], $_SESSION['user_id']) == 0) && isset($_POST['create_complaint'])) {
+            $errors['username_error'] = "You cannot create a complaint against yourself.";
+        } else if ($userCheck['Member'] != $factionId) {
+            $errors['username_error'] = "This user is not a member of this faction.";
+        }
+
+        // check if complaint description field is empty
+        if (empty($complaintData['complaint_desc'])) {
+            $errors['description_error'] = "Complaint description cannot be empty.";
+        } else if (strlen($complaintData['complaint_desc']) < 5) {
+            $errors['description_error'] = "Description must have at least 5 characters.";
+        }
+
+        return $errors;
+    }
 }

@@ -56,11 +56,10 @@ class User
         $this->db->bind(':factionId', $factionId);
         // get the result
         $result = $this->db->getResult();
-        $faction = $result['Name'];
         if ($this->db->countRows() > 0) {
-            return $faction;
+            return $result['Name'];
         } else {
-            return false;
+            return 'No Faction';
         }
     }
 
@@ -76,7 +75,7 @@ class User
         if ($this->db->countRows() > 0) {
             return $result['name'];
         } else {
-            return false;
+            return 'Unemployed';
         }
     }
 
@@ -89,11 +88,10 @@ class User
         $this->db->bind(':familyId', $familyId);
         // get the result
         $result = $this->db->getResult();
-        $job = $result['name'];
         if ($this->db->countRows() > 0) {
-            return $job;
+            return $result['name'];
         } else {
-            return false;
+            return 'No Family';
         }
     }
 
