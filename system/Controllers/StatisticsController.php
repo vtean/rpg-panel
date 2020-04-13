@@ -6,7 +6,6 @@
  * @version 0.1
  */
 
-require_once ROOT_PATH . '/system/API/SampQuery.class.php';
 
 class StatisticsController extends Controller
 {
@@ -20,16 +19,19 @@ class StatisticsController extends Controller
 
         // store user privileges
         $this->privileges = $this->checkPrivileges();
+
     }
 
     public function online()
     {
         global $lang;
+        $server = "rpg.dreamvibe.ro";
+        $port = 7777;
 
         // get badges
         $badges = $this->badges();
 
-        $query = new SampQuery("rpg.dreamvibe.ro", 7777);
+        $query = new SampQuery($server, $port);
 
         if ($query->connect()) {
             $players = $query->getBasicPlayers();
@@ -37,7 +39,9 @@ class StatisticsController extends Controller
         } else {
             echo "Server did not respond!<br />";
         }
-        $query->close(); // Close the connection
+        $query->close();
+
+        $players = $this->statisticModel->onlineUsers($players);
 
         $data = [
             'pageTitle' => 'Online',

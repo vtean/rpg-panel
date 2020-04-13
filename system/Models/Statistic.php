@@ -64,4 +64,33 @@ class Statistic
         }
         return $final_results;
     }
+
+    public function searchExistingUser($nickname)
+    {
+        $sql = "SELECT * FROM `sv_accounts` WHERE `NickName`=:user_nick";
+        // prepare the query
+        $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':user_nick', $nickname);
+        // get the result
+        $result = $this->db->getResult();
+        if ($this->db->countRows() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function onlineUsers($users)
+    {
+        $final_results = array();
+        if (!empty($users)) {
+            foreach ($users as $user) {
+                $user['faction_name'] = $this->getFactionName($this->searchExistingUser($user['name'])['Member'])['Name'];
+                $user['played_time'] = convertMinutes($this->searchExistingUser($user['name'])['PlayedTime']);
+                array_push($final_results, $user);
+            }
+        }
+        return $final_results;
+    }
 }
