@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief TicketsController controller.
+ * @brief Tickets controller.
  * @authors Lust & Indigo
  * @copyright (c) DreamVibe Community
  * @version 0.1

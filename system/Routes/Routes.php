@@ -55,3 +55,6 @@ Route::set('apps', 'ApplicationsController', 'index');
 
 // staff page
 Route::set('staff', 'StatisticsController', 'staff');
+
+// factions page
+Route::set('factions', 'FactionsController', 'index');

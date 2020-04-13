@@ -18,9 +18,9 @@
                          data-toggle="tooltip" data-placement="left"
                          title="<?php echo $data['user']['HP']; ?> HP"></div>
                 </div>
-                <img class="dv-user-profile-skin"
-                     src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>"
-                     alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
+                <div class="dv-user-profile-skin">
+                    <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>" alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
+                </div>
             </div>
             <div class="dv-user-profile-controls m-auto">
                 <?php if (isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])): ?>
@@ -54,7 +54,7 @@
             <div class="dv-user-profile-info dv-row">
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['faction_txt']; ?></span>
-                    <span class="dv-second"><?php echo $data['user']['Member'] != 0 ? $data['faction'] : 'No Faction'; ?></span>
+                    <span class="dv-second"><?php echo $data['faction']; ?></span>
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['level_txt']; ?></span>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['family_txt']; ?></span>
-                    <span class="dv-second"><?php echo $data['user']['pFamily'] != 0 ? $data['family'] : 'No Family'; ?></span>
+                    <span class="dv-second"><?php echo $data['family']; ?></span>
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['played_time_txt']; ?></span>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['job_txt']; ?></span>
-                    <span class="dv-second"><?php echo $data['user']['Job'] == 0 ? 'Unemployed' : $data['job']; ?></span>
+                    <span class="dv-second"><?php echo $data['job']; ?></span>
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['faction_warns_txt']; ?></span>

@@ -1,7 +1,8 @@
 <?php $complaint = $data['complaint']; ?>
 <?php getHeader($data); ?>
-<h3 class="dv-page-title">Edit Complaint #<?php echo $complaint['id']; ?></h3>
+<?php flashMessage(); ?>
 <div class="dv-row">
+    <h3 class="dv-page-title">Edit Complaint #<?php echo $complaint['id']; ?></h3>
     <div class="row">
         <div class="col-lg-6 col-sm-12 col-12">
             <form action="" method="post" class="dv-form">
@@ -15,14 +16,6 @@
                     <?php if (!empty($errors['username_error'])): ?>
                         <div class="invalid-feedback"><?php echo $errors['username_error']; ?></div>
                     <?php endif; ?>
-                </div>
-                <div class="form-group">
-                    <label for="complaint_category">Complaint Category</label>
-                    <select name="complaint_category" id="complaint_category" class="form-control">
-                        <?php foreach ($data['categories'] as $category): ?>
-                            <option value="<?php echo $category['id']; ?>"<?php if ($category['id'] == $complaint['category_id']): ?> selected="selected"<?php endif; ?>><?php echo $category['name']; ?></option>
-                        <?php endforeach; ?>
-                    </select>
                 </div>
                 <div class="form-group">
                     <label for="complaint_desc">Complaint Description</label>

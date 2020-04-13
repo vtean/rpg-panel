@@ -541,6 +541,7 @@ blockquote {
   line-height: 15px;
   font-weight: 700;
   border: 2px solid white;
+  color: var(--heading-color);
   border-radius: 50%;
   padding: 3px;
   display: block;
@@ -892,7 +893,7 @@ blockquote {
   font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 3px;
-  padding: 0 20px;
+  padding: 0 1.75rem !important;
   height: 50px;
   border-radius: 25px;
   outline: 0;
@@ -1021,8 +1022,17 @@ textarea {
 .dv-user-profile .dv-user-profile-main .dv-user-profile-skin {
   height: 480px;
   width: 240px;
+  padding: 20px 0;
+  margin: 0 auto;
+}
+
+.dv-user-profile .dv-user-profile-main .dv-user-profile-skin img {
+  max-width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: center -20px;
+  object-position: center;
+  position: relative;
+  top: -10px;
 }
 
 .dv-user-profile .dv-user-profile-info {
@@ -1383,7 +1393,6 @@ textarea {
   .dv-user-profile .dv-user-profile-main .dv-user-profile-skin {
     height: 150px;
     width: 100px;
-    object-position: center -7px;
   }
 }
 
@@ -1998,6 +2007,13 @@ textarea {
 
 .dv-staff-table tbody tr td {
   padding: 0.8rem 1rem;
+}
+
+/* Faction page */
+#dvFMembersTable img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
 }
 
 /* General responsive things */

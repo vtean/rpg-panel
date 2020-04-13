@@ -59,6 +59,16 @@ $(document).ready( function () {
         "order": [[ 2, "asc" ]]
     });
 
+    $('#dvFactionsTable').DataTable({
+        "pageLength": 25,
+        "order": [[ 0, "asc" ]]
+    });
+
+    $('#dvFMembersTable').DataTable({
+        "pageLength": 25,
+        "order": [[ 1, "asc" ]]
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
