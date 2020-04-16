@@ -22,7 +22,7 @@
                     <td>
                         <?php if ($faction['Apps_Status'] == 1): ?>
                             <?php if (isLoggedIn()): ?>
-                                <a href="<?php echo BASE_URL . '/factions/apply/' . $faction['ID']; ?>" class="dv-btn btn btn-success">Apply Now</a>
+                                <a href="<?php echo BASE_URL . '/factions/apply/' . $faction['ID']; ?>" class="dv-btn btn btn-success"><i class="fa fa-plus-circle"></i> Apply Now</a>
                             <?php else: ?>
                                 Open
                             <?php endif; ?>
