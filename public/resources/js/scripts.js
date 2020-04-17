@@ -69,6 +69,16 @@ $(document).ready( function () {
         "order": [[ 1, "asc" ]]
     });
 
+    $('#dvApplicationsTable').DataTable({
+        "pageLength": 25,
+        "order": [[ 3, "asc" ]]
+    });
+
+    $('#dvQuestionsTable').dataTable({
+        "pageLength": 25,
+        "order": [[ 0, "asc" ]]
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });

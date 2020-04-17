@@ -7,6 +7,7 @@
  */
 
 require_once ROOT_PATH . '/system/Validations/ValidateComplaint.php';
+require_once ROOT_PATH . '/system/Validations/ValidateFapplication.php';
 
 class FactionsController extends Controller
 {
@@ -14,6 +15,7 @@ class FactionsController extends Controller
     private $userModel;
     private $privileges;
     use ValidateComplaint;
+    use ValidateFapplication;
 
     public function __construct()
     {
@@ -54,7 +56,7 @@ class FactionsController extends Controller
             $factionMembers = $this->factionModel->getFactionMembers($id);
 
             $data = [
-                'pageTitle' => 'Factions',
+                'pageTitle' => $faction['Name'],
                 'fullAccess' => $this->privileges['fullAccess'],
                 'isAdmin' => $this->privileges['isAdmin'],
                 'isLeader' => $this->privileges['isLeader'],
@@ -79,7 +81,7 @@ class FactionsController extends Controller
         $badges = $this->badges();
 
         if (!empty($faction) && is_numeric($factionId)) {
-            if (empty($secondParam) && $complaintId == 0) {
+            if (empty($secondParam) && $complaintId === 0) {
                 $fComplaints = $this->factionModel->getFactionComplaints($factionId);
 
                 $data = [
@@ -223,7 +225,7 @@ class FactionsController extends Controller
                     $this->loadView('fcomplaint_view', $data);
                 }
 
-            } else if (strcasecmp($secondParam, 'create') == 0 && $complaintId == 0) {
+            } else if (strcasecmp($secondParam, 'create') == 0 && $complaintId === 0) {
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // sanitize post data
                     $_POST['against_name'] = filter_var($_POST['against_name'], FILTER_SANITIZE_STRING);
@@ -345,6 +347,216 @@ class FactionsController extends Controller
             }
         } else {
             $this->error('404', 'Page Not Found!');
+        }
+    }
+
+    public function applications($factionId = 0, $secondParam = '', $applicationId = 0)
+    {
+        global $lang;
+        $badges = $this->badges();
+        $faction = $this->factionModel->getFaction($factionId);
+        $application = $this->factionModel->getApplication($applicationId);
+
+        if ($factionId != 0 && !empty($faction) && is_numeric($factionId)) {
+            $appsStatus = $this->factionModel->getFaction($factionId)['Apps_Status'];
+
+            if (empty($secondParam) && $applicationId === 0) {
+                $factionApps = $this->factionModel->getFactionApplications($factionId);
+
+                $data = [
+                    'pageTitle' => $faction['Name'] . ' Applications',
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader'],
+                    'lang' => $lang,
+                    'badges' => $badges,
+                    'faction' => $faction,
+                    'factionApps' => $factionApps,
+                    'appsStatus' => $appsStatus
+                ];
+
+                // load view
+                $this->loadView('fapplications_index', $data);
+
+            } else if (strcasecmp($secondParam, 'create') == 0 && $applicationId === 0) {
+                $userApplied = $this->factionModel->userApplied($_SESSION['user_id']);
+                if ($appsStatus == 0) {
+                    flashMessage('danger', 'Applications for this faction are currently closed.');
+                    redirect('/factions/applications/' . $factionId);
+                } else {
+                    if ($userApplied) {
+                        flashMessage('danger', 'You already have an opened application.');
+                        redirect('/factions/applications/' . $factionId);
+                    } else {
+                        $questions = $this->factionModel->getFactionAppsQuestions($factionId);
+                        $countQuestions = $this->factionModel->countFactionApps($factionId);
+
+                        $data = [
+                            'pageTitle' => 'Post Application',
+                            'fullAccess' => $this->privileges['fullAccess'],
+                            'isAdmin' => $this->privileges['isAdmin'],
+                            'isLeader' => $this->privileges['isLeader'],
+                            'lang' => $lang,
+                            'badges' => $badges,
+                            'faction' => $faction,
+                            'questions' => $questions
+                        ];
+
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                            // sanitize post data
+                            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                            $_POST['questionsNumber'] = $countQuestions;
+
+                            // handle errors
+                            $errors = ValidateFapplication::validateApp($_POST);
+
+                            $postBody = '';
+                            for ($i = 1; $i <= $countQuestions; $i++) {
+                                $postInput = "<p><span class='dv-first'><strong>" . $_POST['question' . $i] . ": </strong></span><span class='dv-second'>" . $_POST['answer' . $i] . "</span></p>";
+                                $postBody = $postBody . $postInput;
+                            }
+                            $postBody = htmlentities($postBody);
+
+                            $postData = [
+                                'body' => $postBody,
+                                'author_id' => $_SESSION['user_id'],
+                                'faction_id' => $factionId,
+                                'status' => 'Open',
+                            ];
+
+                            if (count(array_filter($errors)) == 0 && $countQuestions > 0) {
+                                if ($this->factionModel->postApplication($postData)) {
+                                    flashMessage('success', 'Your application has been successfully posted.');
+                                    redirect('/factions/applications/' . $factionId);
+                                } else {
+                                    die('Something went wrong.');
+                                }
+                            } else {
+                                $this->loadView('fapplication_create', $data, $errors);
+                            }
+
+                        } else {
+                            // load view
+                            $this->loadView('fapplication_create', $data);
+                        }
+                    }
+                }
+
+            } else if (strcasecmp($secondParam, 'view') == 0 && (!empty($application)) && is_numeric($applicationId)) {
+                $application['body'] = html_entity_decode($application['body']);
+
+                $data = [
+                    'pageTitle' => 'View Application',
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader'],
+                    'lang' => $lang,
+                    'badges' => $badges,
+                    'application' => $application
+                ];
+
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if ($data['isLeader'] == $factionId || $data['fullAccess']) {
+                        if (isset($_POST['accept_application'])) {
+                            $postData = [
+                                'status' => 'Accepted for tests',
+                                'updated_by' => $_SESSION['user_id']
+                            ];
+
+                            if ($this->factionModel->updateAppStatus($postData, $applicationId)) {
+                                flashMessage('success', 'Application has been accepted successfully.');
+                                redirect('/factions/applications/' . $factionId);
+                            } else {
+                                die('Something went wrong.');
+                            }
+                        } else if (isset($_POST['reject_application'])) {
+                            $postData = [
+                                'status' => 'Rejected',
+                                'updated_by' => $_SESSION['user_id']
+                            ];
+
+                            if ($this->factionModel->updateAppStatus($postData, $applicationId)) {
+                                flashMessage('success', 'Application has been rejected successfully.');
+                                redirect('/factions/applications/' . $factionId);
+                            } else {
+                                die('Something went wrong.');
+                            }
+                        }
+                    }
+
+                    if (isset($_POST['delete_application']) && $data['fullAccess']) {
+                        if ($this->factionModel->deleteApplication($applicationId)) {
+                            flashMessage('success', 'Application has been deleted successfully.');
+                            redirect('/factions/applications/' . $factionId);
+                        } else {
+                            die('Something went wrong.');
+                        }
+                    }
+                }
+
+                // load view
+                $this->loadView('fapplication_view', $data);
+
+            } else if (strcasecmp($secondParam, 'edit') == 0 && (!empty($application)) && is_numeric($applicationId)) {
+
+            } else if (strcasecmp($secondParam, 'questions') == 0 && $applicationId === 0 && $this->privileges['isLeader'] && $this->privileges['isLeader'] == $factionId) {
+                $questions = $this->factionModel->getFactionAppsQuestions($factionId);
+
+                $data = [
+                    'pageTitle' => 'Application Questions',
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader'],
+                    'lang' => $lang,
+                    'badges' => $badges,
+                    'questions' => $questions
+                ];
+
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if (isset($_POST['add_question'])) {
+                        // sanitize post data
+                        $_POST['question_body'] = filter_var($_POST['question_body'], FILTER_SANITIZE_STRING);
+
+                        $postData = [
+                            'faction_id' => $factionId,
+                            'question_body' => $_POST['question_body']
+                        ];
+
+                        // handle errors
+                        $errors = ValidateFapplication::validateInput($postData);
+
+                        // check if there are no errors
+                        if (count(array_filter($errors)) == 0) {
+                            // add question
+                            if ($this->factionModel->addQuestion($postData)) {
+                                flashMessage('success', 'Question has been successfully added.');
+                                redirect('/factions/applications/' . $factionId . '/questions');
+                            } else {
+                                die('Something went wrong.');
+                            }
+                        } else {
+                            // load view with errors
+                            $this->loadView('fapplications_questions', $data, $errors);
+                        }
+                    } else if (isset($_POST['delete_question'])) {
+                        // delete question
+                        if ($this->factionModel->deleteQuestion($_POST['question_id'])) {
+                            flashMessage('success', 'Question has been successfully deleted.');
+                            redirect('/factions/applications/' . $factionId . '/questions');
+                        } else {
+                            die('Something went wrong.');
+                        }
+                    }
+
+                } else {
+                    // load view
+                    $this->loadView('fapplications_questions', $data);
+                }
+
+            } else {
+                $this->error('404', 'Page Not Found!');
+            }
         }
     }
 }

@@ -344,7 +344,7 @@ blockquote {
 
 .dv-main-menu .dv-navbar .dv-nav-group .dv-nav .dv-nav-item .dv-nav-link.dv-collapse::after {
   content: '\f107';
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 1.4rem;
   color: var(--text-color-secondary);
@@ -835,7 +835,7 @@ blockquote {
 
 .login .username:before {
    content: "\f007";
-   font-family: "Font Awesome 5 Pro";
+   font-family: "Font Awesome 5 Free";
    font-weight: 900;
    font-size: 16px;
    position: absolute;
@@ -849,7 +849,7 @@ blockquote {
 
 .login .secret:before {
   content: "\f084";
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 16px;
   position: absolute;
@@ -863,7 +863,7 @@ blockquote {
 
 .login .password:before {
   content: "\f084";
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 16px;
   position: absolute;
@@ -1047,7 +1047,7 @@ textarea {
 
 .dv-user-profile .dv-user-profile-info .dv-user-info-group::before {
   content: '\f292';
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   position: absolute;
   font-size: 3rem;
@@ -1142,7 +1142,7 @@ textarea {
 
 .dv-user-profile .dv-user-properties .dv-user-property::before {
   content: '\f27a';
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 5rem;
   color: #435ebb30;
@@ -1366,7 +1366,7 @@ textarea {
 
 .dv-widget .dv-widget-content ul li a:before {
   content: '\f0a4';
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   margin-right: 5px;
 }
@@ -1377,7 +1377,7 @@ textarea {
 
 .dv-page-block .dv-block-content ul li:before {
   content: '\f0da';
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   margin-right: 2px;
 }
@@ -1630,6 +1630,11 @@ textarea {
 
 .dvTable table.dataTable.hover tbody tr:hover {
   background-color: var(--content-bg);
+}
+
+#dvFactionsTable tbody td a i {
+  font-size: 1.2rem;
+  margin: 0 10px;
 }
 
 .dv-action-btn {
@@ -1979,7 +1984,7 @@ textarea {
 
 .dv-magic-group ul li a:before {
   content: '\f0da';
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   margin-right: 3px;
 }

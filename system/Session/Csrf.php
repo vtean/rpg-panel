@@ -6,22 +6,16 @@
  * @version 0.1
  */
 
-$length = 32;
-$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-$charactersLength = strlen($characters);
-$randomString = '';
-for ($i = 0; $i < $length; $i++) {
-    $randomString .= $characters[rand(0, $charactersLength - 1)];
-}
-$randomToken = openssl_random_pseudo_bytes(32);
+$randomToken = time() + rand(1, 10000);
+$userToken = hash('sha1', $randomToken);
 
 if (!isset($_SESSION['csrfToken'])) {
-    $_SESSION['csrfToken'] = hash_hmac('sha256', $randomString, $randomToken);
+    $_SESSION['csrfToken'] = hash('sha256', $userToken);
     $_SESSION['csrfExpire'] = time() + 900;
 }
 
 if (time() > $_SESSION['csrfExpire']) {
-    $_SESSION['csrfToken'] = hash_hmac('sha256', $randomString, $randomToken);
+    $_SESSION['csrfToken'] = hash('sha256', $userToken);
     $_SESSION['csrfExpire'] = time() + 900;
 }
 

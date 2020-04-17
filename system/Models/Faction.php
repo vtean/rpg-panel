@@ -15,28 +15,11 @@ class Faction
         $this->db = new Db();
     }
 
-    public function countFactionMembers($factionId)
-    {
-        $sql = "SELECT `ID` FROM `sv_accounts` WHERE `Member`=:factionId";
-        $this->db->prepareQuery($sql);
-        $this->db->bind(':factionId', $factionId);
-        $this->db->executeStmt();
-        return $this->db->countRows();
-    }
-
     public function getFactions()
     {
         $sql = "SELECT * FROM `sv_factions`";
         $this->db->prepareQuery($sql);
-        $results = $this->db->getResults();
-        $final_results = array();
-        if (!empty($results)) {
-            foreach ($results as $result) {
-                $result['Members'] = $this->countFactionMembers($result['ID']);
-                array_push($final_results, $result);
-            }
-        }
-        return $final_results;
+        return $this->db->getResults();
     }
 
     public function getFaction($factionId)
@@ -49,7 +32,7 @@ class Faction
 
     public function getUser($id)
     {
-        $sql = "SELECT `NickName`, `Level`, `Admin`, `PlayedTime`, `Member`, `Rank`, `FWarns`, `Skin` FROM `sv_accounts` WHERE `ID`=:id";
+        $sql = "SELECT `NickName`, `Level`, `Admin`, `PlayedTime`, `Member`, `Rank`, `Warns`, `FWarns`, `Skin`, `TotalPlayed` FROM `sv_accounts` WHERE `ID`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
         $result = $this->db->getResult();
@@ -219,5 +202,130 @@ class Faction
         } else {
             return false;
         }
+    }
+
+    public function getFactionApplications($factionId)
+    {
+        $sql = "SELECT * FROM `panel_faction_apps` WHERE `faction_id`=:factionId";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':factionId', $factionId);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                $result['author_name'] = $this->getUser($result['author_id'])['NickName'];
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function getApplication($id)
+    {
+        $sql = "SELECT * FROM `panel_faction_apps` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        $result = $this->db->getResult();
+        if (!empty($result)) {
+            $result['author'] = $this->getUser($result['author_id']);
+        }
+        return $result;
+    }
+
+    public function postApplication($data)
+    {
+        $sql = "INSERT INTO `panel_faction_apps` (`body`, `author_id`, `faction_id`, `status`) VALUES (:body, :authorId, :factionId, :status)";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':body', $data['body']);
+        $this->db->bind(':authorId', $data['author_id']);
+        $this->db->bind(':factionId', $data['faction_id']);
+        $this->db->bind(':status', $data['status']);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateAppStatus($data, $id)
+    {
+        $sql = "UPDATE `panel_faction_apps` SET `status`=:status, `updated_by`=:updatedBy WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':status', $data['status']);
+        $this->db->bind(':updatedBy', $data['updated_by']);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteApplication($id)
+    {
+        $sql = "DELETE FROM `panel_faction_apps` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function userApplied($id)
+    {
+        $sql = "SELECT `id` FROM `panel_faction_apps` WHERE `author_id`=:id AND `status`=:appStatus";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        $this->db->bind(':appStatus', 'Open');
+        $this->db->executeStmt();
+        if ($this->db->countRows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function addQuestion($data)
+    {
+        $sql = "INSERT INTO `panel_fapps_questions` (`faction_id`, `body`) VALUES (:factionId, :body)";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':factionId', $data['faction_id']);
+        $this->db->bind(':body', $data['question_body']);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getFactionAppsQuestions($factionId)
+    {
+        $sql = "SELECT * FROM `panel_fapps_questions` WHERE `faction_id`=:factionId";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':factionId', $factionId);
+        return $this->db->getResults();
+    }
+
+    public function deleteQuestion($id)
+    {
+        $sql = "DELETE FROM `panel_fapps_questions` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function countFactionApps($factionId)
+    {
+        $sql = "SELECT `id` FROM `panel_fapps_questions` WHERE `faction_id`=:factionId";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':factionId', $factionId);
+        $this->db->executeStmt();
+        return $this->db->countRows();
     }
 }
