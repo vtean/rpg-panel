@@ -179,6 +179,10 @@ blockquote {
   text-shadow: 0 0 30px var(--text-hover-color);
 }
 
+.dv-verified {
+  color: var(--text-hover-color);
+}
+
 .dv-desc ul {
   padding: 0 0 0 40px;
 }
@@ -1633,6 +1637,11 @@ textarea {
 }
 
 #dvFactionsTable tbody td a i {
+  font-size: 1.2rem;
+  margin: 0 5px;
+}
+#dvPropertiesTable tbody td i {
+  color: var(--heading-color);
   font-size: 1.2rem;
   margin: 0 5px;
 }

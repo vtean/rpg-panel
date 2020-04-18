@@ -29,9 +29,6 @@ Route::set('leader', 'LeaderController', 'index');
 // user page
 Route::set('users', 'UsersController', 'index');
 
-// statistics pages
-Route::set('online', 'StatisticsController', 'online');
-
 // groups page
 Route::set('groups', 'GroupsController', 'index');
 
@@ -61,3 +58,24 @@ Route::set('factions', 'FactionsController', 'index');
 
 // families page
 Route::set('families', 'FamiliesController', 'index');
+
+// online players page
+Route::set('online', 'StatisticsController', 'online');
+
+// top players page
+Route::set('top', 'StatisticsController', 'top');
+
+// bans page
+Route::set('bans', 'StatisticsController', 'bans');
+
+// houses page
+Route::set('houses', 'StatisticsController', 'houses');
+
+// businesses page
+Route::set('businesses', 'StatisticsController', 'businesses');
+
+// vehicles page
+Route::set('vehicles', 'StatisticsController', 'vehicles');
+
+// search page
+Route::set('search', 'SearchController', 'index');

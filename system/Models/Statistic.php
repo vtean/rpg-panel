@@ -15,6 +15,13 @@ class Statistic
         $this->db = new Db();
     }
 
+    public function getAllUsers()
+    {
+        $sql = "SELECT `NickName`, `Level`, `Exp`, `TotalPlayed` FROM `sv_accounts`";
+        $this->db->prepareQuery($sql);
+        return $this->db->getResults();
+    }
+
     public function getAdmins()
     {
         $sql = "SELECT `NickName`, `Admin`, `Online_status`, `LastLogin`, `PanelGroups` FROM `sv_accounts` WHERE `Admin` > :notAdmin ORDER BY `Admin` DESC, `ID` ASC";
@@ -29,6 +36,50 @@ class Statistic
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
         return $this->db->getResult();
+    }
+
+    public function getBannedUsers()
+    {
+        $sql = "SELECT * FROM `sv_bannames`";
+        $this->db->prepareQuery($sql);
+        return $this->db->getResults();
+    }
+
+    public function getHouses()
+    {
+        $sql = "SELECT * FROM `sv_houses`";
+        $this->db->prepareQuery($sql);
+        return $this->db->getResults();
+    }
+
+    public function getBusinesses()
+    {
+        $sql = "SELECT * FROM `sv_businesses`";
+        $this->db->prepareQuery($sql);
+        return $this->db->getResults();
+    }
+
+    public function getVehicleName($model)
+    {
+        $sql = "SELECT `Name` FROM `sv_modellimit` WHERE `Model`=:model";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':model', $model);
+        return $this->db->getResult();
+    }
+
+    public function getVehicles()
+    {
+        $sql = "SELECT * FROM `sv_vehicles`";
+        $this->db->prepareQuery($sql);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                $result['name'] = $this->getVehicleName($result['Model'])['Name'];
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
     }
 
     public function getFactionName($id)

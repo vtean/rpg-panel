@@ -89,6 +89,26 @@ $(document).ready( function () {
         "order": [[ 0, "asc" ]]
     });
 
+    $('#dvFamilyMembersTable').dataTable({
+        "pageLength": 25,
+        "order": [[ 0, "asc" ]]
+    });
+
+    $('#dvTopPlayersTable').dataTable({
+        "pageLength": 25,
+        "order": [[ 2, "desc" ]]
+    });
+
+    $('#dvBannedPlayersTable').dataTable({
+        "pageLength": 25,
+        "order": [[ 4, "desc" ]]
+    });
+
+    $('#dvPropertiesTable').dataTable({
+        "pageLength": 50,
+        "order": [[ 0, "asc" ]]
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });

@@ -19,6 +19,7 @@ class MainController extends Controller
         // store user privileges
         $this->privileges = $this->checkPrivileges();
     }
+
     public function index()
     {
         global $lang;
