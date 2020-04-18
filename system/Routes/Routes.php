@@ -58,3 +58,6 @@ Route::set('staff', 'StatisticsController', 'staff');
 
 // factions page
 Route::set('factions', 'FactionsController', 'index');
+
+// families page
+Route::set('families', 'FamiliesController', 'index');

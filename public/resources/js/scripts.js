@@ -84,6 +84,11 @@ $(document).ready( function () {
         "order": [[ 2, "desc" ]]
     });
 
+    $('#dvFamiliesTable').dataTable({
+        "pageLength": 25,
+        "order": [[ 0, "asc" ]]
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });

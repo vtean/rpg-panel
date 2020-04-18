@@ -1,7 +1,7 @@
 <?php getHeader($data); ?>
 <?php flashMessage(); ?>
-<h3 class="dv-page-title">Factions</h3>
 <div class="dv-row">
+    <h3 class="dv-page-title">Factions</h3>
     <div class="dvTable">
         <table id="dvFactionsTable">
             <thead>
