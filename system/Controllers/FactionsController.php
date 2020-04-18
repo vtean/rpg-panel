@@ -358,6 +358,9 @@ class FactionsController extends Controller
         global $lang;
         $badges = $this->badges();
         $faction = $this->factionModel->getFaction($factionId);
+        if (isLoggedIn()) {
+            $userFaction = $this->factionModel->getUser($_SESSION['user_id'])['Member'];
+        }
 
         if ($factionId != 0 && !empty($faction) && is_numeric($factionId)) {
             $application = $this->factionModel->getApplication($applicationId);
@@ -381,7 +384,7 @@ class FactionsController extends Controller
                 // load view
                 $this->loadView('fapplications_index', $data);
 
-            } else if (strcasecmp($secondParam, 'create') == 0 && $applicationId === 0) {
+            } else if (strcasecmp($secondParam, 'create') == 0 && $applicationId === 0 && $userFaction == 0) {
                 $userApplied = $this->factionModel->userApplied($_SESSION['user_id']);
                 if ($appsStatus == 0) {
                     flashMessage('danger', 'Applications for this faction are currently closed.');
