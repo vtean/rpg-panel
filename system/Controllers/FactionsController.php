@@ -8,6 +8,7 @@
 
 require_once ROOT_PATH . '/system/Validations/ValidateComplaint.php';
 require_once ROOT_PATH . '/system/Validations/ValidateFapplication.php';
+require_once ROOT_PATH . '/system/Validations/ValidateResignation.php';
 
 class FactionsController extends Controller
 {
@@ -16,6 +17,7 @@ class FactionsController extends Controller
     private $privileges;
     use ValidateComplaint;
     use ValidateFapplication;
+    use ValidateResignation;
 
     public function __construct()
     {
@@ -76,11 +78,12 @@ class FactionsController extends Controller
     public function complaints($factionId = 0, $secondParam = '', $complaintId = 0)
     {
         global $lang;
-        $faction = $this->factionModel->getFaction($factionId);
-        $complaint = $this->factionModel->getComplaint($complaintId);
         $badges = $this->badges();
+        $faction = $this->factionModel->getFaction($factionId);
 
         if (!empty($faction) && is_numeric($factionId)) {
+            $complaint = $this->factionModel->getComplaint($complaintId);
+
             if (empty($secondParam) && $complaintId === 0) {
                 $fComplaints = $this->factionModel->getFactionComplaints($factionId);
 
@@ -355,9 +358,9 @@ class FactionsController extends Controller
         global $lang;
         $badges = $this->badges();
         $faction = $this->factionModel->getFaction($factionId);
-        $application = $this->factionModel->getApplication($applicationId);
 
         if ($factionId != 0 && !empty($faction) && is_numeric($factionId)) {
+            $application = $this->factionModel->getApplication($applicationId);
             $appsStatus = $this->factionModel->getFaction($factionId)['Apps_Status'];
 
             if (empty($secondParam) && $applicationId === 0) {
@@ -385,7 +388,7 @@ class FactionsController extends Controller
                     redirect('/factions/applications/' . $factionId);
                 } else {
                     if ($userApplied) {
-                        flashMessage('danger', 'You already have an opened application.');
+                        flashMessage('danger', 'You have already an opened application.');
                         redirect('/factions/applications/' . $factionId);
                     } else {
                         $questions = $this->factionModel->getFactionAppsQuestions($factionId);
@@ -557,6 +560,183 @@ class FactionsController extends Controller
             } else {
                 $this->error('404', 'Page Not Found!');
             }
+        }
+    }
+
+    public function resignations($factionId = 0, $secondParam = '', $resignationId = 0)
+    {
+        global $lang;
+        $badges = $this->badges();
+        $faction = $this->factionModel->getFaction($factionId);
+        if (isLoggedIn()) {
+            $isFactionMember = $this->factionModel->getUser($_SESSION['user_id'])['Member'] == $factionId ? 1 : 0;
+        }
+
+        if ($factionId != 0 && !empty($faction) && is_numeric($factionId) && isLoggedIn() && ($isFactionMember || $this->privileges['fullAccess'])) {
+            $resignation = $this->factionModel->getResignation($resignationId);
+
+            if (empty($secondParam) && $resignationId === 0) {
+                $resignations = $this->factionModel->getResignations($factionId);
+
+                $data = [
+                    'pageTitle' => 'Resignations',
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader'],
+                    'lang' => $lang,
+                    'badges' => $badges,
+                    'faction' => $faction,
+                    'resignations' => $resignations,
+                    'isFactionMember' => $isFactionMember
+                ];
+
+                // load view
+                $this->loadView('resignations_index', $data);
+
+            } else if (strcasecmp($secondParam, 'create') == 0 && $resignationId === 0) {
+                $userPostedResignation = $this->factionModel->userPostedResignation($_SESSION['user_id']);
+
+                if ($userPostedResignation) {
+                    flashMessage('danger', 'You have already an opened resignation.');
+                    redirect('/factions/resignations/' . $factionId);
+                } else {
+                    $data = [
+                        'pageTitle' => 'Post Resignation',
+                        'fullAccess' => $this->privileges['fullAccess'],
+                        'isAdmin' => $this->privileges['isAdmin'],
+                        'isLeader' => $this->privileges['isLeader'],
+                        'lang' => $lang,
+                        'badges' => $badges
+                    ];
+
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        if (isset($_POST['post_resignation'])) {
+                            // sanitize post data
+                            $_POST['resignation_body'] = htmlentities($_POST['resignation_body']);
+
+                            $postData = [
+                                'body' => $_POST['resignation_body'],
+                                'author_id' => $_SESSION['user_id'],
+                                'author_ip' => getUserIp(),
+                                'faction_id' => $factionId,
+                                'status' => 'Open'
+                            ];
+
+                            // handle errors
+                            $errors = ValidateResignation::validatePost($postData);
+
+                            if (count(array_filter($errors)) == 0) {
+                                if ($this->factionModel->postResignation($postData)) {
+                                    flashMessage('success', 'Resignation has been successfully posted.');
+                                    redirect('/factions/resignations/' . $factionId);
+                                } else {
+                                    die('Something went wrong.');
+                                }
+                            } else {
+                                // load view with errors
+                                $this->loadView('resignation_create', $data, $errors);
+                            }
+                        }
+                    } else {
+                        // load view
+                        $this->loadView('resignation_create', $data);
+                    }
+                }
+
+            } else if (strcasecmp($secondParam, 'view') == 0 && is_numeric($resignationId) && !empty($resignation)) {
+                $userBanned = $this->factionModel->userBanned($resignation['author']['NickName']);
+                $resignation['body'] = html_entity_decode($resignation['body']);
+                $replies = $this->factionModel->getResignationReplies($resignationId);
+                $finalReplies = array();
+                foreach ($replies as $reply) {
+                    $reply['body'] = html_entity_decode($reply['body']);
+                    array_push($finalReplies, $reply);
+                }
+
+                $data = [
+                    'pageTitle' => 'View Resignation',
+                    'fullAccess' => $this->privileges['fullAccess'],
+                    'isAdmin' => $this->privileges['isAdmin'],
+                    'isLeader' => $this->privileges['isLeader'],
+                    'lang' => $lang,
+                    'badges' => $badges,
+                    'resignation' => $resignation,
+                    'userBanned' => $userBanned,
+                    'replies' => $finalReplies
+                ];
+
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if (isset($_POST['post_reply'])) {
+                        // sanitize post data
+                        $_POST['resignation_reply'] = htmlentities($_POST['resignation_reply']);
+                        if ($_SESSION['user_id'] == $resignation['author_id']) {
+                            $userStatus = 'Resignation Creator';
+                        } else {
+                            $userStatus = 'Player';
+                        }
+
+                        $postData = [
+                            'resignation_id' => $resignationId,
+                            'author_id' => $_SESSION['user_id'],
+                            'body' => $_POST['resignation_reply'],
+                            'user_status' => $userStatus
+                        ];
+
+                        // handle errors
+                        $errors = ValidateResignation::validatePostReply($postData);
+
+                        if (count(array_filter($errors)) == 0) {
+                            // post reply
+                            if ($this->factionModel->postResignationReply($postData)) {
+                                flashMessage('success', 'Reply has been successfully posted.');
+                                redirect('/factions/resignations/' . $factionId . '/view/' . $resignationId);
+                            } else {
+                                die('Something went wrong.');
+                            }
+                        } else {
+                            $this->loadView('resignation_view', $data, $errors);
+                        }
+                    }
+
+                    if ($_SESSION['user_id'] == $resignation['author_id'] || $data['isLeader'] == $factionId || $data['fullAccess']) {
+                        if (isset($_POST['close_resignation'])) {
+                            $closeData = [
+                                'status' => 'Closed',
+                                'closed_by' => $_SESSION['user_id']
+                            ];
+
+                            if ($this->factionModel->updateResignationStatus($closeData, $resignationId)) {
+                                flashMessage('success', 'Resignation has been successfully closed.');
+                                redirect('/factions/resignations/' . $factionId . '/view/' . $resignationId);
+                            } else {
+                                die('Something went wrong.');
+                            }
+                        }
+                    }
+
+                    if ($data['fullAccess']) {
+                        if (isset($_POST['delete_reply'])) {
+                            $replyId = filter_var($_POST['reply_id'], FILTER_SANITIZE_NUMBER_INT);
+                            if ($this->factionModel->deleteResignationReply($replyId)) {
+                                flashMessage('success', 'Reply has been deleted successfully.');
+                                redirect('/factions/resignations/' . $factionId . '/view/' . $resignationId);
+                            } else {
+                                die('Something went wrong.');
+                            }
+                        }
+                    }
+                } else {
+                    // load view
+                    $this->loadView('resignation_view', $data);
+                }
+
+            } else if (strcasecmp($secondParam, 'edit') == 0 && is_numeric($resignationId) && !empty($resignation)) {
+
+            } else {
+                $this->error('404', 'Page Not Found!');
+            }
+        } else {
+            $this->error('404', 'Page Not Found!');
         }
     }
 }

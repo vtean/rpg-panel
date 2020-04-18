@@ -32,7 +32,7 @@ class Faction
 
     public function getUser($id)
     {
-        $sql = "SELECT `NickName`, `Level`, `Admin`, `PlayedTime`, `Member`, `Rank`, `Warns`, `FWarns`, `Skin`, `TotalPlayed` FROM `sv_accounts` WHERE `ID`=:id";
+        $sql = "SELECT `NickName`, `Level`, `Admin`, `Leader`, `PlayedTime`, `Member`, `Rank`, `Warns`, `FWarns`, `Skin`, `TotalPlayed` FROM `sv_accounts` WHERE `ID`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
         $result = $this->db->getResult();
@@ -110,7 +110,7 @@ class Faction
         $this->db->bind(':against_id', $data['against_id']);
         $this->db->bind(':is_edited', $data['is_edited']);
         $this->db->bind(':edit_ip', $data['edit_ip']);
-        $this->db->bind(':edited_by',$data['edited_by']);
+        $this->db->bind(':edited_by', $data['edited_by']);
         $this->db->bind(':id', $id);
         if ($this->db->executeStmt()) {
             return true;
@@ -327,5 +327,137 @@ class Faction
         $this->db->bind(':factionId', $factionId);
         $this->db->executeStmt();
         return $this->db->countRows();
+    }
+
+    public function getResignations($id)
+    {
+        $sql = "SELECT * FROM `panel_resignations` WHERE `faction_id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                $result['author_name'] = $this->getUser($result['author_id'])['NickName'];
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function getResignation($id)
+    {
+        $sql = "SELECT * FROM `panel_resignations` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        $result = $this->db->getResult();
+        if (!empty($result)) {
+            $result['author'] = $this->getUser($result['author_id']);
+            if ($result['closed_by'] != 0) {
+                $result['closed_by_name'] = $this->getUser($result['closed_by'])['NickName'];
+            }
+        }
+        return $result;
+    }
+
+    public function userPostedResignation($user_id)
+    {
+        $sql = "SELECT `id` FROM `panel_resignations` WHERE `author_id`=:authorId AND `status`=:status";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':authorId', $user_id);
+        $this->db->bind(':status', 'Open');
+        $this->db->executeStmt();
+        if ($this->db->countRows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function postResignation($data)
+    {
+        $sql = "INSERT INTO `panel_resignations` (`body`, `author_id`, `author_ip`, `faction_id`, `status`) VALUES (:body, :author_id, :author_ip, :faction_id, :status)";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':body', $data['body']);
+        $this->db->bind(':author_id', $data['author_id']);
+        $this->db->bind(':author_ip', $data['author_ip']);
+        $this->db->bind(':faction_id', $data['faction_id']);
+        $this->db->bind(':status', $data['status']);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateResignationStatus($data, $resignationId)
+    {
+        $sql = "UPDATE `panel_resignations` SET `status`=:status, `closed_by`=:closedBy WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':status', $data['status']);
+        $this->db->bind(':closedBy', $data['closed_by']);
+        $this->db->bind(':id', $resignationId);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function userBanned($username)
+    {
+        $sql = "SELECT * FROM `sv_bannames` WHERE `Name`=:username";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':username', $username);
+        $this->db->executeStmt();
+        $result = $this->db->getResult();
+        if ($this->db->countRows() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function getResignationReplies($resignationId)
+    {
+        $sql = "SELECT * FROM `panel_resign_replies` WHERE `resignation_id`=:resignation_id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':resignation_id', $resignationId);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                $result['author'] = $this->getUser($result['author_id']);
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function postResignationReply($data)
+    {
+        $sql = "INSERT INTO `panel_resign_replies` (`resignation_id`, `author_id`, `body`, `user_status`) VALUES (:resignationId, :authorId, :body, :userStatus)";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':resignationId', $data['resignation_id']);
+        $this->db->bind(':authorId', $data['author_id']);
+        $this->db->bind(':body', $data['body']);
+        $this->db->bind(':userStatus', $data['user_status']);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteResignationReply($id)
+    {
+        $sql = "DELETE FROM `panel_resign_replies` WHERE `id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

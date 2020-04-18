@@ -26,7 +26,9 @@
                             <div class="invalid-feedback"><?php echo $errors['description_error']; ?></div>
                         <?php endif; ?>
                     </div>
-                    <button type="submit" name="create_complaint" class="dv-btn btn btn-primary"><i class="fas fa-paper-plane"></i> Post Complaint</button>
+                    <button type="submit" name="create_complaint" class="dv-btn btn btn-primary"><i
+                                class="fas fa-paper-plane"></i> Post Complaint
+                    </button>
                 </form>
             </div>
         </div>

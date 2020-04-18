@@ -79,6 +79,11 @@ $(document).ready( function () {
         "order": [[ 0, "asc" ]]
     });
 
+    $('#dvResignationsTable').dataTable({
+        "pageLength": 25,
+        "order": [[ 2, "desc" ]]
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
