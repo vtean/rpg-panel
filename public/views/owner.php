@@ -86,7 +86,7 @@
                             <li><a href="">Manage Admins</a></li>
                             <li><a href="">Manage Leaders</a></li>
                             <li><a href="">Manage Users</a></li>
-                            <li><a href="">Logs</a></li>
+                            <li><a href="<?php echo BASE_URL . '/logs'; ?>">Logs</a></li>
                         </ul>
                     </div>
                 </div>

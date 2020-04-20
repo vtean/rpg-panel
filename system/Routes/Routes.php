@@ -79,3 +79,6 @@ Route::set('vehicles', 'StatisticsController', 'vehicles');
 
 // search page
 Route::set('search', 'SearchController', 'index');
+
+// logs page
+Route::set('logs', 'LogsController', 'index');

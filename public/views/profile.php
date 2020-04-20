@@ -38,6 +38,9 @@
                     <a href="<?php echo BASE_URL . '/groups/assign/' . $data['user']['NickName']; ?>"
                        class="dv-btn btn btn-primary" role="button"><i class="fas fa-user-tag"></i> Assign Groups</a>
                 <?php endif; ?>
+                <?php if (isLoggedIn() && ($data['isAdmin']) > 2): ?>
+                    <a href="<?php echo BASE_URL . '/logs/player/' . $data['user']['ID']; ?>" class="dv-btn btn btn-warning" role="button"><i class="fas fa-history"></i> Player Logs</a>
+                <?php endif; ?>
             </div>
         </div>
         <div class="col-lg-8 col-md-12 col-sm-12">
