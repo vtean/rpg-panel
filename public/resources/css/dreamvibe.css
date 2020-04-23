@@ -195,6 +195,10 @@ blockquote {
   color: var(--heading-color);
 }
 
+.dv-fit {
+  width: fit-content;
+}
+
 /* MainController menu */
 .dv-main-menu {
   background-color: var(--menu-bg);
@@ -423,6 +427,10 @@ blockquote {
   margin-left: 3px;
 }
 
+.dv-topic-badge {
+  padding: 3px 7px;
+}
+
 /* MainController content */
 .dv-main {
   min-height: 100%;
@@ -477,11 +485,19 @@ blockquote {
   padding: 15px;
 }
 
-/* Latest actions */
+/* Alert */
+.alert {
+  border-radius: 5px;
+}
 
+.success  {
+  color: var(--success-color);
+  border-color: var(--success-border)
+}
 
 /* Flash messages */
-.dv-message {
+.dv-message,
+.dv-alert {
   width: 100%;
   background: url(../img/bg-lines.png) repeat-x #95A5A6;
   margin-bottom: 10px;
@@ -491,33 +507,41 @@ blockquote {
 }
 
 .dv-message i,
-.dv-message span {
+.dv-message span,
+.dv-alert i,
+.dv-alert span {
   vertical-align: middle;
   color: var(--heading-color);
 }
 
-.dv-message i {
+.dv-message i,
+.dv-alert i {
   font-size: 1.4rem;
   margin-right: 5px;
 }
 
-.dv-message span {
+.dv-message span,
+.dv-alert span {
   font-weight: bold;
 }
 
-.dv-message.success {
+.dv-message.success,
+.dv-alert.success {
   background-color: var(--success-color);
 }
 
-.dv-message.info {
+.dv-message.info,
+.dv-alert.info {
   background-color: var(--info-color);
 }
 
-.dv-message.danger {
+.dv-message.danger,
+.dv-alert.danger {
   background-color: var(--danger-color);
 }
 
-.dv-message.warning {
+.dv-message.warning,
+.dv-alert.warning {
   background-color: var(--warning-color);
 }
 
@@ -1124,8 +1148,8 @@ textarea {
 }
 
 .dv-row-title {
+  display: table;
   text-shadow: 0 12px 25px #6d88f8;
-  width: fit-content;
   margin-bottom: 15px;
 }
 
@@ -1312,6 +1336,34 @@ textarea {
   font-weight: bold;
 }
 
+/* User settings */
+.tab-content .dv-page-block {
+  padding: 30px;
+}
+
+.dv-account-overview .dv-single {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.dv-account-overview .dv-single .dv-btn {
+  position: absolute;
+  right: 0;
+  top: 3px;
+}
+
+.dv-account-overview .dv-single:last-child {
+  margin-bottom: 0;
+}
+
+.dv-account-overview .dv-single span {
+  display: block;
+}
+
+.dv-account-overview .dv-single .dv-first {
+  font-size: 1.2rem;
+}
+
 /* Page content & Widgets */
 .dv-widget {
   margin-top: 30px;
@@ -1321,11 +1373,20 @@ textarea {
   margin-top: 0;
 }
 
-.dv-page-content,
+.dv-page-block,
 .dv-widget {
   background-color: var(--content-bg);
   padding: 20px;
   border-radius: 5px;
+}
+
+.dv-page-block {
+  margin-bottom: 30px;
+}
+
+.inline-label {
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .dv-page-block .dv-block-title,
@@ -1665,6 +1726,10 @@ textarea {
   border-radius: 5px;
 }
 
+.dv-page-block .dv-form .form-control {
+  background-color: #3a3e5f;
+}
+
 .dv-form .form-control:focus {
   outline: none;
   box-shadow: none;
@@ -1681,6 +1746,7 @@ textarea {
   display: inline-block;
   width: 54px;
   height: 28px;
+  vertical-align: middle;
 }
 
 /* Hide default HTML checkbox */
@@ -2028,6 +2094,15 @@ textarea {
   width: 50px;
   height: 50px;
   object-fit: cover;
+}
+
+/* Modal */
+.dv-modal .modal-content {
+  background-color: #30334c;
+}
+
+.dv-modal .modal-header {
+  border-bottom-color: #494e75;
 }
 
 /* General responsive things */

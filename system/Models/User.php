@@ -205,4 +205,90 @@ class User
         // return result
         return $this->db->getResult();
     }
+
+    // update user email
+    public function updateUserEmail($id, $email)
+    {
+        $sql = "UPDATE `sv_accounts` SET `Mail`=:email WHERE `ID`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':email', $email);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // update user forum name
+    public function updateForumName($id, $name)
+    {
+        $sql = "UPDATE `sv_accounts` SET `ForumName`=:forumName WHERE `ID`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':forumName', $name);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // change user password
+    public function updateUserPassword($id, $password)
+    {
+        $sql = "UPDATE `sv_accounts` SET `Password`=:password WHERE `ID`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':password', $password);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // activate email login
+    public function changeEmailLogin($id, $state)
+    {
+        $sql = "UPDATE `sv_accounts` SET `MailLogin`=:mailValue WHERE `ID`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':mailValue', $state);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // enable google authenticator
+    public function enableGAuth($id, $secretCode)
+    {
+        $sql = "UPDATE `sv_accounts` SET `GoogleCode`=:secretCode, `GoogleStatus`=:gStatus WHERE `ID`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':secretCode', $secretCode);
+        $this->db->bind(':gStatus', 1);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // disable google authenticator
+    public function disableGAuth($id)
+    {
+        $sql = "UPDATE `sv_accounts` SET `GoogleCode`=:secretCode, `GoogleStatus`=:gStatus WHERE `ID`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':secretCode', 'None');
+        $this->db->bind(':gStatus', 0);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

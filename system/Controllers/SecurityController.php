@@ -41,7 +41,7 @@ class SecurityController extends Controller
             $type = $_SESSION['sec_type'];
             $mail = $user['Mail'];
             if ($type == 'email') {
-                $pageTitle = $_SESSION['user_lang'] == 'en' ? 'Email Confirmation' : 'Confirmare Email';
+                $pageTitle = $_COOKIE['user_lang'] == 'en' ? 'Email Confirmation' : 'Confirmare Email';
                 $sendCode = $_SESSION['sec_code'];
                 $message = "A fost depistata o autentificare pe contul tau de pe un nou IP. <br>
                             Daca ai fost tu, introdu pe server codul de mai jos. In cazul in care nu tu te-ai conectat, iti recomandam sa iti schimbi parola. <br><br>    
@@ -50,7 +50,7 @@ class SecurityController extends Controller
                     sendMail($mail, 'do-not-reply@dreamvibe.ro', 'DreamVibe RPG', 'Confirmare Login', $message);
                 }
             } else {
-                $pageTitle = $_SESSION['user_lang'] == 'en' ? 'Two Factor Authentication' : 'Autentificare în 2 pași';
+                $pageTitle = $_COOKIE['user_lang'] == 'en' ? 'Two Factor Authentication' : 'Autentificare în 2 pași';
             }
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_POST['secret'] = filter_var($_POST['secret'], FILTER_VALIDATE_INT);

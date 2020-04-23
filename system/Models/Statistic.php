@@ -108,7 +108,9 @@ class Statistic
         $final_results = array();
         if (!empty($results)) {
             foreach ($results as $result) {
-                $result['faction_name'] = $this->getFactionName($result['Member'])['Name'];
+                if ($result['Member'] != 0) {
+                    $result['faction_name'] = $this->getFactionName($result['Member'])['Name'];
+                }
                 $result['faction_members'] = $this->countFactionMembers($result['Member']);
                 array_push($final_results, $result);
             }

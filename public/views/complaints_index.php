@@ -27,7 +27,9 @@
                             </td>
                             <td><a href="<?php echo BASE_URL . '/users/profile/' . $complaint['author_name']; ?>"><?php echo $complaint['author_name']; ?></a></td>
                             <td><?php echo $complaint['created_at']; ?></td>
-                            <td><?php echo $complaint['status']; ?></td>
+                            <td>
+                                <span class="dv-topic-badge badge<?php if ($complaint['status'] == 'Open'): ?> badge-success<?php elseif ($complaint['status'] == 'Closed'): ?> badge-secondary<?php elseif ($complaint['status'] == 'Author Reply' || $complaint['status'] == 'Admin Reply'): ?> badge-warning<?php elseif ($complaint['status'] == 'Needs Owner Involvement'): ?> badge-danger<?php endif; ?>"><?php echo $complaint['status']; ?></span>
+                            </td>
                             <td>
                                 <a href="<?php echo BASE_URL . '/complaints/view/' . $complaint['id']; ?>" class="dv-action-btn"><i class="fas fa-eye"></i></a>
                                 <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || in_array(1, $data['canEditAComplaints'])): ?>

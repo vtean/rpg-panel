@@ -26,10 +26,16 @@
                 <?php foreach ($data['tickets'] as $ticket): ?>
                     <tr>
                         <td><?php echo $ticket['id']; ?></td>
-                        <td><a href="<?php echo BASE_URL . '/tickets/view/' . $ticket['id']; ?>"><?php echo $ticket['category_name']['name']; ?></a></td>
-                        <td><a href="<?php echo BASE_URL . '/users/profile/' .  $ticket['author_name']; ?>"><?php echo $ticket['author_name']; ?></a></td>
+                        <td>
+                            <a href="<?php echo BASE_URL . '/tickets/view/' . $ticket['id']; ?>"><?php echo $ticket['category_name']['name']; ?></a>
+                        </td>
+                        <td>
+                            <a href="<?php echo BASE_URL . '/users/profile/' . $ticket['author_name']; ?>"><?php echo $ticket['author_name']; ?></a>
+                        </td>
                         <td><?php echo $ticket['created_at']; ?></td>
-                        <td><?php echo $ticket['status']; ?></td>
+                        <td>
+                            <span class="dv-topic-badge badge<?php if ($ticket['status'] == 'Open'): ?> badge-success<?php elseif ($ticket['status'] == 'Closed'): ?> badge-secondary<?php elseif ($ticket['status'] == 'Author Reply' || $ticket['status'] == 'Admin Reply'): ?> badge-warning<?php elseif ($ticket['status'] == 'Needs Owner Involvement'): ?> badge-danger<?php endif; ?>"><?php echo $ticket['status']; ?></span>
+                        </td>
                         <td>
                             <?php
                             if ($ticket['author_id'] == $_SESSION['user_id'] && $ticket['status'] == 'Open') {

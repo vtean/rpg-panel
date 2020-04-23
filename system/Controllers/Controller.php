@@ -54,10 +54,14 @@ class Controller
     public function badges()
     {
         $this->bigBossModel = $this->loadModel('General');
-        $ticketBadge = $this->bigBossModel->countTickets();
+        $ticketBadge = $this->bigBossModel->countTickets('Open');
+        $complaintBadge = $this->bigBossModel->countComplaints('Open');
+        $unbanBadge = $this->bigBossModel->countUnbans('Open');
 
         return [
-          'ticketBadge' => $ticketBadge
+            'ticketBadge' => $ticketBadge,
+            'complaintBadge' => $complaintBadge,
+            'unbanBadge' => $unbanBadge
         ];
     }
 

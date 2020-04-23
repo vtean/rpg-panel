@@ -125,14 +125,54 @@ class General
         return $final_results;
     }
 
-    public function countTickets()
+    public function countAllTickets()
+    {
+        $sql = "SELECT * FROM `panel_tickets`";
+        $this->db->prepareQuery($sql);
+        $this->db->executeStmt();
+        return $this->db->countRows();
+    }
+
+    public function countTickets($status)
     {
         $sql = "SELECT * FROM `panel_tickets` WHERE `status`=:status";
-        // prepare the query
         $this->db->prepareQuery($sql);
-        // bind params
-        $this->db->bind(':status', 'Open');
-        $this->db->getResults();
+        $this->db->bind(':status', $status);
+        $this->db->executeStmt();
+        return $this->db->countRows();
+    }
+
+    public function countAllComplaints()
+    {
+        $sql = "SELECT * FROM `panel_complaints`";
+        $this->db->prepareQuery($sql);
+        $this->db->executeStmt();
+        return $this->db->countRows();
+    }
+
+    public function countComplaints($status)
+    {
+        $sql = "SELECT * FROM `panel_complaints` WHERE `status`=:status";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':status', $status);
+        $this->db->executeStmt();
+        return $this->db->countRows();
+    }
+
+    public function countAllUnbans()
+    {
+        $sql = "SELECT * FROM `panel_unbans`";
+        $this->db->prepareQuery($sql);
+        $this->db->executeStmt();
+        return $this->db->countRows();
+    }
+
+    public function countUnbans($status)
+    {
+        $sql = "SELECT * FROM `panel_unbans` WHERE `status`=:status";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':status', $status);
+        $this->db->executeStmt();
         return $this->db->countRows();
     }
 }

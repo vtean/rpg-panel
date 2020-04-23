@@ -14,7 +14,7 @@
                     <span class="dv-welcome-text"><?php echo $data['lang']['welcome_txt']; ?>, <?php echo $_SESSION['user_name']; ?></span>
                     <div class="dv-user-controls">
                         <ul class="list-style-none">
-                            <li><a href="#"><i class="fas fa-user-cog"></i></a></li>
+                            <li><a href="<?php echo BASE_URL . '/users/settings'; ?>"><i class="fas fa-user-cog"></i></a></li>
                             <li><a href=""><i class="fas fa-bell"></i></a></li>
                             <li><a href="<?php echo BASE_URL . '/logout'; ?>"><i class="fas fa-sign-out-alt"></i></a></li>
                         </ul>
@@ -98,19 +98,27 @@
                             <a class="dv-nav-link" href="<?php echo BASE_URL . '/tickets'; ?>">
                                 <i class="dv-nav-icon fas fa-ticket-alt"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['tickets_txt']; ?></span>
-                                <span class="dv-badge badge badge-pill badge-danger"><?= $data['badges']['ticketBadge'] ?></span>
+                                <?php if ($data['isAdmin'] > 2): ?>
+                                    <span class="dv-badge badge badge-danger"><?= $data['badges']['ticketBadge'] ?></span>
+                                <?php endif; ?>
                             </a>
                         </li>
                         <li class="dv-nav-item">
                             <a class="dv-nav-link" href="<?php echo BASE_URL . '/complaints'; ?>">
                                 <i class="dv-nav-icon fas fa-user-times"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['complaints_txt']; ?></span>
+                                <?php if ($data['isAdmin'] > 2): ?>
+                                    <span class="dv-badge badge badge-danger"><?php echo $data['badges']['complaintBadge']; ?></span>
+                                <?php endif; ?>
                             </a>
                         </li>
                         <li class="dv-nav-item">
                             <a class="dv-nav-link" href="<?php echo BASE_URL . '/unbans'; ?>">
                                 <i class="dv-nav-icon fas fa-ban"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['unban_requests_txt']; ?></span>
+                                <?php if ($data['isAdmin'] > 2): ?>
+                                    <span class="dv-badge badge badge-danger"><?php echo $data['badges']['unbanBadge']; ?></span>
+                                <?php endif; ?>
                             </a>
                         </li>
                         <li class="dv-nav-item">
@@ -150,7 +158,7 @@
                         <li class="dv-nav-item">
                             <a class="dv-nav-link" href="<?php echo BASE_URL . '/shop'; ?>">
                                 <i class="dv-nav-icon fas fa-shopping-bag"></i>
-                                <span class="dv-nav-text"><?php echo $data['lang']['shop_txt']; ?></span>
+                                <span class="dv-nav-text"><?php echo $data['lang']['shop_txt']; ?> <span class="text-danger">(Unavailable)</span></span>
                             </a>
                         </li>
                         <li class="dv-nav-item">
