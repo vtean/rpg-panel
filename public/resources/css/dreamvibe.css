@@ -239,7 +239,7 @@ blockquote {
   margin: 0 auto;
   background-color: var(--menu-icon-bg);
   border-radius: 50%;
-  border: 2px solid #6b7bbf40;
+  border: 2px solid #40476c;
   overflow: hidden;
   transition: all .2s ease-in-out;
 }
@@ -249,10 +249,9 @@ blockquote {
 }
 
 .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar .dv-logged-img {
-  height: 300%;
-  object-fit: cover;
+  transform: scale(3.5);
   position: relative;
-  top: -15px;
+  top: 100px;
 }
 
 .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar,
@@ -464,7 +463,7 @@ blockquote {
 }
 
 .dv-main-feed .nav-tabs {
-  border-bottom: 2px solid #4c507d99;
+  border-bottom: 2px solid #414469;
 }
 
 .dv-main-feed .nav-tabs .nav-item {
@@ -735,7 +734,7 @@ blockquote {
 }
 
 .login .login-icon {
-  background: #448aff99;
+  background: #3c67b7;
   color: var(--text-color);
   width: 120px;
   height: 120px;
@@ -775,7 +774,7 @@ blockquote {
   background: 0 0;
   padding: 0 5px 0 38px;
   border: none;
-  border-bottom: 2px solid #ffffff40
+  border-bottom: 2px solid #646679;
 }
 
 .login .login-form::-webkit-input-placeholder {
@@ -908,7 +907,7 @@ blockquote {
 }
 
 .login p a {
-  color: #448aff99;
+  color: #3c67b7;
 }
 
 .login p a:hover {
@@ -917,7 +916,7 @@ blockquote {
 
 .login .login-btn {
   color: var(--heading-color);
-  background: #448aff99;
+  background: #3c67b7;
   font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -1056,11 +1055,9 @@ textarea {
 
 .dv-user-profile .dv-user-profile-main .dv-user-profile-skin img {
   max-width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  transform: scale(2.4);
   position: relative;
-  top: -10px;
+  top: 125px;
 }
 
 .dv-user-profile .dv-user-profile-info {
@@ -1081,7 +1078,7 @@ textarea {
   font-size: 3rem;
   left: -13px;
   top: -4px;
-  color: #435ebb30;
+  color: #2c3252;
   z-index: -1;
 }
 
@@ -1173,7 +1170,7 @@ textarea {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 5rem;
-  color: #435ebb30;
+  color: #2c3252;
   position: absolute;
   top: -7px;
   left: -30px;
@@ -1221,10 +1218,9 @@ textarea {
 }
 
 .dv-user-fh .dv-user-fh-item .dv-user-fh-avatar img {
-  height: 300%;
-  object-fit: cover;
+  transform: scale(3.5);
   position: relative;
-  top: -5px;
+  top: 35px;
 }
 
 .dv-user-fh .dv-user-fh-item .dv-user-fh-text {
@@ -2141,8 +2137,13 @@ textarea {
     height: 40px;
   }
 
+  .dv-user-profile .dv-user-profile-main .dv-user-profile-skin img {
+    transform: scale(2);
+    top: 12px;
+  }
+
   .dv-main-menu .dv-user-bar .dv-user-welcome .dv-user-avatar .dv-logged-img {
-    top: -4px;
+    top: 32px;
   }
 
   .dv-main-menu .dv-user-bar .dv-user-welcome .dv-welcome-text {
