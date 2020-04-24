@@ -234,6 +234,7 @@ class ApplicationsController extends Controller
             if ($userApp['extra'] != 'staff') {
                 $userApp['applied_to'] = $this->appModel->getFactionInfo($userApp['extra'])['Name'];
             }
+            $userFH = $this->appModel->getUserFH($userApp['author_id']);
 
             $data = [
                 'pageTitle' => $userApp['account_details']['NickName'] . "'s Application",
@@ -246,7 +247,8 @@ class ApplicationsController extends Controller
                 'canDeleteLApps' => $userApp['type'] == 'leader' && in_array(1, $this->privileges['canDeleteLApps']),
                 'lang' => $lang,
                 'badges' => $badges,
-                'userApp' => $userApp
+                'userApp' => $userApp,
+                'userFH' => $userFH
             ];
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {

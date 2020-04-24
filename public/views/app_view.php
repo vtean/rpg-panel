@@ -77,27 +77,22 @@
         <div class="dv-topic-message dv-mb-30">
             <h4 class="dv-row-title">Faction history</h4>
             <div class="dv-user-fh">
-                <div class="dv-user-fh-item">
-                    <div class="dv-user-fh-avatar">
-                        <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $userApp['account_details']['Skin'] . '.png'; ?>"
-                             alt="<?php echo $userApp['account_details']['NickName'] . "'s Skin"; ?>">
-                    </div>
-                    <div class="dv-user-fh-text">
-                        <p>Lust has joined the faction School Instructors (invited by Indigo).</p>
-                        <span><i class="far fa-clock"></i> 15/03/2020 05:25</span>
-                    </div>
-                </div>
-                <div class="dv-user-fh-item">
-                    <div class="dv-user-fh-avatar">
-                        <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $userApp['account_details']['Skin'] . '.png'; ?>"
-                             alt="<?php echo $userApp['account_details']['NickName'] . "'s Skin"; ?>">
-                    </div>
-                    <div class="dv-user-fh-text">
-                        <p>Lust was uninvited by Indigo from faction School Instructors (rank 9) after 69 days,
-                            without FP. Reason: Cerere de demisie!</p>
-                        <span><i class="far fa-clock"></i> 15/03/2020 02:25</span>
-                    </div>
-                </div>
+                <?php if (!empty($data['userFH'])): ?>
+                    <?php foreach ($data['userFH'] as $fh): ?>
+                        <div class="dv-user-fh-item">
+                            <div class="dv-user-fh-avatar">
+                                <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $userApp['account_details']['Skin'] . '.png'; ?>"
+                                     alt="<?php echo $userApp['account_details']['NickName'] . "'s Skin"; ?>">
+                            </div>
+                            <div class="dv-user-fh-text">
+                                <p><?php echo $fh['action']; ?></p>
+                                <span><i class="far fa-clock"></i> <?php echo $fh['date']; ?></span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <span>There are currently no actions.</span>
+                <?php endif; ?>
             </div>
         </div>
     </div>
