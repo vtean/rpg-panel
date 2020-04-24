@@ -2,12 +2,9 @@
 
 class SearchController extends Controller
 {
-    private $privileges;
-
     public function __construct()
     {
-        // store privileges
-        $this->privileges = $this->checkPrivileges();
+        parent::__construct();
     }
 
     public function viewmap($x = 0, $y = 0)
@@ -34,9 +31,6 @@ class SearchController extends Controller
     }
 
     public function map($x = 0, $y = 0) {
-        global $lang;
-        $badges = $this->badges();
-
         if ($x === 0 || $y === 0) {
             $this->error('404', 'Page Not Found!');
         } else {
@@ -44,11 +38,6 @@ class SearchController extends Controller
 
             $data = [
                 'pageTitle' => 'Map',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'badges' => $badges,
                 'imgUrl' => $imgUrl
             ];
 

@@ -10,26 +10,19 @@
 class StatisticsController extends Controller
 {
     private $statisticModel;
-    private $privileges;
 
     public function __construct()
     {
+        parent::__construct();
+
         // load model
         $this->statisticModel = $this->loadModel('Statistic');
-
-        // store user privileges
-        $this->privileges = $this->checkPrivileges();
-
     }
 
     public function online()
     {
-        global $lang;
-        $server = "188.212.102.123";
+        $server = '188.212.102.123';
         $port = 7777;
-
-        // get badges
-        $badges = $this->badges();
 
         $query = new SampQuery($server, $port);
 
@@ -45,23 +38,15 @@ class StatisticsController extends Controller
 
         $data = [
             'pageTitle' => 'Online',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
             'players' => $players,
             'info' => $info,
-            'lang' => $lang,
-            'badges' => $badges
         ];
-
 
         $this->loadView('online', $data);
     }
 
     public function staff()
     {
-        global $lang;
-        $badges = $this->badges();
         $admins = $this->statisticModel->getAdmins();
         $finalAdmins = array();
         $leaders = $this->statisticModel->getLeaders();
@@ -82,11 +67,6 @@ class StatisticsController extends Controller
 
         $data = [
             'pageTitle' => 'Staff',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'admins' => $finalAdmins,
             'leaders' => $leaders
         ];
@@ -97,17 +77,10 @@ class StatisticsController extends Controller
 
     public function top()
     {
-        global $lang;
-        $badges = $this->badges();
         $allPlayers = $this->statisticModel->getAllUsers();
 
         $data = [
             'pageTitle' => 'Top Players',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'allPlayers' => $allPlayers
         ];
 
@@ -117,8 +90,6 @@ class StatisticsController extends Controller
 
     public function bans()
     {
-        global $lang;
-        $badges = $this->badges();
         $bannedPlayers = $this->statisticModel->getBannedUsers();
         $finalBannedPlayers = array();
         if (!empty($bannedPlayers)) {
@@ -133,11 +104,6 @@ class StatisticsController extends Controller
 
         $data = [
             'pageTitle' => 'Banned Players',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'bannedPlayers' => $finalBannedPlayers
         ];
 
@@ -147,17 +113,10 @@ class StatisticsController extends Controller
 
     public function houses()
     {
-        global $lang;
-        $badges = $this->badges();
         $houses = $this->statisticModel->getHouses();
 
         $data = [
             'pageTitle' => 'Houses',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'houses' => $houses
         ];
 
@@ -167,17 +126,10 @@ class StatisticsController extends Controller
 
     public function businesses()
     {
-        global $lang;
-        $badges = $this->badges();
         $businesses = $this->statisticModel->getBusinesses();
 
         $data = [
             'pageTitle' => 'Businesses',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'businesses' => $businesses
         ];
 
@@ -187,17 +139,10 @@ class StatisticsController extends Controller
 
     public function vehicles()
     {
-        global $lang;
-        $badges = $this->badges();
         $vehicles = $this->statisticModel->getVehicles();
 
         $data = [
             'pageTitle' => 'Vehicles',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'vehicles' => $vehicles
         ];
 

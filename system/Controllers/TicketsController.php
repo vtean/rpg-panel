@@ -15,11 +15,10 @@ class TicketsController extends Controller
     private $categoryModel;
     private $userModel;
     private $logModel;
-    private $privileges;
 
     public function __construct()
     {
-        global $lang;
+        parent::__construct();
 
         // load models
         $this->ticketModel = $this->loadModel('Ticket');
@@ -27,26 +26,18 @@ class TicketsController extends Controller
         $this->userModel = $this->loadModel('User');
         $this->logModel = $this->loadModel('Log');
 
-        // store user privileges
-        $this->privileges = $this->checkPrivileges();
-
         if (!isLoggedIn()) {
-            flashMessage('danger', $lang['ticket_not_logged_txt']);
+            flashMessage('danger', siteLang()['ticket_not_logged_txt']);
             redirect('/');
         }
     }
 
     public function index()
     {
-        global $lang;
-
         $allTickets = $this->ticketModel->getAllTickets();
         $userTickets = $this->ticketModel->getUserTickets($_SESSION['user_id']);
 
-        // get badges
-        $badges = $this->badges();
-
-        if (in_array(1, $this->privileges['canViewTickets'])) {
+        if ($this->privileges['canViewTickets']) {
             $tickets = $allTickets;
         } else {
             $tickets = $userTickets;
@@ -54,14 +45,7 @@ class TicketsController extends Controller
 
         $data = [
             'pageTitle' => 'Panel Tickets',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'tickets' => $tickets,
-            'lang' => $lang,
-            'canViewTickets' => in_array(1, $this->privileges['canViewTickets']),
-            'canDeleteTickets' => in_array(1, $this->privileges['canDeleteTickets']),
-            'badges' => $badges
+            'tickets' => $tickets
         ];
 
         $this->loadView('ticket_index', $data);
@@ -69,13 +53,8 @@ class TicketsController extends Controller
 
     public function create()
     {
-        global $lang;
-
         $type = 'ticket';
         $categories = $this->categoryModel->getAllCategories($type);
-
-        // get badges
-        $badges = $this->badges();
 
         if (isset($_POST['create_ticket'])) {
             // sanitize post data
@@ -93,14 +72,9 @@ class TicketsController extends Controller
             // parse data
             $data = [
                 'pageTitle' => 'Create Ticket',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
                 'ticket' => $dataPost,
                 'categories' => $categories,
-                'lang' => $lang,
-                'ticketBody' => $_POST['ticket_body'],
-                'badges' => $badges
+                'ticketBody' => $_POST['ticket_body']
             ];
 
             // handle errors
@@ -122,17 +96,12 @@ class TicketsController extends Controller
         } else {
             $data = [
                 'pageTitle' => 'Create Ticket',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
                 'ticketBody' => '',
                 'ticket' => [
                     'body' => '',
                     'category_id' => 0
                 ],
-                'categories' => $categories,
-                'lang' => $lang,
-                'badges' => $badges
+                'categories' => $categories
             ];
 
             // load view
@@ -146,19 +115,15 @@ class TicketsController extends Controller
 
         if ($id == 0) {
             $this->error('404', 'Page Not Found!');
-        } else if ($ticket['author_id'] != $_SESSION['user_id'] || $ticket['status'] != 'Open') {
+        } else if ($ticket['author_id'] != $_SESSION['user_id'] && $ticket['status'] != 'Open' || !$this->privileges['canEditTickets']) {
             $this->error('403', 'Forbidden!');
         } else {
-            global $lang;
-
-            // get badges
-            $badges = $this->badges();
             $type = 'ticket';
             $categories = $this->categoryModel->getAllCategories($type);
             $category_name = $this->ticketModel->getCategoryName($ticket['category_id']);
 
             // check if delete group button is set
-            if (in_array(1, $this->privileges['canDeleteTickets']) && isset($_POST['delete_ticket'])) {
+            if ($this->privileges['canDeleteTickets'] && isset($_POST['delete_ticket'])) {
                 if ($this->ticketModel->deleteTicket($id)) {
                     // log action
                     $logAction = $_SESSION['user_name'] . ' deleted ticket (ID: ' . $id . ').';
@@ -177,7 +142,7 @@ class TicketsController extends Controller
             }
 
             // check if close group button is set
-            if (in_array(1, $this->privileges['canCloseTickets']) && isset($_POST['close_ticket'])) {
+            if ($this->privileges['canCloseTickets'] && isset($_POST['close_ticket'])) {
                 $status = 'Closed';
                 $closed_by = $_SESSION['user_id'];
 
@@ -201,17 +166,11 @@ class TicketsController extends Controller
             // parse data
             $data = [
                 'pageTitle' => 'Edit Ticket',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
                 'ticket' => $ticket,
                 'categories' => $categories,
-                'lang' => $lang,
-                'canDeleteTickets' => in_array(1, $this->privileges['canDeleteTickets']),
-                'badges' => $badges
             ];
 
-            if ($_SESSION['user_id'] == $ticket['author_id'] || in_array(1, $this->privileges['canEditTickets'])) {
+            if ($_SESSION['user_id'] == $ticket['author_id'] || $this->privileges['canEditTickets']) {
                 if (isset($_POST['edit_ticket'])) {
                     // sanitize post data
                     $_POST['ticket_category'] = filter_var($_POST['ticket_category'], FILTER_SANITIZE_NUMBER_INT);
@@ -254,18 +213,12 @@ class TicketsController extends Controller
                 } else {
                     $data = [
                         'pageTitle' => 'Edit Ticket',
-                        'fullAccess' => $this->privileges['fullAccess'],
-                        'isAdmin' => $this->privileges['isAdmin'],
-                        'isLeader' => $this->privileges['isLeader'],
-                        'canDeleteTickets' => in_array(1, $this->privileges['canDeleteTickets']),
                         'ticket' => [
                             'body' => $ticket['body'],
                             'category_id' => $ticket['category_id']
                         ],
                         'category_name' => $category_name,
-                        'categories' => $categories,
-                        'lang' => $lang,
-                        'badges' => $badges
+                        'categories' => $categories
                     ];
 
                     // load view
@@ -282,14 +235,9 @@ class TicketsController extends Controller
 
         if (empty($id) || empty($ticket)) {
             $this->error('404', 'Page Not Found!');
-        } else if ($ticket['author_id'] != $_SESSION['user_id'] && !in_array(1, $this->privileges['canViewTickets'])) {
+        } else if ($ticket['author_id'] != $_SESSION['user_id'] && !$this->privileges['canViewTickets']) {
             $this->error('403', 'Forbidden!');
         } else {
-            global $lang;
-
-            // get badges
-            $badges = $this->badges();
-
             // get replies
             $replies = $this->ticketModel->getReplies($id);
             $finalReplies = array();
@@ -307,23 +255,13 @@ class TicketsController extends Controller
 
             $data = [
                 'pageTitle' => 'View Ticket',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'canViewTickets' => in_array(1, $this->privileges['canViewTickets']),
-                'canEditTickets' => in_array(1, $this->privileges['canEditTickets']),
-                'canDeleteTickets' => in_array(1, $this->privileges['canDeleteTickets']),
-                'canDeleteTReplies' => in_array(1, $this->privileges['canDeleteTReplies']),
-                'canCloseTickets' => in_array(1, $this->privileges['canCloseTickets']),
                 'ticket' => $ticket,
                 'author' => $author,
-                'lang' => $lang,
-                'badges' => $badges,
                 'replies' => $finalReplies,
                 'categories' => $categories
             ];
 
-            if ($data['canDeleteTickets'] && isset($_POST['delete_ticket'])) {
+            if ($this->privileges['canDeleteTickets'] && isset($_POST['delete_ticket'])) {
                 if ($this->ticketModel->deleteTicket($id)) {
                     // log action
                     $logAction = $_SESSION['user_name'] . ' deleted ticket (ID: ' . $id . ').';
@@ -339,7 +277,7 @@ class TicketsController extends Controller
                 } else {
                     die('Something went wrong');
                 }
-            } else if ($data['canCloseTickets'] && isset($_POST['close_ticket'])) {
+            } else if ($this->privileges['canCloseTickets'] && isset($_POST['close_ticket'])) {
                 $status = 'Closed';
                 $closed_by = $_SESSION['user_id'];
 
@@ -358,7 +296,7 @@ class TicketsController extends Controller
                 } else {
                     die('Something went wrong');
                 }
-            } else if ($data['canCloseTickets'] && isset($_POST['open_ticket'])) {
+            } else if ($this->privileges['canCloseTickets'] && isset($_POST['open_ticket'])) {
                 if ($this->ticketModel->updateStatus($id, 'Open')) {
                     // log action
                     $logAction = $_SESSION['user_name'] . ' opened ticket (ID: ' . $id . ').';
@@ -374,7 +312,7 @@ class TicketsController extends Controller
                 } else {
                     die('Something went wrong');
                 }
-            } else if ($data['canCloseTickets'] && isset($_POST['change_category'])) {
+            } else if ($this->privileges['canCloseTickets'] && isset($_POST['change_category'])) {
                 // filter post
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $cID = $_POST['new_category_id'];
@@ -393,7 +331,7 @@ class TicketsController extends Controller
                 } else {
                     die('Something went wrong');
                 }
-            } else if ($data['canCloseTickets'] && isset($_POST['needs_owner'])) {
+            } else if ($this->privileges['canCloseTickets'] && isset($_POST['needs_owner'])) {
                 if ($this->ticketModel->updateStatus($id, 'Needs Owner Involvement')) {
                     // log action
                     $logAction = $_SESSION['user_name'] . ' changed ticket (ID: ' . $id . ') category to: Needs Owner Involvement.';
@@ -408,7 +346,7 @@ class TicketsController extends Controller
                 } else {
                     die('Something went wrong.');
                 }
-            } else if ($data['canDeleteTReplies'] && isset($_POST['delete_reply'])) {
+            } else if ($this->privileges['canDeleteTReplies'] && isset($_POST['delete_reply'])) {
                 // filter post
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $reply_id = $_POST['reply_id'];

@@ -13,7 +13,7 @@
   --menu-item-hover-bg: #3e445b95;
   --content-bg: #30334c;
   --footer-bg: #232535;
-  --form-input-bg: #3d4160;
+  --form-input-bg: #3a3e5f;
 
   /* Text colors */
   --text-color: #bdc8f6;
@@ -202,6 +202,16 @@ blockquote {
 .dv-disabled {
   opacity: .5;
   pointer-events: none;
+}
+
+.close {
+  color: #fff;
+  text-shadow: none;
+  transition: all .2s ease-in-out;
+}
+
+.close:hover {
+  color: var(--text-hover-color);
 }
 
 /* MainController menu */
@@ -444,6 +454,7 @@ blockquote {
   width: calc(100% - 270px);
   margin-left: 270px;
   padding: 30px 40px 140px 40px;
+  position: relative;
 }
 
 .dv-row {
@@ -1242,7 +1253,7 @@ textarea {
 }
 
 .dv-user-fh .dv-user-fh-item .dv-user-fh-text span {
-  color: #8c92c3;
+  color: var(--text-color);
 }
 
 .dv-user-profile .dv-user-profile-controls {
@@ -1746,8 +1757,21 @@ textarea {
   border-radius: 5px;
 }
 
-.dv-page-block .dv-form .form-control {
+.dv-page-block .dv-form .form-control,
+.dv-modal .dv-form .form-control,
+.dv-page-block .dv-form .tox .tox-edit-area__iframe,
+.dv-page-block .dv-form .tox .tox-toolbar-overlord,
+.dv-page-block .dv-form .tox .tox-toolbar,
+.dv-page-block .dv-form .tox .tox-toolbar__overflow,
+.dv-page-block .dv-form .tox .tox-toolbar__primary {
   background-color: #3a3e5f;
+}
+
+.dv-page-block .dv-form .tox .tox-toolbar,
+.dv-page-block .dv-form .tox .tox-toolbar__overflow,
+.dv-page-block .dv-form .tox .tox-toolbar__primary,
+.dv-page-block .dv-form .tox:not([dir=rtl]) .tox-toolbar__group:not(:last-of-type) {
+  border-color: #4e5582;
 }
 
 .dv-form .form-control:focus {

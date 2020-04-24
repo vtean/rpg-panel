@@ -1,4 +1,3 @@
-<?php getHeader($data); ?>
 <div class="dv-row">
     <h4 class="dv-row-title">Admins</h4>
     <table class="dv-staff-table">
@@ -57,8 +56,8 @@
                 <tr>
                     <td>
                     <span class="dv-online-status<?php if ($leader['Online_status'] == 0): ?> dv-offline<?php else: ?> dv-online<?php endif; ?>"><i
-                            class="fas fa-dot-circle" data-toggle="tooltip" data-placement="left"
-                            title="<?php if ($leader['Online_status'] == 0): ?>Offline<?php else: ?>Online<?php endif; ?>"></i></span>
+                                class="fas fa-dot-circle" data-toggle="tooltip" data-placement="left"
+                                title="<?php if ($leader['Online_status'] == 0): ?>Offline<?php else: ?>Online<?php endif; ?>"></i></span>
                         <a href="<?php echo BASE_URL . '/users/profile/' . $leader['NickName']; ?>"><?php echo $leader['NickName']; ?></a>
                     </td>
                     <td><?php echo $leader['faction_name']; ?></td>
@@ -70,4 +69,3 @@
         </tbody>
     </table>
 </div>
-<?php getFooter(); ?>

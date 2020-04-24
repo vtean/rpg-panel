@@ -7,7 +7,7 @@
  */
 
 require_once ROOT_PATH . '/system/Validations/ValidateComplaint.php';
-require_once ROOT_PATH . '/system/Validations/ValidateFapplication.php';
+require_once ROOT_PATH . '/system/Validations/ValidateFApplication.php';
 require_once ROOT_PATH . '/system/Validations/ValidateResignation.php';
 
 class FactionsController extends Controller
@@ -15,15 +15,13 @@ class FactionsController extends Controller
     private $factionModel;
     private $userModel;
     private $logModel;
-    private $privileges;
     use ValidateComplaint;
-    use ValidateFapplication;
+    use ValidateFApplication;
     use ValidateResignation;
 
     public function __construct()
     {
-        // store privileges
-        $this->privileges = $this->checkPrivileges();
+        parent::__construct();
 
         // load models
         $this->factionModel = $this->loadModel('Faction');
@@ -33,17 +31,10 @@ class FactionsController extends Controller
 
     public function index()
     {
-        global $lang;
-        $badges = $this->badges();
         $factions = $this->factionModel->getFactions();
 
         $data = [
             'pageTitle' => 'Factions',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'factions' => $factions
         ];
 
@@ -53,19 +44,12 @@ class FactionsController extends Controller
 
     public function view($id = 0)
     {
-        global $lang;
         $faction = $this->factionModel->getFaction($id);
         if (!empty($faction) && is_numeric($id)) {
-            $badges = $this->badges();
             $factionMembers = $this->factionModel->getFactionMembers($id);
 
             $data = [
                 'pageTitle' => $faction['Name'],
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'badges' => $badges,
                 'faction' => $faction,
                 'factionMembers' => $factionMembers
             ];
@@ -79,8 +63,6 @@ class FactionsController extends Controller
 
     public function complaints($factionId = 0, $secondParam = '', $complaintId = 0)
     {
-        global $lang;
-        $badges = $this->badges();
         $faction = $this->factionModel->getFaction($factionId);
 
         if (!empty($faction) && is_numeric($factionId)) {
@@ -91,11 +73,6 @@ class FactionsController extends Controller
 
                 $data = [
                     'pageTitle' => $faction['Name'] . ' Complaints',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang,
-                    'badges' => $badges,
                     'faction' => $faction,
                     'complaints' => $fComplaints
                 ];
@@ -116,21 +93,12 @@ class FactionsController extends Controller
 
                 $data = [
                     'pageTitle' => $faction['Name'] . ' Complaints',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'canEditFComplaints' => $complaint['category_id'] == 9 && in_array(1, $this->privileges['canEditFComplaints']),
-                    'canDeleteFComplaints' => $complaint['category_id'] == 9 && in_array(1, $this->privileges['canDeleteFComplaints']),
-                    'canDeleteFCReplies' => $complaint['category_id'] == 9 && in_array(1, $this->privileges['canDeleteFCReplies']),
-                    'canCloseFComplaints' => $complaint['category_id'] == 9 && in_array(1, $this->privileges['canCloseFComplaints']),
-                    'lang' => $lang,
-                    'badges' => $badges,
                     'complaint' => $complaint,
                     'cReplies' => $finalReplies
                 ];
 
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    if (($_SESSION['user_id'] == $complaint['author_id']) || ($data['isLeader'] == $complaint['faction_id']) || $data['canCloseFComplaints']) {
+                    if (($_SESSION['user_id'] == $complaint['author_id']) || ($this->privileges['isLeader'] == $complaint['faction_id']) || $this->privileges['canCloseFComplaints'] && $complaint['category_id'] == 9) {
                         if (isset($_POST['close_complaint'])) {
                             $closeData = [
                                 'status' => 'Closed',
@@ -146,7 +114,7 @@ class FactionsController extends Controller
                                 ];
                                 if ($_SESSION['user_id'] == $complaint['author_id']) {
                                     $this->logModel->playerLog($logData);
-                                } else if ($data['isLeader'] == $complaint['faction_id']) {
+                                } else if ($this->privileges['isLeader'] == $complaint['faction_id']) {
                                     $this->logModel->leaderLog($logData);
                                 } else {
                                     $this->logModel->adminLog($logData);
@@ -159,7 +127,7 @@ class FactionsController extends Controller
                         }
                     }
 
-                    if (($data['isLeader'] == $complaint['faction_id']) || $data['canCloseFComplaints']) {
+                    if (($this->privileges['isLeader'] == $complaint['faction_id']) || $this->privileges['canCloseFComplaints'] && $complaint['category_id'] == 9) {
                         if (isset($_POST['open_complaint'])) {
                             $closeData = [
                                 'status' => 'Open',
@@ -173,7 +141,7 @@ class FactionsController extends Controller
                                     'type' => 'Faction Complaint',
                                     'action' => $logAction
                                 ];
-                                if ($data['isLeader'] == $complaint['faction_id']) {
+                                if ($this->privileges['isLeader'] == $complaint['faction_id']) {
                                     $this->logModel->leaderLog($logData);
                                 } else {
                                     $this->logModel->adminLog($logData);
@@ -186,7 +154,7 @@ class FactionsController extends Controller
                         }
                     }
 
-                    if ($data['canDeleteFComplaints']) {
+                    if ($this->privileges['canDeleteFComplaints'] && $complaint['category_id'] == 9) {
                         if (isset($_POST['delete_complaint'])) {
                             // delete complaint
                             if ($this->factionModel->deleteComplaint($complaintId)) {
@@ -204,7 +172,7 @@ class FactionsController extends Controller
                         }
                     }
 
-                    if ($data['canDeleteFCReplies']) {
+                    if ($this->privileges['canDeleteFCReplies'] && $complaint['category_id'] == 9) {
                         if (isset($_POST['delete_reply'])) {
                             $reply_id = $_POST['reply_id'];
                             // delete reply
@@ -282,11 +250,6 @@ class FactionsController extends Controller
 
                     $data = [
                         'pageTitle' => 'Create Complaint',
-                        'fullAccess' => $this->privileges['fullAccess'],
-                        'isAdmin' => $this->privileges['isAdmin'],
-                        'isLeader' => $this->privileges['isLeader'],
-                        'lang' => $lang,
-                        'badges' => $badges,
                         'complaint' => $postData
                     ];
 
@@ -315,11 +278,6 @@ class FactionsController extends Controller
                 } else {
                     $data = [
                         'pageTitle' => 'Create Complaint',
-                        'fullAccess' => $this->privileges['fullAccess'],
-                        'isAdmin' => $this->privileges['isAdmin'],
-                        'isLeader' => $this->privileges['isLeader'],
-                        'lang' => $lang,
-                        'badges' => $badges,
                         'complaint' => [
                             'against_name' => '',
                             'complaint_desc' => ''
@@ -330,16 +288,11 @@ class FactionsController extends Controller
                     $this->loadView('fcomplaint_create', $data);
                 }
             } else if (strcasecmp($secondParam, 'edit') == 0 && !empty($complaint) && is_numeric($complaintId)) {
-                if ($_SESSION['user_id'] == $complaint['author_id'] || in_array(1, $this->privileges['canEditFComplaints'])) {
+                if ($_SESSION['user_id'] == $complaint['author_id'] || $this->privileges['canEditFComplaints'] && $complaint['category_id'] == 9) {
                     $complaint['description'] = html_entity_decode($complaint['description']);
 
                     $data = [
                         'pageTitle' => 'Edit Complaint',
-                        'fullAccess' => $this->privileges['fullAccess'],
-                        'isAdmin' => $this->privileges['isAdmin'],
-                        'isLeader' => $this->privileges['isLeader'],
-                        'lang' => $lang,
-                        'badges' => $badges,
                         'complaint' => $complaint
                     ];
 
@@ -405,8 +358,6 @@ class FactionsController extends Controller
 
     public function applications($factionId = 0, $secondParam = '', $applicationId = 0)
     {
-        global $lang;
-        $badges = $this->badges();
         $faction = $this->factionModel->getFaction($factionId);
         if (isLoggedIn()) {
             $userFaction = $this->factionModel->getUser($_SESSION['user_id'])['Member'];
@@ -421,11 +372,6 @@ class FactionsController extends Controller
 
                 $data = [
                     'pageTitle' => $faction['Name'] . ' Applications',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang,
-                    'badges' => $badges,
                     'faction' => $faction,
                     'factionApps' => $factionApps,
                     'appsStatus' => $appsStatus
@@ -449,11 +395,6 @@ class FactionsController extends Controller
 
                         $data = [
                             'pageTitle' => 'Post Application',
-                            'fullAccess' => $this->privileges['fullAccess'],
-                            'isAdmin' => $this->privileges['isAdmin'],
-                            'isLeader' => $this->privileges['isLeader'],
-                            'lang' => $lang,
-                            'badges' => $badges,
                             'faction' => $faction,
                             'questions' => $questions
                         ];
@@ -465,7 +406,7 @@ class FactionsController extends Controller
                             $_POST['questionsNumber'] = $countQuestions;
 
                             // handle errors
-                            $errors = ValidateFapplication::validateApp($_POST);
+                            $errors = ValidateFApplication::validateApp($_POST);
 
                             $postBody = '';
                             for ($i = 1; $i <= $countQuestions; $i++) {
@@ -504,16 +445,11 @@ class FactionsController extends Controller
 
                 $data = [
                     'pageTitle' => 'View Application',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang,
-                    'badges' => $badges,
                     'application' => $application
                 ];
 
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    if ($data['isLeader'] == $factionId || $data['fullAccess']) {
+                    if ($this->privileges['isLeader'] == $factionId || $this->privileges['fullAccess']) {
                         if (isset($_POST['accept_application'])) {
                             $postData = [
                                 'status' => 'Accepted for tests',
@@ -526,7 +462,7 @@ class FactionsController extends Controller
                                     'type' => 'Faction Application',
                                     'action' => $logAction
                                 ];
-                                if ($data['isLeader'] == $factionId) {
+                                if ($this->privileges['isLeader'] == $factionId) {
                                     $this->logModel->leaderLog($logData);
                                 } else {
                                     $this->logModel->adminLog($logData);
@@ -548,7 +484,7 @@ class FactionsController extends Controller
                                     'type' => 'Faction Application',
                                     'action' => $logAction
                                 ];
-                                if ($data['isLeader'] == $factionId) {
+                                if ($this->privileges['isLeader'] == $factionId) {
                                     $this->logModel->leaderLog($logData);
                                 } else {
                                     $this->logModel->adminLog($logData);
@@ -587,11 +523,6 @@ class FactionsController extends Controller
 
                 $data = [
                     'pageTitle' => 'Application Questions',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang,
-                    'badges' => $badges,
                     'questions' => $questions
                 ];
 
@@ -606,7 +537,7 @@ class FactionsController extends Controller
                         ];
 
                         // handle errors
-                        $errors = ValidateFapplication::validateInput($postData);
+                        $errors = ValidateFApplication::validateInput($postData);
 
                         // check if there are no errors
                         if (count(array_filter($errors)) == 0) {
@@ -656,8 +587,6 @@ class FactionsController extends Controller
 
     public function resignations($factionId = 0, $secondParam = '', $resignationId = 0)
     {
-        global $lang;
-        $badges = $this->badges();
         $faction = $this->factionModel->getFaction($factionId);
         if (isLoggedIn()) {
             $isFactionMember = $this->factionModel->getUser($_SESSION['user_id'])['Member'] == $factionId ? 1 : 0;
@@ -671,11 +600,6 @@ class FactionsController extends Controller
 
                 $data = [
                     'pageTitle' => 'Resignations',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang,
-                    'badges' => $badges,
                     'faction' => $faction,
                     'resignations' => $resignations,
                     'isFactionMember' => $isFactionMember
@@ -692,12 +616,7 @@ class FactionsController extends Controller
                     redirect('/factions/resignations/' . $factionId);
                 } else {
                     $data = [
-                        'pageTitle' => 'Post Resignation',
-                        'fullAccess' => $this->privileges['fullAccess'],
-                        'isAdmin' => $this->privileges['isAdmin'],
-                        'isLeader' => $this->privileges['isLeader'],
-                        'lang' => $lang,
-                        'badges' => $badges
+                        'pageTitle' => 'Post Resignation'
                     ];
 
                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -746,11 +665,6 @@ class FactionsController extends Controller
 
                 $data = [
                     'pageTitle' => 'View Resignation',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang,
-                    'badges' => $badges,
                     'resignation' => $resignation,
                     'userBanned' => $userBanned,
                     'replies' => $finalReplies
@@ -789,7 +703,7 @@ class FactionsController extends Controller
                         }
                     }
 
-                    if ($_SESSION['user_id'] == $resignation['author_id'] || $data['isLeader'] == $factionId || $data['fullAccess']) {
+                    if ($_SESSION['user_id'] == $resignation['author_id'] || $this->privileges['isLeader'] == $factionId || $this->privileges['fullAccess']) {
                         if (isset($_POST['close_resignation'])) {
                             $closeData = [
                                 'status' => 'Closed',
@@ -802,7 +716,7 @@ class FactionsController extends Controller
                                     'type' => 'Faction Resignation',
                                     'action' => $logAction
                                 ];
-                                if ($data['isLeader'] == $factionId) {
+                                if ($this->privileges['isLeader'] == $factionId) {
                                     $this->logModel->leaderLog($logData);
                                 } else {
                                     $this->logModel->adminLog($logData);
@@ -815,7 +729,7 @@ class FactionsController extends Controller
                         }
                     }
 
-                    if ($data['fullAccess']) {
+                    if ($this->privileges['fullAccess']) {
                         if (isset($_POST['delete_reply'])) {
                             $replyId = filter_var($_POST['reply_id'], FILTER_SANITIZE_NUMBER_INT);
                             if ($this->factionModel->deleteResignationReply($replyId)) {

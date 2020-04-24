@@ -15,28 +15,20 @@ class ComplaintsController extends Controller
     private $categoryModel;
     private $userModel;
     private $logModel;
-    private $privileges;
 
     public function __construct()
     {
-        global $lang;
+        parent::__construct();
 
         // load models
         $this->complaintModel = $this->loadModel('Complaint');
         $this->categoryModel = $this->loadModel('Category');
         $this->userModel = $this->loadModel('User');
         $this->logModel = $this->loadModel('Log');
-
-        // store user privileges
-        $this->privileges = $this->checkPrivileges();
     }
 
     public function index()
     {
-        global $lang;
-
-        $badge = $this->badges();
-
         if ($this->privileges['fullAccess'] == 1) {
             $complaints = $this->complaintModel->getAllComplaints();
         } else {
@@ -45,25 +37,16 @@ class ComplaintsController extends Controller
 
         $data = [
             'pageTitle' => 'Complaints',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'canEditAComplaints' => $this->privileges['canEditAComplaints'],
-            'lang' => $lang,
-            'badges' => $badge,
             'complaints' => $complaints
         ];
+
         // load view
         $this->loadView('complaints_index', $data);
     }
 
     public function create()
     {
-        global $lang;
-
         if (isLoggedIn()) {
-            $badge = $this->badges();
-
             $categories = $this->categoryModel->getAllCategories('complaint');
 
             if (isset($_POST['create_complaint'])) {
@@ -84,12 +67,7 @@ class ComplaintsController extends Controller
 
                 $data = [
                     'pageTitle' => 'New Complaint',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
                     'complaint' => $postData,
-                    'lang' => $lang,
-                    'badges' => $badge,
                     'categories' => $categories
                 ];
 
@@ -117,15 +95,10 @@ class ComplaintsController extends Controller
             } else {
                 $data = [
                     'pageTitle' => 'New Complaint',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
                     'complaint' => [
                         'against_name' => '',
                         'complaint_desc' => '',
                     ],
-                    'lang' => $lang,
-                    'badges' => $badge,
                     'categories' => $categories
                 ];
 
@@ -144,23 +117,14 @@ class ComplaintsController extends Controller
 
         if (($id == 0) || ($complaint == false)) {
             $this->error('404', 'Page Not Found!');
-        } else if (($complaint['author_id'] != $_SESSION['user_id'] && $complaint['status'] != 'Open' && $this->privileges['isAdmin'] < 1 && !in_array(1, $this->privileges['canEditAComplaints'])) || (($this->privileges['isAdmin'] > 0) && !in_array(1, $this->privileges['canEditAComplaints']))) {
+        } else if (($complaint['author_id'] != $_SESSION['user_id'] && $complaint['status'] != 'Open' && $this->privileges['isAdmin'] < 1 && !$this->privileges['canEditAComplaints']) || (($this->privileges['isAdmin'] > 0) && !$this->privileges['canEditAComplaints'])) {
             $this->error('403', 'Forbidden!');
         } else {
-            global $lang;
-
             $complaint['description'] = html_entity_decode($complaint['description']);
-
-            $badges = $this->badges();
             $categories = $this->categoryModel->getAllCategories('complaint');
 
             $data = [
                 'pageTitle' => 'Edit Complaint',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'badges' => $badges,
                 'categories' => $categories,
                 'complaint' => $complaint
             ];
@@ -218,10 +182,6 @@ class ComplaintsController extends Controller
 
     public function view($id = 0)
     {
-        global $lang;
-
-        $badges = $this->badges();
-
         $complaint = $this->complaintModel->getComplaint($id);
 
         if ($id == 0 || $complaint == false || ($complaint['is_hidden'] == 1) && ($this->privileges['fullAccess'] == 0)) {
@@ -241,38 +201,13 @@ class ComplaintsController extends Controller
 
             $data = [
                 'pageTitle' => 'Complaint against ' . $complaint['against_user']['NickName'],
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'canEditAComplaints' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canEditAComplaints']),
-                'canDeleteAComplaints' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canDeleteAComplaints']),
-                'canDeleteACReplies' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canDeleteACReplies']),
-                'canCloseAComplaints' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canCloseAComplaints']),
-                'canHideAComplaints' => $complaint['category_id'] == 5 && in_array(1, $this->privileges['canHideAComplaints']),
-                'canEditHComplaints' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canEditHComplaints']),
-                'canDeleteHComplaints' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canDeleteHComplaints']),
-                'canDeleteHCReplies' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canDeleteHCReplies']),
-                'canCloseHComplaints' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canCloseHComplaints']),
-                'canHideHComplaints' => $complaint['category_id'] == 6 && in_array(1, $this->privileges['canHideHComplaints']),
-                'canEditLComplaints' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canEditLComplaints']),
-                'canDeleteLComplaints' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canDeleteLComplaints']),
-                'canDeleteLCReplies' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canDeleteLCReplies']),
-                'canCloseLComplaints' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canCloseLComplaints']),
-                'canHideLComplaints' => $complaint['category_id'] == 7 && in_array(1, $this->privileges['canHideLComplaints']),
-                'canEditUComplaints' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canEditUComplaints']),
-                'canDeleteUComplaints' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canDeleteUComplaints']),
-                'canDeleteUCReplies' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canDeleteUCReplies']),
-                'canCloseUComplaints' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canCloseUComplaints']),
-                'canHideUComplaints' => $complaint['category_id'] == 8 && in_array(1, $this->privileges['canHideUComplaints']),
-                'lang' => $lang,
-                'badges' => $badges,
                 'complaint' => $complaint,
                 'categories' => $categories,
                 'cReplies' => $finalReplies
             ];
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if ((isLoggedIn() && $_SESSION['user_id'] == $data['complaint']['author_id']) || $data['canCloseAComplaints'] || $data['canCloseHComplaints'] || $data['canCloseLComplaints'] || $data['canCloseUComplaints']) {
+                if ((isLoggedIn() && $_SESSION['user_id'] == $data['complaint']['author_id']) || $this->privileges['canCloseAComplaints'] && $complaint['category_id'] == 5 || $this->privileges['canCloseHComplaints'] && $complaint['category_id'] == 6 || $this->privileges['canCloseLComplaints'] && $complaint['category_id'] == 7 || $this->privileges['canCloseUComplaints'] && $complaint['category_id'] == 8) {
                     if (isset($_POST['close_complaint'])) {
                         $closeData = [
                             'status' => 'Closed',
@@ -299,7 +234,7 @@ class ComplaintsController extends Controller
                     }
                 }
 
-                if ($data['canCloseAComplaints'] || $data['canCloseHComplaints'] || $data['canCloseLComplaints'] || $data['canCloseUComplaints']) {
+                if ($this->privileges['canCloseAComplaints'] && $complaint['category_id'] == 5 || $this->privileges['canCloseHComplaints'] && $complaint['category_id'] == 6 || $this->privileges['canCloseLComplaints'] && $complaint['category_id'] == 7 || $this->privileges['canCloseUComplaints'] && $complaint['category_id'] == 8) {
                     if (isset($_POST['open_complaint'])) {
                         $closeData = [
                             'status' => 'Open',
@@ -341,7 +276,7 @@ class ComplaintsController extends Controller
                     }
                 }
 
-                if ($data['canDeleteAComplaints'] || $data['canDeleteHComplaints'] || $data['canDeleteLComplaints'] || $data['canDeleteUComplaints']) {
+                if ($this->privileges['canDeleteAComplaints'] && $complaint['category_id'] == 5 || $this->privileges['canDeleteHComplaints'] && $complaint['category_id'] == 6 || $this->privileges['canDeleteLComplaints'] && $complaint['category_id'] == 7 || $this->privileges['canDeleteUComplaints'] && $complaint['category_id'] == 8) {
                     if (isset($_POST['delete_complaint'])) {
                         // delete complaint
                         if ($this->complaintModel->deleteComplaint($id)) {
@@ -359,7 +294,7 @@ class ComplaintsController extends Controller
                     }
                 }
 
-                if ($data['canHideAComplaints'] || $data['canHideHComplaints'] || $data['canHideLComplaints'] || $data['canHideUComplaints']) {
+                if ($this->privileges['canHideAComplaints'] && $complaint['category_id'] == 5 || $this->privileges['canHideHComplaints'] && $complaint['category_id'] == 6 || $this->privileges['canHideLComplaints'] && $complaint['category_id'] == 7 || $this->privileges['canHideUComplaints'] && $complaint['category_id'] == 8) {
                     if (isset($_POST['hide_complaint'])) {
                         $isHidden = 1;
                         // hide complaint
@@ -395,7 +330,7 @@ class ComplaintsController extends Controller
                     }
                 }
 
-                if ($data['canDeleteACReplies'] || $data['canDeleteHCReplies'] || $data['canDeleteLCReplies'] || $data['canDeleteUCReplies']) {
+                if ($this->privileges['canDeleteACReplies'] && $complaint['category_id'] == 5 || $this->privileges['canDeleteHCReplies'] && $complaint['category_id'] == 6 || $this->privileges['canDeleteLCReplies'] && $complaint['category_id'] == 7 || $this->privileges['canDeleteUCReplies'] && $complaint['category_id'] == 8) {
                     if (isset($_POST['delete_reply'])) {
                         // filter post
                         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

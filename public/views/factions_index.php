@@ -1,5 +1,3 @@
-<?php getHeader($data); ?>
-<?php flashMessage(); ?>
 <div class="dv-row">
     <h3 class="dv-page-title">Factions</h3>
     <div class="dvTable">
@@ -52,4 +50,3 @@
         </table>
     </div>
 </div>
-<?php getFooter(); ?>

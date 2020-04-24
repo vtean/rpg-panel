@@ -9,15 +9,13 @@
 class LogsController extends Controller
 {
     private $logModel;
-    private $privileges;
 
     public function __construct()
     {
+        parent::__construct();
+
         // load model
         $this->logModel = $this->loadModel('Log');
-
-        // store privileges
-        $this->privileges = $this->checkPrivileges();
 
         if (!isLoggedIn()) {
             $this->error('403', 'Forbidden!');
@@ -33,9 +31,6 @@ class LogsController extends Controller
 
     public function panel()
     {
-        global $lang;
-        $badges = $this->badges();
-
         if (isLoggedIn() && $this->privileges['isAdmin'] > 6) {
             $adminLogs = $this->logModel->panelAdminLogs();
             $leaderLogs = $this->logModel->panelLeaderLogs();
@@ -44,11 +39,6 @@ class LogsController extends Controller
 
             $data = [
                 'pageTitle' => 'Panel Logs',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'badges' => $badges,
                 'adminLogs' => $adminLogs,
                 'leaderLogs' => $leaderLogs,
                 'playerLogs' => $playerLogs,
@@ -65,9 +55,6 @@ class LogsController extends Controller
 
     public function server()
     {
-        global $lang;
-        $badges = $this->badges();
-
         if (isLoggedIn() && $this->privileges['isAdmin'] > 6) {
             $allLogs = $this->logModel->allLogs();
             $adminLogs = $this->logModel->adminLogs();
@@ -80,11 +67,6 @@ class LogsController extends Controller
 
             $data = [
                 'pageTitle' => 'Server Logs',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'badges' => $badges,
                 'allLogs' => $allLogs,
                 'adminLogs' => $adminLogs,
                 'anticheatLogs' => $anticheatLogs,
@@ -105,8 +87,6 @@ class LogsController extends Controller
 
     public function player($id = 0)
     {
-        global $lang;
-        $badges = $this->badges();
         $user = $this->logModel->getUserName($id);
 
         if (isLoggedIn() && $this->privileges['isAdmin'] > 6) {
@@ -126,11 +106,6 @@ class LogsController extends Controller
 
                 $data = [
                     'pageTitle' => 'Player Logs',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang,
-                    'badges' => $badges,
                     'player_name' => $user['NickName'],
                     'playerAllLogs' => $playerAllLogs,
                     'playerAdminLogs' => $playerAdminLogs,

@@ -28,7 +28,7 @@ function getFooter()
 // redirect page
 function redirect($page)
 {
-    header('location: ' . BASE_URL . $page);
+    header('Location: ' . BASE_URL . $page);
     exit;
 }
 
@@ -147,7 +147,6 @@ function sexyDisplay($arr)
     echo '</pre>';
 }
 
-/* Get page error */
 function getError($code, $msg)
 {
     require_once ROOT_PATH . '/public/views/exception.php';

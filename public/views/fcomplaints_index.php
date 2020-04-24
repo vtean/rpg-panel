@@ -1,6 +1,4 @@
 <?php $faction = $data['faction']; ?>
-<?php getHeader($data); ?>
-<?php flashMessage(); ?>
 <div class="dv-row">
     <h3 class="dv-page-title"><?php echo $faction['Name'] . ' Complaints'; ?></h3>
     <?php if (isLoggedIn()): ?>
@@ -44,4 +42,3 @@
         </table>
     </div>
 </div>
-<?php getFooter(); ?>

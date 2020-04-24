@@ -7,43 +7,30 @@
  */
 
 require_once ROOT_PATH . '/system/Validations/ValidateSettings.php';
+require_once ROOT_PATH . '/system/Validations/ValidateProfileActions.php';
 
 class UsersController extends Controller
 {
     private $userModel;
     private $authModel;
     private $logModel;
-    private $privileges;
     use ValidateSettings;
+    use ValidateProfileActions;
 
     public function __construct()
     {
+        parent::__construct();
+
         // load models
         $this->userModel = $this->loadModel('User');
         $this->authModel = $this->loadModel('Auth');
         $this->logModel = $this->loadModel('Log');
-
-        // store use privileges
-        $this->privileges = $this->checkPrivileges();
-
-        if (in_array(0, $this->privileges['canAccessSite'])) {
-            die('You are banned noob.');
-        }
-    }
-
-    public function index()
-    {
     }
 
     public function profile($nickname = '')
     {
-        global $lang;
-
-        // get badges
-        $badges = $this->badges();
-
         if (empty($nickname)) {
-            echo 'nothing to see here';
+            $this->error('404', 'Page Not Found!');
         } else {
             if ($this->userModel->searchExistingUser($nickname) != false) {
                 $userInfo = $this->userModel->searchExistingUser($nickname);
@@ -71,10 +58,6 @@ class UsersController extends Controller
                 $data = [
                     'pageTitle' => $userInfo['NickName'] . "'s Profile",
                     'user' => $userInfo,
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'canAccessSite' => $this->privileges['canAccessSite'],
                     'userGroups' => $finalGroups,
                     'job' => $job,
                     'family' => $family,
@@ -84,13 +67,62 @@ class UsersController extends Controller
                     'getModelName' => $getModelName,
                     'getBusiness' => $getBusiness,
                     'getHouse' => $getHouse,
-                    'lang' => $lang,
-                    'badges' => $badges,
                     'userFH' => $userFH
                 ];
 
-                // load the profile view
-                $this->loadView('profile', $data);
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if ($this->privileges['isAdmin'] > 6) {
+                        if (isset($_POST['suspend_user'])) {
+                            // sanitize post data
+                            $_POST['suspend_time'] = filter_var($_POST['suspend_time'], FILTER_SANITIZE_NUMBER_INT);
+                            $_POST['suspend_reason'] = filter_var($_POST['suspend_reason'], FILTER_SANITIZE_STRING);
+
+                            // handle errors
+                            $errors = ValidateProfileActions::validateSuspend($_POST);
+
+                            if (!empty($errors['days_error'])) {
+                                flashMessage('danger', $errors['days_error']);
+                                redirect('/users/profile/' . $nickname);
+                            } else if (!empty($errors['reason_error'])) {
+                                flashMessage('danger', $errors['reason_error']);
+                                redirect('/users/profile/' . $nickname);
+                            } else {
+                                if ($_POST['suspend_time'] == 999) {
+                                    $suspendedUntil = 0;
+                                } else {
+                                    $suspendedUntil = time() + 86400 * $_POST['suspend_time'];
+                                }
+
+                                $postData = [
+                                    'user_id' => $userInfo['ID'],
+                                    'suspended_until' => $suspendedUntil,
+                                    'reason' => $_POST['suspend_reason'],
+                                    'suspended_by' => $_SESSION['user_id']
+                                ];
+
+                                // suspend user
+                                if ($this->userModel->suspendUser($postData)) {
+                                    // log action
+                                    $logAction = $_SESSION['user_name'] . ' suspended user ' . $userInfo['NickName'] . ' (ID: ' . $userInfo['ID'] . ') for ' . $_POST['suspend_time'] . ' days. Reason: ' . $_POST['suspend_reason'] . '.';
+                                    $logData = [
+                                        'type' => 'Suspend',
+                                        'action' => $logAction
+                                    ];
+                                    $this->logModel->adminLog($logData);
+
+                                    flashMessage('success', 'User has been successfully suspended.');
+                                    redirect('/users/profile/' . $nickname);
+                                } else {
+                                    die('Something went wrong.');
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // load the profile view
+                    $this->loadView('profile', $data);
+                }
+
             } else {
                 // add session message
                 flashMessage('info', 'User not found.');
@@ -102,8 +134,6 @@ class UsersController extends Controller
 
     public function settings($urlParam = 'overview')
     {
-        global $lang;
-        $badges = $this->badges();
         $allowedParams = array('overview', 'change-email', 'change-password', 'forum-name', 'email-login', 'authenticator');
 
         if (!isLoggedIn()) {
@@ -116,11 +146,6 @@ class UsersController extends Controller
 
             $data = [
                 'pageTitle' => "Settings",
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'badges' => $badges,
                 'userInfo' => $userInfo,
                 'urlParam' => $urlParam
             ];
@@ -393,35 +418,6 @@ class UsersController extends Controller
                 // load settings view
                 $this->loadView('settings', $data);
             }
-        }
-    }
-
-    public function authenticator()
-    {
-        global $lang;
-        $badges = $this->badges();
-
-        if (!isLoggedIn()) {
-            flashMessage('danger', 'Please log in to be able to access this page.');
-            redirect('/');
-        } else {
-            $secret = $this->authModel->createSecretCode();
-            $qrCode = $this->authModel->createQrCode($_SESSION['user_name'], $secret);
-            $oneCode = $this->authModel->createCode($secret);
-            $verify = $this->authModel->checkCode($secret, $oneCode);
-
-            $data = [
-                'pageTitle' => "Google Authenticator",
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'secret' => $secret,
-                'qrCode' => $qrCode,
-                'oneCode' => $oneCode,
-                'verify' => $verify,
-                'badges' => $badges
-            ];
         }
     }
 }

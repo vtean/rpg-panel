@@ -11,17 +11,15 @@ class LeaderController extends Controller
     private $generalModel;
     private $secretModel;
     private $logModel;
-    private $privileges;
 
     public function __construct()
     {
+        parent::__construct();
+
         // load models
         $this->generalModel = $this->loadModel('General');
         $this->secretModel = $this->loadModel('Secret');
         $this->logModel = $this->loadModel('Log');
-
-        // store user privileges
-        $this->privileges = $this->checkPrivileges();
 
         if ($this->privileges['isLeader'] == 0) {
             // add session message
@@ -33,8 +31,6 @@ class LeaderController extends Controller
 
     public function index()
     {
-        global $lang;
-        $badges = $this->badges();
         $faction = $this->secretModel->getLeaderFaction($this->privileges['isLeader']);
         $openComplaints = $this->secretModel->countFactionComplaints($this->privileges['isLeader'], 'Open');
         $openApplications = $this->secretModel->countFactionApplications($this->privileges['isLeader'], 'Open');
@@ -42,11 +38,6 @@ class LeaderController extends Controller
 
         $data = [
             'pageTitle' => 'Leader Panel',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'faction' => $faction,
             'openComplaints' => $openComplaints,
             'openApplications' => $openApplications,
@@ -54,10 +45,10 @@ class LeaderController extends Controller
         ];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if ($data['isLeader'] > 0 && isset($_POST['close_applications'])) {
-                if ($this->secretModel->changeAppsStatus($data['isLeader'], 0)) {
+            if ($this->privileges['isLeader'] > 0 && isset($_POST['close_applications'])) {
+                if ($this->secretModel->changeAppsStatus($this->privileges['isLeader'], 0)) {
                     // log action
-                    $logAction = $_SESSION['user_name'] . ' closed applications for faction (ID: ' . $data['isLeader'] . ').';
+                    $logAction = $_SESSION['user_name'] . ' closed applications for faction (ID: ' . $this->privileges['isLeader'] . ').';
                     $logData = [
                         'type' => 'Faction Application',
                         'action' => $logAction
@@ -69,10 +60,10 @@ class LeaderController extends Controller
                 } else {
                     die('Something went wrong.');
                 }
-            } else if ($data['isLeader'] > 0 && isset($_POST['open_applications'])) {
-                if ($this->secretModel->changeAppsStatus($data['isLeader'], 1)) {
+            } else if ($this->privileges['isLeader'] > 0 && isset($_POST['open_applications'])) {
+                if ($this->secretModel->changeAppsStatus($this->privileges['isLeader'], 1)) {
                     // log action
-                    $logAction = $_SESSION['user_name'] . ' opened applications for faction (ID: ' . $data['isLeader'] . ').';
+                    $logAction = $_SESSION['user_name'] . ' opened applications for faction (ID: ' . $this->privileges['isLeader'] . ').';
                     $logData = [
                         'type' => 'Faction Application',
                         'action' => $logAction

@@ -1,6 +1,4 @@
 <?php $faction = $data['faction']; ?>
-<?php getHeader($data); ?>
-<?php flashMessage(); ?>
 <div class="dv-row">
     <h3 class="dv-page-title"><?php echo $faction['Name'] . ' Applications'; ?></h3>
     <?php if (isLoggedIn() && $data['appsStatus'] == 1): ?>
@@ -41,4 +39,3 @@
         </table>
     </div>
 </div>
-<?php getFooter(); ?>

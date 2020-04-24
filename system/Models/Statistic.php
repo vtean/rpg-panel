@@ -139,7 +139,11 @@ class Statistic
         $final_results = array();
         if (!empty($users)) {
             foreach ($users as $user) {
-                $user['faction_name'] = $this->getFactionName($this->searchExistingUser($user['name'])['Member'])['Name'];
+                if ($this->searchExistingUser($user['name'])['Member'] == 0) {
+                    $user['faction_name'] = 'None';
+                } else {
+                    $user['faction_name'] = $this->getFactionName($this->searchExistingUser($user['name'])['Member'])['Name'];
+                }
                 $user['played_time'] = convertMinutes($this->searchExistingUser($user['name'])['PlayedTime']);
                 array_push($final_results, $user);
             }

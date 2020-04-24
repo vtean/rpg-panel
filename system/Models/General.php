@@ -15,6 +15,19 @@ class General
         $this->db = new Db();
     }
 
+    public function getUserNickname($id)
+    {
+        $sql = "SELECT `NickName` FROM `sv_accounts` WHERE `ID`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        $result = $this->db->getResult();
+        if (!empty($result)) {
+            return $result['NickName'];
+        } else {
+            return 'Unknown';
+        }
+    }
+
     public function checkFullAccess($username)
     {
         $sql = "SELECT * FROM `sv_fulldostup` WHERE `FullDostup1`=:username OR `FullDostup2`=:username 
@@ -174,5 +187,33 @@ class General
         $this->db->bind(':status', $status);
         $this->db->executeStmt();
         return $this->db->countRows();
+    }
+
+    public function getSuspendedUser($id)
+    {
+        $sql = "SELECT * FROM `panel_suspended_users` WHERE `user_id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        return $this->db->getResult();
+    }
+
+    public function unsuspendUser($id)
+    {
+        $sql = "DELETE FROM `panel_suspended_users` WHERE `user_id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getSettingValue($setting)
+    {
+        $sql = "SELECT * FROM `panel_settings` WHERE `setting_key`=:settingKey";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':settingKey', $setting);
+        return $this->db->getResult()['setting_value'];
     }
 }

@@ -15,12 +15,12 @@ class Main
         $this->db = new Db();
     }
 
-    public function getUserSkin($id)
+    public function getUser($id)
     {
-        $sql = "SELECT `Skin` FROM `sv_accounts` WHERE `ID`=:id";
+        $sql = "SELECT `NickName`, `Skin` FROM `sv_accounts` WHERE `ID`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
-        return $this->db->getResult()['Skin'];
+        return $this->db->getResult();
     }
 
     public function getHouses()
@@ -71,7 +71,7 @@ class Main
         $finalResults = array();
         if (!empty($results)) {
             foreach ($results as $result) {
-                $result['player_skin'] = $this->getUserSkin($result['player_id']);
+                $result['player_skin'] = $this->getUser($result['player_id'])['Skin'];
                 array_push($finalResults, $result);
             }
         }

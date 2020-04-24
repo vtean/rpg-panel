@@ -1,5 +1,4 @@
 <?php $complaint = $data['complaint']; ?>
-<?php getHeader($data); ?>
 <h3 class="dv-page-title">Edit Complaint #<?php echo $complaint['id']; ?></h3>
 <div class="dv-row">
     <div class="row">
@@ -34,9 +33,10 @@
                         <div class="invalid-feedback"><?php echo $errors['description_error']; ?></div>
                     <?php endif; ?>
                 </div>
-                <button type="submit" name="edit_complaint" class="dv-btn btn btn-primary"><i class="fas fa-pencil-alt"></i> Edit Complaint</button>
+                <button type="submit" name="edit_complaint" class="dv-btn btn btn-primary"><i
+                            class="fas fa-pencil-alt"></i> Edit Complaint
+                </button>
             </form>
         </div>
     </div>
 </div>
-<?php getFooter(); ?>

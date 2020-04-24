@@ -6,7 +6,7 @@
  * @version 0.1
  */
 
-trait ValidateFapplication
+trait ValidateFApplication
 {
     public static function validateInput($data)
     {

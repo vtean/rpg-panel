@@ -1,5 +1,3 @@
-<?php getHeader($data); ?>
-<?php flashMessage(); ?>
 <div class="dv-row">
     <h3 class="dv-page-title">Wanna be a part of our STAFF?</h3>
     <div class="dv-grid-2">
@@ -53,7 +51,9 @@
                             <li>All the factions have leaders.</li>
                         <?php else: ?>
                             <?php foreach ($data['fWithoutLeader'] as $faction): ?>
-                                <li><a href="<?php echo BASE_URL . '/apps/create/leader/' . $faction['ID']; ?>"><?php echo $faction['Name']; ?></a></li>
+                                <li>
+                                    <a href="<?php echo BASE_URL . '/apps/create/leader/' . $faction['ID']; ?>"><?php echo $faction['Name']; ?></a>
+                                </li>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </ul>
@@ -118,4 +118,3 @@
         </div>
     </div>
 </div>
-<?php getFooter(); ?>

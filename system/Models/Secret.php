@@ -99,4 +99,17 @@ class Secret
         $this->db->executeStmt();
         return $this->db->countRows();
     }
+
+    public function updatePanelSetting($data)
+    {
+        $sql = "UPDATE `panel_settings` SET `setting_value`=:settingValue WHERE `setting_key`=:settingKey";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':settingValue', $data['setting_value']);
+        $this->db->bind(':settingKey', $data['setting_key']);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -1,4 +1,3 @@
-<?php getHeader($data); ?>
 <div class="dv-user-profile">
     <div class="row justify-content-center">
         <div class="col-auto">
@@ -19,25 +18,31 @@
                          title="<?php echo $data['user']['HP']; ?> HP"></div>
                 </div>
                 <div class="dv-user-profile-skin">
-                    <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>" alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
+                    <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>"
+                         alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
                 </div>
             </div>
             <div class="dv-user-profile-controls m-auto">
                 <?php if (isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])): ?>
-                    <a class="dv-btn btn btn-primary" href="<?php echo BASE_URL . '/users/settings'; ?>" role="button"><i
+                    <a class="dv-btn btn btn-primary" href="<?php echo BASE_URL . '/users/settings'; ?>"
+                       role="button"><i
                                 class="fas fa-user-edit"></i> <?php echo $data['lang']['profile_settings_txt']; ?></a>
                 <?php endif; ?>
-                <?php if ((isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])) || (isLoggedIn() && ($data['isAdmin'] > 0))): ?>
+                <?php if ((isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])) || (isLoggedIn() && ($data['privileges']['isAdmin'] > 0))): ?>
                     <a class="dv-btn btn btn-warning" href="#" role="button"><i
                                 class="fas fa-exclamation-triangle"></i> <?php echo $data['lang']['last_punish_txt']; ?>
                     </a>
                 <?php endif; ?>
-                <?php if (isLoggedIn() && ($data['fullAccess'] == true)): ?>
+                <?php if (isLoggedIn() && ($data['privileges']['fullAccess'] == 1)): ?>
                     <a href="<?php echo BASE_URL . '/groups/assign/' . $data['user']['NickName']; ?>"
                        class="dv-btn btn btn-primary" role="button"><i class="fas fa-user-tag"></i> Assign Groups</a>
                 <?php endif; ?>
-                <?php if (isLoggedIn() && ($data['isAdmin']) > 6): ?>
-                    <a href="<?php echo BASE_URL . '/logs/player/' . $data['user']['ID']; ?>" class="dv-btn btn btn-warning" role="button"><i class="fas fa-history"></i> Player Logs</a>
+                <?php if (isLoggedIn() && ($data['privileges']['isAdmin']) > 6): ?>
+                    <a href="<?php echo BASE_URL . '/logs/player/' . $data['user']['ID']; ?>"
+                       class="dv-btn btn btn-info" role="button"><i class="fas fa-history"></i> Player Logs</a>
+                    <button class="dv-btn btn btn-danger btn-block" data-toggle="modal" data-target="#suspendModal"><i
+                                class="fas fa-ban"></i> Suspend
+                    </button>
                 <?php endif; ?>
             </div>
         </div>
@@ -230,7 +235,8 @@
                         <?php foreach ($data['userFH'] as $fh): ?>
                             <div class="dv-user-fh-item">
                                 <div class="dv-user-fh-avatar">
-                                    <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>" alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
+                                    <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>"
+                                         alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
                                 </div>
                                 <div class="dv-user-fh-text">
                                     <p><?php echo $fh['action']; ?></p>
@@ -313,6 +319,42 @@
                 </div>
             </div>
         </div>
+        <?php if ($data['privileges']['isAdmin'] > 6): ?>
+            <div class="dv-modal modal fade" id="suspendModal" tabindex="-1" role="dialog"
+                 aria-labelledby="suspendModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="suspendModalLabel">
+                                Suspend <?php echo $data['user']['NickName']; ?></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" class="dv-form">
+                                <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
+                                <div class="form-group">
+                                    <label for="suspendTime">Suspend Time</label>
+                                    <input type="number" name="suspend_time" class="form-control" id="suspendTime"
+                                           aria-describedby="suspendHelp">
+                                    <small id="suspendHelp" class="form-text">Time is counted in days. Use 999 for
+                                        permanent.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="suspendReason">Reason</label>
+                                    <input type="text" name="suspend_reason" class="form-control" id="suspendReason">
+                                </div>
+                                <div class="clearfix">
+                                    <button type="submit" name="suspend_user" class="dv-btn btn btn-danger float-right">
+                                        <i class="fas fa-ban"></i> Suspend
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
-<?php getFooter(); ?>

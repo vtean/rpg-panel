@@ -9,30 +9,21 @@
 class FamiliesController extends Controller
 {
     private $familyModel;
-    private $privileges;
 
     public function __construct()
     {
+        parent::__construct();
+
         // load model
         $this->familyModel = $this->loadModel('Family');
-
-        // store privileges
-        $this->privileges = $this->checkPrivileges();
     }
 
     public function index()
     {
-        global $lang;
-        $badges = $this->badges();
         $families = $this->familyModel->getFamilies();
 
         $data = [
             'pageTitle' => 'Families',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'families' => $families
         ];
 
@@ -42,8 +33,6 @@ class FamiliesController extends Controller
 
     public function view($id = 0)
     {
-        global $lang;
-        $badges = $this->badges();
         $family = $this->familyModel->getFamily($id);
 
         if ($id != 0 && !empty($family)) {
@@ -52,11 +41,6 @@ class FamiliesController extends Controller
 
             $data = [
                 'pageTitle' => 'Families',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'badges' => $badges,
                 'family' => $family
             ];
 

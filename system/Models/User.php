@@ -300,4 +300,20 @@ class User
         $this->db->bind(':id', $id);
         return $this->db->getResults();
     }
+
+    // suspend user
+    public function suspendUser($data)
+    {
+        $sql = "INSERT INTO `panel_suspended_users` (`user_id`, `suspended_until`, `reason`, `suspended_by`) VALUES (:user_id, :suspended_until, :reason, :suspended_by)";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':user_id', $data['user_id']);
+        $this->db->bind(':suspended_until', $data['suspended_until']);
+        $this->db->bind(':reason', $data['reason']);
+        $this->db->bind(':suspended_by', $data['suspended_by']);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

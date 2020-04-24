@@ -13,19 +13,17 @@ class GroupsController extends Controller
     private $groupModel;
     private $userModel;
     private $logModel;
-    private $privileges;
 
     use ValidateGroup;
 
     public function __construct()
     {
+        parent::__construct();
+
         // load models
         $this->groupModel = $this->loadModel('Group');
         $this->userModel = $this->loadModel('User');
         $this->logModel = $this->loadModel('Log');
-
-        // check user privileges
-        $this->privileges = $this->checkPrivileges();
 
         if ($this->privileges['fullAccess'] == 0) {
             // add session message
@@ -37,21 +35,11 @@ class GroupsController extends Controller
 
     public function index()
     {
-        global $lang;
-
-        // get badges
-        $badges = $this->badges();
-
         $allGroups = $this->groupModel->getAllGroups();
 
         $data = [
             'pageTitle' => 'Panel Groups',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
             'groups' => $allGroups,
-            'lang' => $lang,
-            'badges' => $badges
         ];
 
         $this->loadView('groups_index', $data);
@@ -59,11 +47,6 @@ class GroupsController extends Controller
 
     public function create()
     {
-        global $lang;
-
-        // get badges
-        $badges = $this->badges();
-
         if (isset($_POST['create_group'])) {
             // sanitize post data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -113,12 +96,7 @@ class GroupsController extends Controller
             // parse data
             $data = [
                 'pageTitle' => 'Create Group',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
                 'group' => $_POST,
-                'lang' => $lang,
-                'badges' => $badges
             ];
 
             // check if group already exists
@@ -154,9 +132,6 @@ class GroupsController extends Controller
         } else {
             $data = [
                 'pageTitle' => 'Create Group',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
                 'group' => [
                     'group_name' => '',
                     'group_keyword' => '',
@@ -200,9 +175,7 @@ class GroupsController extends Controller
                     'can_delete_lapps' => 0,
                     'can_edit_happs' => 0,
                     'can_delete_happs' => 0
-                ],
-                'lang' => $lang,
-                'badges' => $badges
+                ]
             ];
 
             // load view
@@ -212,25 +185,15 @@ class GroupsController extends Controller
 
     public function edit($id = 0)
     {
-        global $lang;
-
         if ($id == 0) {
             flashMessage('danger', 'Nothing to see here.');
             redirect('/');
         } else {
             $group = $this->groupModel->getSingleGroup($id);
 
-            // get badges
-            $badges = $this->badges();
-
             $data = [
                 'pageTitle' => $group['group_name'] . ' Group',
                 'group' => $group,
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'badges' => $badges
             ];
 
             $errors = [];
@@ -335,11 +298,6 @@ class GroupsController extends Controller
 
     public function assign($name = '')
     {
-        global $lang;
-
-        // get badges
-        $badges = $this->badges();
-
         if (empty($name)) {
             echo 'Page not found';
         } else {
@@ -355,14 +313,9 @@ class GroupsController extends Controller
 
                 $data = [
                     'pageTitle' => $pageTitle,
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang,
                     'user' => $user,
                     'groups' => $allGroups,
                     'userGroups' => $userGroupsArr,
-                    'badges' => $badges
                 ];
 
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -379,7 +332,7 @@ class GroupsController extends Controller
                     $implodedGroups = implode(', ', $_POST['userGroups']);
                     $logAction = $_SESSION['user_name'] . ' updated groups for user ' . $user['NickName'] . '. (New groups: ' . $implodedGroups . ')';
                     $logData = [
-                        'type' => 'Player',
+                        'type' => 'Group',
                         'action' => $logAction
                     ];
                     $this->logModel->adminLog($logData);

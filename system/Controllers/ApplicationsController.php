@@ -12,17 +12,15 @@ class ApplicationsController extends Controller
 {
     private $appModel;
     private $logModel;
-    private $privileges;
     use ValidateApplication;
 
     public function __construct()
     {
+        parent::__construct();
+
         // load models
         $this->appModel = $this->loadModel('Application');
         $this->logModel = $this->loadModel('Log');
-
-        // store privileges
-        $this->privileges = $this->checkPrivileges();
 
         if (!isLoggedIn()) {
             flashMessage('danger', 'You must log in to be able to post an application.');
@@ -32,9 +30,6 @@ class ApplicationsController extends Controller
 
     public function index()
     {
-        global $lang;
-
-        $badges = $this->badges();
         $fWithoutLeader = $this->appModel->factionsWithoutLeader();
 
         if ($this->privileges['isAdmin'] > 2) {
@@ -55,11 +50,6 @@ class ApplicationsController extends Controller
 
         $data = [
             'pageTitle' => 'Applications',
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
-            'lang' => $lang,
-            'badges' => $badges,
             'helperApps' => $helperApps,
             'leaderApps' => $finalLApps,
             'fWithoutLeader' => $fWithoutLeader
@@ -75,13 +65,11 @@ class ApplicationsController extends Controller
             $allowedSecond = range(1, 28);
             if (in_array($secondParam, $allowedSecond)) {
                 $leaderName = $this->appModel->getFactionInfo($secondParam)['Leader'];
-                $appsOpen = $leaderName == 'None' ? true : false;
+                $appsOpen = $leaderName == 'None';
             }
         }
 
         if ($firstParam == 'helper' && empty($secondParam) || $firstParam == 'leader' && !empty($secondParam) && in_array($secondParam, $allowedSecond) && $appsOpen) {
-            global $lang;
-
             if ($firstParam == 'helper') {
                 $alreadyApplied = $this->appModel->alreadyApplied($_SESSION['user_id'], 'helper', 'staff');
             } else if ($firstParam == 'leader') {
@@ -93,15 +81,8 @@ class ApplicationsController extends Controller
                 redirect('/apps');
             }
 
-            $badges = $this->badges();
-
             $data = [
-                'pageTitle' => 'Apply',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'lang' => $lang,
-                'badges' => $badges
+                'pageTitle' => 'Apply'
             ];
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -154,23 +135,14 @@ class ApplicationsController extends Controller
 
     public function edit($id = 0)
     {
-        global $lang;
         $userApp = $this->appModel->getApplication($id);
         $userApp['body'] = html_entity_decode($userApp['body']);
-        $badges = $this->badges();
 
         if ($id == 0 || empty($userApp)) {
             $this->error('404', 'Application not found!');
-        } else if (in_array(1, $this->privileges['canEditHApps']) || in_array(1, $this->privileges['canEditLApps']) || $_SESSION['user_id'] == $userApp['author_id']) {
+        } else if ($this->privileges['canEditHApps'] && $userApp['type'] == 'helper' || $this->privileges['canEditLApps'] && $userApp['type'] == 'leader' || $_SESSION['user_id'] == $userApp['author_id']) {
             $data = [
                 'pageTitle' => 'Edit Application',
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'canEditHApps' => in_array(1, $this->privileges['canEditHApps']),
-                'canEditLApps' => in_array(1, $this->privileges['canEditLApps']),
-                'lang' => $lang,
-                'badges' => $badges,
                 'userApp' => $userApp
             ];
 
@@ -223,10 +195,8 @@ class ApplicationsController extends Controller
 
     public function view($id = 0)
     {
-        global $lang;
         $userApp = $this->appModel->getApplication($id);
         $userApp['body'] = html_entity_decode($userApp['body']);
-        $badges = $this->badges();
 
         if ($id == 0 || empty($userApp)) {
             $this->error('404', 'Application not found!');
@@ -238,21 +208,12 @@ class ApplicationsController extends Controller
 
             $data = [
                 'pageTitle' => $userApp['account_details']['NickName'] . "'s Application",
-                'fullAccess' => $this->privileges['fullAccess'],
-                'isAdmin' => $this->privileges['isAdmin'],
-                'isLeader' => $this->privileges['isLeader'],
-                'canEditHApps' => $userApp['type'] == 'helper' && in_array(1, $this->privileges['canEditHApps']),
-                'canEditLApps' => $userApp['type'] == 'leader' && in_array(1, $this->privileges['canEditLApps']),
-                'canDeleteHApps' => $userApp['type'] == 'helper' && in_array(1, $this->privileges['canDeleteHApps']),
-                'canDeleteLApps' => $userApp['type'] == 'leader' && in_array(1, $this->privileges['canDeleteLApps']),
-                'lang' => $lang,
-                'badges' => $badges,
                 'userApp' => $userApp,
                 'userFH' => $userFH
             ];
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if ($data['canDeleteHApps'] || $data['canDeleteLApps']) {
+                if ($this->privileges['canDeleteHApps'] && $userApp['type'] == 'helper' || $this->privileges['canDeleteLApps'] && $userApp['type'] == 'leader') {
                     if (isset($_POST['delete_application'])) {
                         // delete application
                         if ($this->appModel->deleteApplication($id)) {

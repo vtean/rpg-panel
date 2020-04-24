@@ -1,5 +1,4 @@
 <?php $faction = $data['faction']; ?>
-<?php getHeader($data); ?>
 <div class="dv-row">
     <h3 class="dv-page-title"><?php echo $faction['Name']; ?></h3>
     <div class="row">
@@ -19,7 +18,8 @@
                             <tr>
                                 <td>
                                     <a href="<?php echo BASE_URL . '/users/profile/' . $member['NickName']; ?>">
-                                        <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $member['Skin'] . '.png'; ?>" alt="<?php echo $member['NickName'] . "'s Skin" ?>">
+                                        <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $member['Skin'] . '.png'; ?>"
+                                             alt="<?php echo $member['NickName'] . "'s Skin" ?>">
                                         <span><?php echo $member['NickName']; ?></span>
                                     </a>
                                 </td>
@@ -45,12 +45,14 @@
             <div class="dv-widget">
                 <h5 class="dv-widget-title"><i class="fas fa-file"></i> Pages</h5>
                 <div class="dv-widget-content">
-                    <a href="<?php echo BASE_URL . '/factions/applications/' . $faction['ID']; ?>" class="dv-btn btn btn-success btn-block"><i class="fas fa-graduation-cap"></i> Applications</a>
-                    <a href="<?php echo BASE_URL . '/factions/complaints/' . $faction['ID']; ?>" class="dv-btn btn btn-warning btn-block"><i class="fas fa-user-times"></i> Complaints</a>
-                    <a href="<?php echo BASE_URL . '/factions/resignations/' . $faction['ID']; ?>" class="dv-btn btn btn-danger btn-block"><i class="fas fa-sign-out-alt"></i> Resignations</a>
+                    <a href="<?php echo BASE_URL . '/factions/applications/' . $faction['ID']; ?>"
+                       class="dv-btn btn btn-success btn-block"><i class="fas fa-graduation-cap"></i> Applications</a>
+                    <a href="<?php echo BASE_URL . '/factions/complaints/' . $faction['ID']; ?>"
+                       class="dv-btn btn btn-warning btn-block"><i class="fas fa-user-times"></i> Complaints</a>
+                    <a href="<?php echo BASE_URL . '/factions/resignations/' . $faction['ID']; ?>"
+                       class="dv-btn btn btn-danger btn-block"><i class="fas fa-sign-out-alt"></i> Resignations</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php getFooter(); ?>

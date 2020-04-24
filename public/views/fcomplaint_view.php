@@ -4,8 +4,6 @@ $author = $complaint['author'];
 $against_user = $complaint['against_user'];
 $replies = $data['cReplies'];
 ?>
-<?php getHeader($data); ?>
-<?php flashMessage(); ?>
 <h3 class="dv-page-title">Faction Complaint #<?php echo $complaint['id']; ?></h3>
 <div class="dv-row">
     <div class="row">
@@ -59,25 +57,26 @@ $replies = $data['cReplies'];
                         </li>
                     </ul>
                 </div>
-                <?php if ($data['isAdmin'] > 0 || isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']): ?>
+                <?php if ($data['privileges']['isAdmin'] > 0 || isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']): ?>
                     <div class="dv-topic-widget dv-actions">
                         <h4 class="dv-row-title">Complaint actions</h4>
                         <div class="dv-action-buttons">
                             <div class="row">
                                 <?php if ($complaint['status'] != 'Closed'): ?>
-                                    <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || $data['canCloseFComplaints']): ?>
+                                    <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || $data['privileges']['canCloseFComplaints'] && $complaint['category_id'] == 9): ?>
                                         <div class="col">
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="close_complaint" class="dv-btn btn btn-warning text-white"><i
+                                                <button name="close_complaint"
+                                                        class="dv-btn btn btn-warning text-white"><i
                                                             class="fas fa-lock"></i> Close
                                                 </button>
                                             </form>
                                         </div>
                                     <?php endif; ?>
                                 <?php elseif ($complaint['status'] == 'Closed'): ?>
-                                    <?php if ($data['canCloseFComplaints']): ?>
+                                    <?php if ($data['privileges']['canCloseFComplaints'] && $complaint['category_id'] == 9): ?>
                                         <div class="col">
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
@@ -89,7 +88,7 @@ $replies = $data['cReplies'];
                                         </div>
                                     <?php endif; ?>
                                 <?php endif; ?>
-                                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id'] && $complaint['status'] != 'Closed') || $data['canEditFComplaints']): ?>
+                                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id'] && $complaint['status'] != 'Closed') || $data['privileges']['canEditFComplaints'] && $complaint['category_id'] == 9): ?>
                                     <div class="col">
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
@@ -99,7 +98,7 @@ $replies = $data['cReplies'];
                                         </form>
                                     </div>
                                 <?php endif; ?>
-                                <?php if ($data['canDeleteFComplaints']): ?>
+                                <?php if ($data['privileges']['canDeleteFComplaints'] && $complaint['category_id'] == 9): ?>
                                     <div class="col">
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
@@ -158,7 +157,7 @@ $replies = $data['cReplies'];
                                     </div>
                                     <div class="dv-reply-date">
                                         <span><i class="far fa-clock"></i> <?php echo $reply['created_at']; ?></span>
-                                        <?php if ($data['canDeleteFCReplies']): ?>
+                                        <?php if ($data['privileges']['canDeleteFCReplies'] && $complaint['category_id'] == 9): ?>
                                             <div class="dv-reply-actions float-right">
                                                 <form action="" method="post">
                                                     <input type="hidden" name="csrfToken"
@@ -187,7 +186,7 @@ $replies = $data['cReplies'];
                 <?php endif; ?>
             </div>
             <?php if ($complaint['status'] != 'Closed'): ?>
-                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || (isLoggedIn() && $_SESSION['user_id'] == $complaint['against_id']) || ($data['isAdmin'] > 0)): ?>
+                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || (isLoggedIn() && $_SESSION['user_id'] == $complaint['against_id']) || ($data['privileges']['isAdmin'] > 0)): ?>
                     <form action="" method="post" class="dv-form">
                         <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
                         <h4 class="dv-row-title">Leave a reply</h4>
@@ -199,11 +198,12 @@ $replies = $data['cReplies'];
                                 <div class="invalid-feedback"><?php echo $errors['reply_error']; ?></div>
                             <?php endif; ?>
                         </div>
-                        <button type="submit" name="post_reply" class="dv-btn btn btn-primary"><i class="fas fa-paper-plane"></i> Submit</button>
+                        <button type="submit" name="post_reply" class="dv-btn btn btn-primary"><i
+                                    class="fas fa-paper-plane"></i> Submit
+                        </button>
                     </form>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
 </div>
-<?php getFooter(); ?>

@@ -9,42 +9,32 @@
 class MainController extends Controller
 {
     private $mainModel;
-    private $privileges;
+    private $generalModel;
 
     public function __construct()
     {
-        // load the model
-        $this->mainModel = $this->loadModel('Main');
+        parent::__construct();
 
-        // store user privileges
-        $this->privileges = $this->checkPrivileges();
+        // load models
+        $this->mainModel = $this->loadModel('Main');
+        $this->generalModel = $this->loadModel('General');
     }
 
     public function index()
     {
-        global $lang;
-
-        // get badges
-        $badges = $this->badges();
-
         $houses = $this->mainModel->getHouses();
         $business = $this->mainModel->getBusiness();
         $vehicles = $this->mainModel->getVehicles();
-        $regUsers= $this->mainModel->getRegUsers();
+        $regUsers = $this->mainModel->getRegUsers();
         $pageTitle = $_COOKIE["user_lang"] == "ro" ? 'Acasă' : 'Home';
         $latestFH = $this->mainModel->latestFactionHistory();
 
         $data = [
             'pageTitle' => $pageTitle,
-            'fullAccess' => $this->privileges['fullAccess'],
-            'isAdmin' => $this->privileges['isAdmin'],
-            'isLeader' => $this->privileges['isLeader'],
             'houses' => $houses,
             'business' => $business,
             'vehicles' => $vehicles,
             'regUsers' => $regUsers,
-            'lang' => $lang,
-            'badges' => $badges,
             'latestFH' => $latestFH
         ];
 

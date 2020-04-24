@@ -60,11 +60,11 @@
                         </li>
                     </ul>
                 </div>
-                <?php if ($data['fullAccess'] || $data['isAdmin'] || $data['isLeader']): ?>
+                <?php if ($data['privileges']['fullAccess'] || $data['privileges']['isAdmin'] || $data['privileges']['isLeader']): ?>
                     <div class="dv-nav-group">
                         <h6 class="dv-nav-title"><?php echo $data['lang']['top_secret_txt']; ?></h6>
                         <ul class="dv-nav">
-                            <?php if ($data['fullAccess']): ?>
+                            <?php if ($data['privileges']['fullAccess']): ?>
                                 <li class="dv-nav-item">
                                     <a class="dv-nav-link" href="<?php echo BASE_URL . '/owner'; ?>">
                                         <i class="dv-nav-icon fas fa-cog"></i>
@@ -72,7 +72,7 @@
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if ($data['isAdmin']): ?>
+                            <?php if ($data['privileges']['isAdmin']): ?>
                                 <li class="dv-nav-item">
                                     <a class="dv-nav-link" href="<?php echo BASE_URL . '/admin'; ?>">
                                         <i class="dv-nav-icon fas fa-shield-alt"></i>
@@ -80,7 +80,7 @@
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if ($data['isLeader']): ?>
+                            <?php if ($data['privileges']['isLeader']): ?>
                                 <li class="dv-nav-item">
                                     <a class="dv-nav-link" href="<?php echo BASE_URL . '/leader'; ?>">
                                         <i class="dv-nav-icon fas fa-user-tie"></i>
@@ -98,7 +98,7 @@
                             <a class="dv-nav-link" href="<?php echo BASE_URL . '/tickets'; ?>">
                                 <i class="dv-nav-icon fas fa-ticket-alt"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['tickets_txt']; ?></span>
-                                <?php if ($data['isAdmin'] > 2): ?>
+                                <?php if ($data['privileges']['isAdmin'] > 2): ?>
                                     <span class="dv-badge badge badge-danger"><?= $data['badges']['ticketBadge'] ?></span>
                                 <?php endif; ?>
                             </a>
@@ -107,7 +107,7 @@
                             <a class="dv-nav-link" href="<?php echo BASE_URL . '/complaints'; ?>">
                                 <i class="dv-nav-icon fas fa-user-times"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['complaints_txt']; ?></span>
-                                <?php if ($data['isAdmin'] > 2): ?>
+                                <?php if ($data['privileges']['isAdmin'] > 2): ?>
                                     <span class="dv-badge badge badge-danger"><?php echo $data['badges']['complaintBadge']; ?></span>
                                 <?php endif; ?>
                             </a>
@@ -116,7 +116,7 @@
                             <a class="dv-nav-link" href="<?php echo BASE_URL . '/unbans'; ?>">
                                 <i class="dv-nav-icon fas fa-ban"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['unban_requests_txt']; ?></span>
-                                <?php if ($data['isAdmin'] > 2): ?>
+                                <?php if ($data['privileges']['isAdmin'] > 2): ?>
                                     <span class="dv-badge badge badge-danger"><?php echo $data['badges']['unbanBadge']; ?></span>
                                 <?php endif; ?>
                             </a>

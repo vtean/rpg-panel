@@ -1,6 +1,4 @@
 <?php $unban = $data['unban']; ?>
-<?php getHeader($data); ?>
-<?php flashMessage(); ?>
 <h3 class="dv-page-title">Unban Request #<?php echo $unban['id']; ?></h3>
 <div class="dv-row">
     <div class="row">
@@ -25,7 +23,7 @@
                         </li>
                         <li class="dv-single">
                             <span class="dv-first">Duration:</span>
-                            <span class="dv-second"><?php echo $unban['ban_time']/3600 . ' hours'; ?></span>
+                            <span class="dv-second"><?php echo $unban['ban_time'] / 3600 . ' hours'; ?></span>
                         </li>
                         <li class="dv-single">
                             <span class="dv-first">Status:</span>
@@ -33,13 +31,13 @@
                         </li>
                     </ul>
                 </div>
-                <?php if ($data['isAdmin'] > 0 || isLoggedIn() && $_SESSION['user_id'] == $unban['author_id']): ?>
+                <?php if ($data['privileges']['isAdmin'] > 0 || isLoggedIn() && $_SESSION['user_id'] == $unban['author_id']): ?>
                     <div class="dv-topic-widget dv-actions">
                         <h4 class="dv-row-title">Request actions</h4>
                         <div class="dv-action-buttons">
                             <div class="row">
                                 <?php if ($unban['status'] != 'Closed'): ?>
-                                    <?php if (isLoggedIn() && $_SESSION['user_id'] == $unban['author_id'] || $data['canCloseUnbans']): ?>
+                                    <?php if (isLoggedIn() && $_SESSION['user_id'] == $unban['author_id'] || $data['privileges']['canCloseUnbans']): ?>
                                         <div class="col">
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
@@ -51,7 +49,7 @@
                                         </div>
                                     <?php endif; ?>
                                 <?php elseif ($unban['status'] == 'Closed'): ?>
-                                    <?php if ($data['canCloseUnbans']): ?>
+                                    <?php if ($data['privileges']['canCloseUnbans']): ?>
                                         <div class="col">
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
@@ -63,7 +61,7 @@
                                         </div>
                                     <?php endif; ?>
                                 <?php endif; ?>
-                                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $unban['author_id'] && $unban['status'] == 'Open') || $data['canEditUnbans']): ?>
+                                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $unban['author_id'] && $unban['status'] == 'Open') || $data['privileges']['canEditUnbans']): ?>
                                     <div class="col">
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
@@ -73,7 +71,7 @@
                                         </form>
                                     </div>
                                 <?php endif; ?>
-                                <?php if ($data['canCloseUnbans']): ?>
+                                <?php if ($data['privileges']['canCloseUnbans']): ?>
                                     <div class="w-100"></div>
                                     <div class="col">
                                         <form action="" method="post">
@@ -85,7 +83,7 @@
                                         </form>
                                     </div>
                                 <?php endif; ?>
-                                <?php if ($data['canDeleteUnbans']): ?>
+                                <?php if ($data['privileges']['canDeleteUnbans']): ?>
                                     <div class="col">
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
@@ -121,7 +119,8 @@
                             <div class="dv-reply-content">
                                 <div class="dv-reply-head clearfix">
                                     <div class="dv-reply-author">
-                                        <a href="<?php echo BASE_URL . '/users/profile/' . $reply['author_name']; ?>" class="author-name"><?php echo $reply['author_name']; ?></a>
+                                        <a href="<?php echo BASE_URL . '/users/profile/' . $reply['author_name']; ?>"
+                                           class="author-name"><?php echo $reply['author_name']; ?></a>
                                         <?php if ($reply['admin_level'] > 0): ?>
                                             <span class="badge badge-danger"><i
                                                         class="fas fa-shield-alt"></i> Admin</span>
@@ -129,12 +128,13 @@
                                     </div>
                                     <div class="dv-reply-date">
                                         <span><i class="far fa-clock"></i> <?php echo $reply['created_at']; ?></span>
-                                        <?php if ($data['canDeleteUnbans']): ?>
+                                        <?php if ($data['privileges']['canDeleteUnbans']): ?>
                                             <div class="dv-reply-actions float-right">
                                                 <form action="" method="post">
                                                     <input type="hidden" name="csrfToken"
                                                            value="<?php echo $_SESSION['csrfToken']; ?>"/>
-                                                    <input type="hidden" name="reply_id" value="<?php echo $reply['id']; ?>">
+                                                    <input type="hidden" name="reply_id"
+                                                           value="<?php echo $reply['id']; ?>">
                                                     <button name="delete_reply" class="btn btn-link p-0 mx-2"><i
                                                                 class="fas fa-trash"></i></button>
                                                 </form>
@@ -176,4 +176,3 @@
         </div>
     </div>
 </div>
-<?php getFooter(); ?>

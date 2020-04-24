@@ -5,10 +5,8 @@ $against_user = $complaint['against_user'];
 $replies = $data['cReplies'];
 $categories = $data['categories'];
 ?>
-<?php getHeader($data); ?>
-<?php flashMessage(); ?>
 <h3 class="dv-page-title">Complaint #<?php echo $complaint['id']; ?></h3>
-<?php if ($data['canHideAComplaints'] || $data['canHideHComplaints'] || $data['canHideLComplaints'] || $data['canHideUComplaints']): ?>
+<?php if ($data['privileges']['canHideAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canHideHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canHideLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canHideUComplaints'] && $complaint['category_id'] == 8): ?>
     <?php if ($complaint['is_hidden'] == 1): ?>
         <span class="dv-hidden-text"><i class="fas fa-eye-slash"></i> This complaint is currently hidden.</span>
     <?php endif; ?>
@@ -65,25 +63,26 @@ $categories = $data['categories'];
                         </li>
                     </ul>
                 </div>
-                <?php if ($data['isAdmin'] > 0 || isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']): ?>
+                <?php if ($data['privileges']['isAdmin'] > 0 || isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']): ?>
                     <div class="dv-topic-widget dv-actions">
                         <h4 class="dv-row-title">Complaint actions</h4>
                         <div class="dv-action-buttons">
                             <div class="row">
                                 <?php if ($complaint['status'] != 'Closed'): ?>
-                                    <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || $data['canCloseAComplaints'] || $data['canCloseHComplaints'] || $data['canCloseLComplaints'] || $data['canCloseUComplaints']): ?>
+                                    <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || $data['privileges']['canCloseAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canCloseHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canCloseLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canCloseUComplaints'] && $complaint['category_id'] == 8): ?>
                                         <div class="col">
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="close_complaint" class="dv-btn btn btn-warning text-white"><i
+                                                <button name="close_complaint"
+                                                        class="dv-btn btn btn-warning text-white"><i
                                                             class="fas fa-lock"></i> Close
                                                 </button>
                                             </form>
                                         </div>
                                     <?php endif; ?>
                                 <?php elseif ($complaint['status'] == 'Closed'): ?>
-                                    <?php if ($data['canCloseAComplaints'] || $data['canCloseHComplaints'] || $data['canCloseLComplaints'] || $data['canCloseUComplaints']): ?>
+                                    <?php if ($data['privileges']['canCloseAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canCloseHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canCloseLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canCloseUComplaints'] && $complaint['category_id'] == 8): ?>
                                         <div class="col">
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
@@ -95,7 +94,7 @@ $categories = $data['categories'];
                                         </div>
                                     <?php endif; ?>
                                 <?php endif; ?>
-                                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id'] && $complaint['status'] != 'Closed') || $data['canEditAComplaints'] || $data['canEditHComplaints'] || $data['canEditLComplaints'] || $data['canEditUComplaints']): ?>
+                                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id'] && $complaint['status'] != 'Closed') || $data['privileges']['canEditAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canEditHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canEditLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canEditUComplaints'] && $complaint['category_id'] == 8): ?>
                                     <div class="col">
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
@@ -105,7 +104,7 @@ $categories = $data['categories'];
                                         </form>
                                     </div>
                                 <?php endif; ?>
-                                <?php if ($data['canEditUComplaints'] || $data['canEditLComplaints'] || $data['canEditAComplaints'] || $data['canEditHComplaints']): ?>
+                                <?php if ($data['privileges']['canEditUComplaints'] && $complaint['category_id'] == 8 || $data['privileges']['canEditLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canEditAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canEditHComplaints'] && $complaint['category_id'] == 6): ?>
                                     <div class="w-100"></div>
                                     <div class="col">
                                         <button type="button" class="dv-btn btn btn-primary" data-toggle="collapse"
@@ -132,7 +131,7 @@ $categories = $data['categories'];
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <?php if ($data['canDeleteAComplaints'] || $data['canDeleteHComplaints'] || $data['canDeleteLComplaints'] || $data['canDeleteUComplaints']): ?>
+                                <?php if ($data['privileges']['canDeleteAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canDeleteHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canDeleteLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canDeleteUComplaints'] && $complaint['category_id'] == 8): ?>
                                     <div class="col">
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
@@ -143,7 +142,7 @@ $categories = $data['categories'];
                                         </form>
                                     </div>
                                 <?php endif; ?>
-                                <?php if ($data['canHideAComplaints'] || $data['canHideHComplaints'] || $data['canHideLComplaints'] || $data['canHideUComplaints']): ?>
+                                <?php if ($data['privileges']['canHideAComplaints']  && $complaint['category_id'] == 5 || $data['privileges']['canHideHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canHideLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canHideUComplaints'] && $complaint['category_id'] == 8): ?>
                                     <div class="w-100"></div>
                                     <div class="col">
                                         <?php if ($complaint['is_hidden'] == 0): ?>
@@ -213,7 +212,7 @@ $categories = $data['categories'];
                                     </div>
                                     <div class="dv-reply-date">
                                         <span><i class="far fa-clock"></i> <?php echo $reply['created_at']; ?></span>
-                                        <?php if ($data['canDeleteACReplies'] || $data['canDeleteHCReplies'] || $data['canDeleteLCReplies'] || $data['canDeleteUCReplies']): ?>
+                                        <?php if ($data['privileges']['canDeleteACReplies'] && $complaint['category_id'] == 5 || $data['privileges']['canDeleteHCReplies'] && $complaint['category_id'] == 6 || $data['privileges']['canDeleteLCReplies'] && $complaint['category_id'] == 7 || $data['privileges']['canDeleteUCReplies'] && $complaint['category_id'] == 8): ?>
                                             <div class="dv-reply-actions float-right">
                                                 <form action="" method="post">
                                                     <input type="hidden" name="csrfToken"
@@ -242,7 +241,7 @@ $categories = $data['categories'];
                 <?php endif; ?>
             </div>
             <?php if ($complaint['status'] != 'Closed'): ?>
-                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || (isLoggedIn() && $_SESSION['user_id'] == $complaint['against_id']) || ($data['isAdmin'] > 0)): ?>
+                <?php if ((isLoggedIn() && $_SESSION['user_id'] == $complaint['author_id']) || (isLoggedIn() && $_SESSION['user_id'] == $complaint['against_id']) || ($data['privileges']['isAdmin'] > 0)): ?>
                     <form action="" method="post" class="dv-form">
                         <input type="hidden" name="csrfToken" value="<?php echo $_SESSION['csrfToken']; ?>"/>
                         <h4 class="dv-row-title">Leave a reply</h4>
@@ -254,11 +253,12 @@ $categories = $data['categories'];
                                 <div class="invalid-feedback"><?php echo $errors['reply_error']; ?></div>
                             <?php endif; ?>
                         </div>
-                        <button type="submit" name="post_reply" class="dv-btn btn btn-primary"><i class="fas fa-paper-plane"></i> Submit</button>
+                        <button type="submit" name="post_reply" class="dv-btn btn btn-primary"><i
+                                    class="fas fa-paper-plane"></i> Submit
+                        </button>
                     </form>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
 </div>
-<?php getFooter(); ?>
