@@ -14,6 +14,7 @@ class ComplaintsController extends Controller
     private $complaintModel;
     private $categoryModel;
     private $userModel;
+    private $logModel;
     private $privileges;
 
     public function __construct()
@@ -24,6 +25,7 @@ class ComplaintsController extends Controller
         $this->complaintModel = $this->loadModel('Complaint');
         $this->categoryModel = $this->loadModel('Category');
         $this->userModel = $this->loadModel('User');
+        $this->logModel = $this->loadModel('Log');
 
         // store user privileges
         $this->privileges = $this->checkPrivileges();
@@ -189,6 +191,16 @@ class ComplaintsController extends Controller
                     $postData['against_id'] = $userCheck['ID'];
 
                     if ($this->complaintModel->editComplaint($postData, $id)) {
+                        $logAction = $_SESSION['user_name'] . ' edited complaint (ID: ' . $id . ').';
+                        $logData = [
+                            'type' => 'Complaint',
+                            'action' => $logAction
+                        ];
+                        if ($complaint['author_id'] == $_SESSION['user_id']) {
+                            $this->logModel->playerLog($logData);
+                        } else {
+                            $this->logModel->adminLog($logData);
+                        }
                         flashMessage('success', 'Complaint has been successfully edited!');
                         redirect('/complaints/view/' . $id);
                     } else {
@@ -269,6 +281,16 @@ class ComplaintsController extends Controller
 
                         // close complaint
                         if ($this->complaintModel->closeComplaint($closeData, $id)) {
+                            $logAction = $_SESSION['user_name'] . ' closed complaint (ID: ' . $id . ').';
+                            $logData = [
+                                'type' => 'Complaint',
+                                'action' => $logAction
+                            ];
+                            if ($_SESSION['user_id'] == $data['complaint']['author_id']) {
+                                $this->logModel->playerLog($logData);
+                            } else {
+                                $this->logModel->adminlog($logData);
+                            }
                             flashMessage('success', 'Complaint has been successfully locked.');
                             redirect('/complaints/view/' . $id);
                         } else {
@@ -286,6 +308,12 @@ class ComplaintsController extends Controller
 
                         // open complaint
                         if ($this->complaintModel->closeComplaint($closeData, $id)) {
+                            $logAction = $_SESSION['user_name'] . ' opened complaint (ID: ' . $id . ').';
+                            $logData = [
+                                'type' => 'Complaint',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->adminlog($logData);
                             flashMessage('success', 'Complaint has been successfully unlocked.');
                             redirect('/complaints/view/' . $id);
                         } else {
@@ -299,6 +327,12 @@ class ComplaintsController extends Controller
                         $cID = $_POST['new_category_id'];
                         // change category
                         if ($this->complaintModel->changeCategory($cID, $id)) {
+                            $logAction = $_SESSION['user_name'] . ' changed category for complaint (ID: ' . $id . ') to ' . $cID . '.';
+                            $logData = [
+                                'type' => 'Complaint',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->adminLog($logData);
                             flashMessage('success', 'Complaint category has been successfully changed.');
                             redirect('/complaints/view/' . $id);
                         } else {
@@ -311,6 +345,12 @@ class ComplaintsController extends Controller
                     if (isset($_POST['delete_complaint'])) {
                         // delete complaint
                         if ($this->complaintModel->deleteComplaint($id)) {
+                            $logAction = $_SESSION['user_name'] . ' deleted complaint (ID: ' . $id . ').';
+                            $logData = [
+                                'type' => 'Complaint',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->adminLog($logData);
                             flashMessage('success', 'Complaint has been successfully deleted.');
                             redirect('/complaints');
                         } else {
@@ -324,6 +364,12 @@ class ComplaintsController extends Controller
                         $isHidden = 1;
                         // hide complaint
                         if ($this->complaintModel->hideComplaint($isHidden, $id)) {
+                            $logAction = $_SESSION['user_name'] . ' hid complaint (ID: ' . $id . ').';
+                            $logData = [
+                                'type' => 'Complaint',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->adminLog($logData);
                             flashMessage('success', 'Complaint has been successfully hidden.');
                             redirect('/complaints/view/' . $id);
                         } else {
@@ -335,6 +381,12 @@ class ComplaintsController extends Controller
                         $isHidden = 0;
                         // hide complaint
                         if ($this->complaintModel->hideComplaint($isHidden, $id)) {
+                            $logAction = $_SESSION['user_name'] . ' made complaint (ID: ' . $id . ') visible.';
+                            $logData = [
+                                'type' => 'Complaint',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->adminLog($logData);
                             flashMessage('success', 'Complaint has been successfully unhidden.');
                             redirect('/complaints/view/' . $id);
                         } else {
@@ -349,6 +401,12 @@ class ComplaintsController extends Controller
                         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                         $reply_id = $_POST['reply_id'];
                         if ($this->complaintModel->deleteReply($reply_id)) {
+                            $logAction = $_SESSION['user_name'] . ' deleted reply #' . $reply_id . ' from complaint (ID: ' . $id . ').';
+                            $logData = [
+                                'type' => 'Reply',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->adminLog($logData);
                             flashMessage('success', 'Reply has been successfully deleted.');
                             redirect('/complaints/view/' . $id);
                         } else {

@@ -32,6 +32,7 @@ class MainController extends Controller
         $vehicles = $this->mainModel->getVehicles();
         $regUsers= $this->mainModel->getRegUsers();
         $pageTitle = $_COOKIE["user_lang"] == "ro" ? 'Acasă' : 'Home';
+        $latestFH = $this->mainModel->latestFactionHistory();
 
         $data = [
             'pageTitle' => $pageTitle,
@@ -43,7 +44,8 @@ class MainController extends Controller
             'vehicles' => $vehicles,
             'regUsers' => $regUsers,
             'lang' => $lang,
-            'badges' => $badges
+            'badges' => $badges,
+            'latestFH' => $latestFH
         ];
 
         $this->loadView('main', $data);

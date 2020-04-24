@@ -9,12 +9,14 @@
 class OwnerController extends Controller
 {
     private $generalModel;
+    private $secretModel;
     private $privileges;
 
     public function __construct()
     {
-        // load model
+        // load models
         $this->generalModel = $this->loadModel('General');
+        $this->secretModel = $this->loadModel('Secret');
 
         // store user privileges
         $this->privileges = $this->checkPrivileges();
@@ -43,6 +45,7 @@ class OwnerController extends Controller
         $openUnbans = $this->generalModel->countUnbans('Open');
         $closedUnbans = $this->generalModel->countUnbans('Closed');
         $ownerUnbans = $this->generalModel->countUnbans('Needs Owner Involvement');
+        $helperApps = $this->secretModel->countHelperApps();
 
         $data = [
             'pageTitle' => 'Owner Panel',
@@ -63,7 +66,8 @@ class OwnerController extends Controller
             'allUnbans' => $allUnbans,
             'openUnbans' => $openUnbans,
             'closedUnbans' => $closedUnbans,
-            'ownerUnbans' => $ownerUnbans
+            'ownerUnbans' => $ownerUnbans,
+            'helperApps' => $helperApps
         ];
 
         $this->loadView('owner', $data);

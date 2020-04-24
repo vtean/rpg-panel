@@ -12,17 +12,17 @@ class GroupsController extends Controller
 {
     private $groupModel;
     private $userModel;
+    private $logModel;
     private $privileges;
 
     use ValidateGroup;
 
     public function __construct()
     {
-        // load group model
+        // load models
         $this->groupModel = $this->loadModel('Group');
-
-        // load user model
         $this->userModel = $this->loadModel('User');
+        $this->logModel = $this->loadModel('Log');
 
         // check user privileges
         $this->privileges = $this->checkPrivileges();
@@ -135,6 +135,13 @@ class GroupsController extends Controller
                 unset($_POST['csrfToken']);
                 // create group
                 if ($this->groupModel->createGroup($_POST)) {
+                    $logAction = $_SESSION['user_name'] . ' created panel group ' . $_POST['group_name'] . '.';
+                    $logData = [
+                        'user_id' => $_SESSION['user_id'],
+                        'type' => 'Group',
+                        'action' => $logAction
+                    ];
+                    $this->logModel->adminLog($logData);
                     flashMessage('success', 'The group has been successfully created!');
                     redirect('/groups');
                 } else {
@@ -231,6 +238,13 @@ class GroupsController extends Controller
             // check if delete group button is set
             if (isset($_POST['delete_group'])) {
                 if ($this->groupModel->deleteGroup($id)) {
+                    $logAction = $_SESSION['user_name'] . ' deleted group (ID: ' . $id . ').';
+                    $logData = [
+                        'user_id' => $_SESSION['user_id'],
+                        'type' => 'Group',
+                        'action' => $logAction
+                    ];
+                    $this->logModel->adminLog($logData);
                     flashMessage('success', 'Group has been successfully deleted!');
                     redirect('/groups');
                     unset($_POST);
@@ -299,6 +313,13 @@ class GroupsController extends Controller
                 if (count(array_filter($errors)) == 0) {
                     unset($_POST['csrfToken']);
                     if ($this->groupModel->editGroup($_POST, $id)) {
+                        $logAction = $_SESSION['user_name'] . ' edited group (ID: ' . $id . ').';
+                        $logData = [
+                            'user_id' => $_SESSION['user_id'],
+                            'type' => 'Group',
+                            'action' => $logAction
+                        ];
+                        $this->logModel->adminLog($logData);
                         flashMessage('success', 'Group has been successfully edited!');
                         redirect('/groups');
                     } else {
@@ -353,6 +374,15 @@ class GroupsController extends Controller
 
                     // assign groups to user
                     $this->groupModel->assignGroups($serializedGroups, $user['NickName']);
+
+                    // log things
+                    $implodedGroups = implode(', ', $_POST['userGroups']);
+                    $logAction = $_SESSION['user_name'] . ' updated groups for user ' . $user['NickName'] . '. (New groups: ' . $implodedGroups . ')';
+                    $logData = [
+                        'type' => 'Player',
+                        'action' => $logAction
+                    ];
+                    $this->logModel->adminLog($logData);
 
                     // add flash message
                     flashMessage('success', 'Groups have been successfully updated.');

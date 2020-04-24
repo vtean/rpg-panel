@@ -139,9 +139,6 @@ class Auth
         if (isset($_SESSION['sec_code'])) {
             unset($_SESSION['sec_code']);
         }
-
-        // redirect user to the main page
-        redirect('/');
     }
 
     // start the security session

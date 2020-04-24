@@ -15,6 +15,14 @@ class Main
         $this->db = new Db();
     }
 
+    public function getUserSkin($id)
+    {
+        $sql = "SELECT `Skin` FROM `sv_accounts` WHERE `ID`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        return $this->db->getResult()['Skin'];
+    }
+
     public function getHouses()
     {
         $sql = "SELECT `ID` FROM `sv_houses`";
@@ -53,5 +61,20 @@ class Main
         // get the result
         $this->db->getResult();
         return $this->db->countRows();
+    }
+
+    public function latestFactionHistory()
+    {
+        $sql = "SELECT * FROM `sv_faction_history` ORDER BY `date` DESC LIMIT 15";
+        $this->db->prepareQuery($sql);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                $result['player_skin'] = $this->getUserSkin($result['player_id']);
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
     }
 }

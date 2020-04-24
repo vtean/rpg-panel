@@ -199,6 +199,11 @@ blockquote {
   width: fit-content;
 }
 
+.dv-disabled {
+  opacity: .5;
+  pointer-events: none;
+}
+
 /* MainController menu */
 .dv-main-menu {
   background-color: var(--menu-bg);
@@ -443,44 +448,39 @@ blockquote {
 
 .dv-row {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .dv-page-title {
   margin-bottom: 10px;
 }
 
-/* MainController feed */
-.dv-main-feed {
-  background: var(--content-bg);
-  border-radius: 5px;
-}
-
-.dv-main-feed .nav-link {
-  padding: 1rem 1.5rem;
+/* DV Content */
+.dv-content .nav-link {
+  padding: 0.75rem 1.5rem;
   border: 0;
   font-size: 1.1rem;
 }
 
-.dv-main-feed .nav-tabs {
+.dv-content .nav-tabs {
   border-bottom: 2px solid #414469;
 }
 
-.dv-main-feed .nav-tabs .nav-item {
+.dv-content .nav-tabs .nav-item {
   margin-bottom: -2px;
 }
 
-.dv-main-feed .nav-tabs .nav-item.show .nav-link,
-.dv-main-feed .nav-tabs .nav-link.active {
+.dv-content .nav-tabs .nav-item.show .nav-link,
+.dv-content .nav-tabs .nav-link.active {
   background: var(--text-hover-color);
   color: var(--heading-color);
 }
 
-.dv-main-feed .nav-tabs .nav-link {
+.dv-content .nav-tabs .nav-link {
   font-weight: 600;
 }
 
-.dv-main-feed .tab-content {
+.dv-content .tab-content {
   padding: 15px;
 }
 
@@ -1197,8 +1197,16 @@ textarea {
   margin-left: 15px;
 }
 
+.dv-page-block .dv-user-fh {
+  margin-left: 0;
+}
+
 .dv-user-fh .dv-user-fh-item {
   margin-bottom: 10px;
+}
+
+.dv-user-fh .dv-user-fh-item:last-child {
+  margin-bottom: 0;
 }
 
 .dv-user-fh .dv-user-fh-item .dv-user-fh-avatar,
@@ -1233,6 +1241,10 @@ textarea {
   padding: 0;
 }
 
+.dv-user-fh .dv-user-fh-item .dv-user-fh-text span {
+  color: #8c92c3;
+}
+
 .dv-user-profile .dv-user-profile-controls {
   width: fit-content;
 }
@@ -1254,6 +1266,14 @@ textarea {
 .dv-btn:hover {
   box-shadow: 0 3px 0 0 #4a4f77;
   transform: translateY(-3px) scale(1.05, 1.05);
+}
+
+.btn-link {
+  color: #fff;
+}
+
+.btn-link:hover {
+  color: var(--text-hover-color);
 }
 
 .btn-warning:hover {
@@ -1593,6 +1613,10 @@ textarea {
 .dvTable {
   margin: 15px 0;
   overflow-x: auto;
+}
+
+#dv-pills-tabContent .dvTable {
+  margin: 0;
 }
 
 .dvTable table {
@@ -2101,6 +2125,39 @@ textarea {
   border-bottom-color: #494e75;
 }
 
+/* Statistics */
+.dv-statistics .dv-statistic {
+  background: #3a3e5f;
+  border-radius: 5px;
+}
+
+.dv-statistics .dv-statistic i,
+.dv-statistics .dv-statistic .dv-block,
+.dv-statistics .dv-statistic .dv-block .dv-second {
+  display: block;
+  text-align: center;
+}
+
+.dv-statistics .dv-statistic .dv-block {
+  background: #484e7b;
+  padding: 5px 0;
+  border-radius: 0 0 5px 5px;
+}
+
+.dv-statistics .dv-statistic i {
+  font-size: 2rem;
+  margin-bottom: 5px;
+  padding: 10px 0;
+}
+
+.dv-statistics .dv-statistic .dv-block span {
+  font-weight: 600;
+}
+
+.dv-statistics .dv-statistic .dv-block .dv-second {
+  margin: 0;
+}
+
 /* General responsive things */
 @media screen and (max-width: 991px) {
   .dv-main-menu {
@@ -2165,12 +2222,16 @@ textarea {
     margin-bottom: 10px;
   }
 
-  .dv-main-feed .dv-general-fh .dv-general-fh-item .dv-general-fh-text {
+  .dv-content .dv-general-fh .dv-general-fh-item .dv-general-fh-text {
     width: calc(100% - 52px);
   }
 
   .dv-footer {
     margin-left: 0;
+  }
+
+  .dv-statistics .dv-statistic {
+    margin-bottom: 30px;
   }
 }
 

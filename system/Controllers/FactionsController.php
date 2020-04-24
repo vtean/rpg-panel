@@ -14,6 +14,7 @@ class FactionsController extends Controller
 {
     private $factionModel;
     private $userModel;
+    private $logModel;
     private $privileges;
     use ValidateComplaint;
     use ValidateFapplication;
@@ -27,6 +28,7 @@ class FactionsController extends Controller
         // load models
         $this->factionModel = $this->loadModel('Faction');
         $this->userModel = $this->loadModel('User');
+        $this->logModel = $this->loadModel('Log');
     }
 
     public function index()
@@ -137,6 +139,18 @@ class FactionsController extends Controller
 
                             // close complaint
                             if ($this->factionModel->closeComplaint($closeData, $complaintId)) {
+                                $logAction = $_SESSION['user_name'] . ' closed faction complaint (ID: ' . $complaintId . ').';
+                                $logData = [
+                                    'type' => 'Faction Complaint',
+                                    'action' => $logAction
+                                ];
+                                if ($_SESSION['user_id'] == $complaint['author_id']) {
+                                    $this->logModel->playerLog($logData);
+                                } else if ($data['isLeader'] == $complaint['faction_id']) {
+                                    $this->logModel->leaderLog($logData);
+                                } else {
+                                    $this->logModel->adminLog($logData);
+                                }
                                 flashMessage('success', 'Complaint has been successfully locked.');
                                 redirect('/factions/complaints/' . $factionId . '/view/' . $complaintId);
                             } else {
@@ -154,6 +168,16 @@ class FactionsController extends Controller
 
                             // close complaint
                             if ($this->factionModel->closeComplaint($closeData, $complaintId)) {
+                                $logAction = $_SESSION['user_name'] . ' opened faction complaint (ID: ' . $complaintId . ').';
+                                $logData = [
+                                    'type' => 'Faction Complaint',
+                                    'action' => $logAction
+                                ];
+                                if ($data['isLeader'] == $complaint['faction_id']) {
+                                    $this->logModel->leaderLog($logData);
+                                } else {
+                                    $this->logModel->adminLog($logData);
+                                }
                                 flashMessage('success', 'Complaint has been successfully opened.');
                                 redirect('/factions/complaints/' . $factionId . '/view/' . $complaintId);
                             } else {
@@ -166,6 +190,12 @@ class FactionsController extends Controller
                         if (isset($_POST['delete_complaint'])) {
                             // delete complaint
                             if ($this->factionModel->deleteComplaint($complaintId)) {
+                                $logAction = $_SESSION['user_name'] . ' deleted faction complaint (ID: ' . $complaintId . ').';
+                                $logData = [
+                                    'type' => 'Faction Complaint',
+                                    'action' => $logAction
+                                ];
+                                $this->logModel->adminLog($logData);
                                 flashMessage('success', 'Complaint has been successfully deleted.');
                                 redirect('/factions/complaints/' . $factionId);
                             } else {
@@ -179,6 +209,12 @@ class FactionsController extends Controller
                             $reply_id = $_POST['reply_id'];
                             // delete reply
                             if ($this->factionModel->deleteReply($reply_id)) {
+                                $logAction = $_SESSION['user_name'] . ' deleted reply #' . $reply_id . ' from faction complaint (ID: ' . $complaintId . ').';
+                                $logData = [
+                                    'type' => 'Faction Complaint',
+                                    'action' => $logAction
+                                ];
+                                $this->logModel->adminlog($logData);
                                 flashMessage('success', 'Reply has been successfully deleted.');
                                 redirect('/factions/complaints/' . $factionId . '/view/' . $complaintId);
                             } else {
@@ -294,55 +330,69 @@ class FactionsController extends Controller
                     $this->loadView('fcomplaint_create', $data);
                 }
             } else if (strcasecmp($secondParam, 'edit') == 0 && !empty($complaint) && is_numeric($complaintId)) {
-                $complaint['description'] = html_entity_decode($complaint['description']);
+                if ($_SESSION['user_id'] == $complaint['author_id'] || in_array(1, $this->privileges['canEditFComplaints'])) {
+                    $complaint['description'] = html_entity_decode($complaint['description']);
 
-                $data = [
-                    'pageTitle' => 'Edit Complaint',
-                    'fullAccess' => $this->privileges['fullAccess'],
-                    'isAdmin' => $this->privileges['isAdmin'],
-                    'isLeader' => $this->privileges['isLeader'],
-                    'lang' => $lang,
-                    'badges' => $badges,
-                    'complaint' => $complaint
-                ];
-
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    // sanitize post data
-                    $_POST['against_name'] = filter_var($_POST['against_name'], FILTER_SANITIZE_STRING);
-                    $_POST['complaint_desc'] = htmlentities($_POST['complaint_desc']);
-
-                    $editData = [
-                        'complaint_desc' => $_POST['complaint_desc'],
-                        'against_name' => $_POST['against_name'],
-                        'is_edited' => 1,
-                        'edit_ip' => getUserIp(),
-                        'edited_by' => $_SESSION['user_id']
+                    $data = [
+                        'pageTitle' => 'Edit Complaint',
+                        'fullAccess' => $this->privileges['fullAccess'],
+                        'isAdmin' => $this->privileges['isAdmin'],
+                        'isLeader' => $this->privileges['isLeader'],
+                        'lang' => $lang,
+                        'badges' => $badges,
+                        'complaint' => $complaint
                     ];
 
-                    $userCheck = $this->userModel->searchExistingUser($_POST['against_name']);
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        // sanitize post data
+                        $_POST['against_name'] = filter_var($_POST['against_name'], FILTER_SANITIZE_STRING);
+                        $_POST['complaint_desc'] = htmlentities($_POST['complaint_desc']);
 
-                    // handle errors
-                    $errors = ValidateComplaint::validateForFaction($editData, $userCheck, $factionId);
+                        $editData = [
+                            'complaint_desc' => $_POST['complaint_desc'],
+                            'against_name' => $_POST['against_name'],
+                            'is_edited' => 1,
+                            'edit_ip' => getUserIp(),
+                            'edited_by' => $_SESSION['user_id']
+                        ];
 
-                    // check if there are no errors
-                    if (count(array_filter($errors)) == 0) {
-                        // add against user id to the array
-                        $editData['against_id'] = $userCheck['ID'];
+                        $userCheck = $this->userModel->searchExistingUser($_POST['against_name']);
 
-                        if ($this->factionModel->editComplaint($editData, $complaintId)) {
-                            flashMessage('success', 'Complaint has been successfully edited!');
-                            redirect('/factions/complaints/' . $factionId . '/view/' . $complaintId);
+                        // handle errors
+                        $errors = ValidateComplaint::validateForFaction($editData, $userCheck, $factionId);
+
+                        // check if there are no errors
+                        if (count(array_filter($errors)) == 0) {
+                            // add against user id to the array
+                            $editData['against_id'] = $userCheck['ID'];
+
+                            if ($this->factionModel->editComplaint($editData, $complaintId)) {
+                                $logAction = $_SESSION['user_name'] . ' edited faction complaint (ID: ' . $complaintId . ').';
+                                $logData = [
+                                    'type' => 'Faction Complaint',
+                                    'action' => $logAction
+                                ];
+                                if ($_SESSION['user_id'] == $complaint['author_id']) {
+                                    $this->logModel->playerLog($logData);
+                                } else {
+                                    $this->logModel->adminLog($logData);
+                                }
+                                flashMessage('success', 'Complaint has been successfully edited!');
+                                redirect('/factions/complaints/' . $factionId . '/view/' . $complaintId);
+                            } else {
+                                die('Something went wrong.');
+                            }
                         } else {
-                            die('Something went wrong.');
+                            // load view with errors
+                            $this->loadView('fcomplaint_edit', $data, $errors);
                         }
-                    } else {
-                        // load view with errors
-                        $this->loadView('fcomplaint_edit', $data, $errors);
-                    }
 
+                    } else {
+                        // load view
+                        $this->loadView('fcomplaint_edit', $data);
+                    }
                 } else {
-                    // load view
-                    $this->loadView('fcomplaint_edit', $data);
+                    $this->error('403', 'Forbidden!');
                 }
 
             } else {
@@ -471,6 +521,16 @@ class FactionsController extends Controller
                             ];
 
                             if ($this->factionModel->updateAppStatus($postData, $applicationId)) {
+                                $logAction = $_SESSION['user_name'] . ' accepted faction application (ID: ' . $applicationId . ').';
+                                $logData = [
+                                    'type' => 'Faction Application',
+                                    'action' => $logAction
+                                ];
+                                if ($data['isLeader'] == $factionId) {
+                                    $this->logModel->leaderLog($logData);
+                                } else {
+                                    $this->logModel->adminLog($logData);
+                                }
                                 flashMessage('success', 'Application has been accepted successfully.');
                                 redirect('/factions/applications/' . $factionId);
                             } else {
@@ -483,6 +543,16 @@ class FactionsController extends Controller
                             ];
 
                             if ($this->factionModel->updateAppStatus($postData, $applicationId)) {
+                                $logAction = $_SESSION['user_name'] . ' rejected faction application (ID: ' . $applicationId . ').';
+                                $logData = [
+                                    'type' => 'Faction Application',
+                                    'action' => $logAction
+                                ];
+                                if ($data['isLeader'] == $factionId) {
+                                    $this->logModel->leaderLog($logData);
+                                } else {
+                                    $this->logModel->adminLog($logData);
+                                }
                                 flashMessage('success', 'Application has been rejected successfully.');
                                 redirect('/factions/applications/' . $factionId);
                             } else {
@@ -493,6 +563,12 @@ class FactionsController extends Controller
 
                     if (isset($_POST['delete_application']) && $data['fullAccess']) {
                         if ($this->factionModel->deleteApplication($applicationId)) {
+                            $logAction = $_SESSION['user_id'] . ' deleted faction application (ID: ' . $applicationId . ').';
+                            $logData = [
+                                'type' => 'Faction Application',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->adminLog($logData);
                             flashMessage('success', 'Application has been deleted successfully.');
                             redirect('/factions/applications/' . $factionId);
                         } else {
@@ -506,7 +582,7 @@ class FactionsController extends Controller
 
             } else if (strcasecmp($secondParam, 'edit') == 0 && (!empty($application)) && is_numeric($applicationId)) {
 
-            } else if (strcasecmp($secondParam, 'questions') == 0 && $applicationId === 0 && $this->privileges['isLeader'] && $this->privileges['isLeader'] == $factionId) {
+            } else if (strcasecmp($secondParam, 'questions') == 0 && $applicationId === 0 && $this->privileges['isLeader'] == $factionId) {
                 $questions = $this->factionModel->getFactionAppsQuestions($factionId);
 
                 $data = [
@@ -536,6 +612,12 @@ class FactionsController extends Controller
                         if (count(array_filter($errors)) == 0) {
                             // add question
                             if ($this->factionModel->addQuestion($postData)) {
+                                $logAction = $_SESSION['user_name'] . ' added new application question for faction ' . $factionId . '. (Q: ' . $postData['question_body'] . ')';
+                                $logData = [
+                                    'type' => 'Faction Application',
+                                    'action' => $logAction
+                                ];
+                                $this->logModel->leaderLog($logData);
                                 flashMessage('success', 'Question has been successfully added.');
                                 redirect('/factions/applications/' . $factionId . '/questions');
                             } else {
@@ -548,6 +630,12 @@ class FactionsController extends Controller
                     } else if (isset($_POST['delete_question'])) {
                         // delete question
                         if ($this->factionModel->deleteQuestion($_POST['question_id'])) {
+                            $logAction = $_SESSION['user_name'] . ' deleted a question for faction applications.';
+                            $logData = [
+                                'type' => 'Faction Application',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->leaderLog($logData);
                             flashMessage('success', 'Question has been successfully deleted.');
                             redirect('/factions/applications/' . $factionId . '/questions');
                         } else {
@@ -709,6 +797,16 @@ class FactionsController extends Controller
                             ];
 
                             if ($this->factionModel->updateResignationStatus($closeData, $resignationId)) {
+                                $logAction = $_SESSION['user_name'] . ' closed faction resignation (ID: ' . $resignationId . ').';
+                                $logData = [
+                                    'type' => 'Faction Resignation',
+                                    'action' => $logAction
+                                ];
+                                if ($data['isLeader'] == $factionId) {
+                                    $this->logModel->leaderLog($logData);
+                                } else {
+                                    $this->logModel->adminLog($logData);
+                                }
                                 flashMessage('success', 'Resignation has been successfully closed.');
                                 redirect('/factions/resignations/' . $factionId . '/view/' . $resignationId);
                             } else {
@@ -721,6 +819,12 @@ class FactionsController extends Controller
                         if (isset($_POST['delete_reply'])) {
                             $replyId = filter_var($_POST['reply_id'], FILTER_SANITIZE_NUMBER_INT);
                             if ($this->factionModel->deleteResignationReply($replyId)) {
+                                $logAction = $_SESSION['user_name'] . ' deleted reply #' . $replyId . ' from faction resignation (ID: ' . $resignationId . ').';
+                                $logData = [
+                                    'type' => 'Faction Resignation',
+                                    'action' => $logAction
+                                ];
+                                $this->logModel->adminLog($logData);
                                 flashMessage('success', 'Reply has been deleted successfully.');
                                 redirect('/factions/resignations/' . $factionId . '/view/' . $resignationId);
                             } else {

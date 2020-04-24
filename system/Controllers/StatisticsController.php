@@ -25,7 +25,7 @@ class StatisticsController extends Controller
     public function online()
     {
         global $lang;
-        $server = "rpg.dreamvibe.ro";
+        $server = "188.212.102.123";
         $port = 7777;
 
         // get badges

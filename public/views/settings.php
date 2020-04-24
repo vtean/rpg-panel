@@ -50,6 +50,12 @@
                                             <a href="<?php echo BASE_URL . '/users/settings/change-password'; ?>"
                                                class="dv-btn btn dv-btn-secondary">Change</a>
                                         </li>
+                                        <li class="dv-single">
+                                            <span class="dv-first">Forum Name</span>
+                                            <span class="dv-second"><?php echo $user['ForumName']; ?></span>
+                                            <a href="<?php echo BASE_URL . '/users/settings/forum-name'; ?>"
+                                               class="dv-btn btn dv-btn-secondary">Change</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

@@ -12,6 +12,7 @@ class UsersController extends Controller
 {
     private $userModel;
     private $authModel;
+    private $logModel;
     private $privileges;
     use ValidateSettings;
 
@@ -20,6 +21,7 @@ class UsersController extends Controller
         // load models
         $this->userModel = $this->loadModel('User');
         $this->authModel = $this->loadModel('Auth');
+        $this->logModel = $this->loadModel('Log');
 
         // store use privileges
         $this->privileges = $this->checkPrivileges();
@@ -53,6 +55,7 @@ class UsersController extends Controller
                 $getModelName = $this->userModel->getModelName($userInfo['NickName']);
                 $getBusiness = $this->userModel->getBusiness($userInfo['NickName']);
                 $getHouse = $this->userModel->getHouse($userInfo['NickName']);
+                $userFH = $this->userModel->getUserFH($userInfo['ID']);
 
                 $userGroups = implode($this->userModel->getUserGroups($nickname));
                 $userGroupsArr = unserialize($userGroups);
@@ -82,7 +85,8 @@ class UsersController extends Controller
                     'getBusiness' => $getBusiness,
                     'getHouse' => $getHouse,
                     'lang' => $lang,
-                    'badges' => $badges
+                    'badges' => $badges,
+                    'userFH' => $userFH
                 ];
 
                 // load the profile view
@@ -134,6 +138,14 @@ class UsersController extends Controller
                     if (count(array_filter($errors)) == 0) {
                         // update email
                         if ($this->userModel->updateUserEmail($_SESSION['user_id'], $_POST['new_email'])) {
+                            // log action
+                            $logAction = $_SESSION['user_name'] . ' changed his account email from ' . $userInfo['Mail'] . ' to ' . $_POST['new_email'] . '.';
+                            $logData = [
+                                'type' => 'Account',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->playerLog($logData);
+
                             flashMessage('success', 'Your email has been successfully changed.');
                             redirect('/users/settings');
                         } else {
@@ -155,6 +167,14 @@ class UsersController extends Controller
                     if (count(array_filter($errors)) == 0) {
                         // update forum name
                         if ($this->userModel->updateForumName($_SESSION['user_id'], $_POST['forum_nickname'])) {
+                            // log action
+                            $logAction = $_SESSION['user_name'] . ' changed his forum name from ' . $userInfo['ForumName'] . ' to ' . $_POST['forum_nickname'] . '.';
+                            $logData = [
+                                'type' => 'Account',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->playerLog($logData);
+
                             flashMessage('success', 'Your forum name has been successfully changed.');
                             redirect('/users/settings');
                         } else {
@@ -179,6 +199,14 @@ class UsersController extends Controller
 
                         // change password
                         if ($this->userModel->updateUserPassword($_SESSION['user_id'], $_POST['new_password'])) {
+                            // log action
+                            $logAction = $_SESSION['user_name'] . ' changed his account password.';
+                            $logData = [
+                                'type' => 'Account',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->playerLog($logData);
+
                             flashMessage('success', 'Your password has been changed successfully.');
                             redirect('/users/settings');
                         } else {
@@ -209,6 +237,14 @@ class UsersController extends Controller
                     if (count(array_filter($errors)) == 0) {
                         // activate email login
                         if ($this->userModel->changeEmailLogin($_SESSION['user_id'], 1)) {
+                            // log action
+                            $logAction = $_SESSION['user_name'] . ' activated Email Login for his account.';
+                            $logData = [
+                                'type' => 'Account',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->playerLog($logData);
+
                             unset($_SESSION['secure_code']);
                             $_POST = array();
                             flashMessage('success', 'You have successfully activated email login.');
@@ -244,6 +280,14 @@ class UsersController extends Controller
                     if (count(array_filter($errors)) == 0) {
                         // deactivate email login
                         if ($this->userModel->changeEmailLogin($_SESSION['user_id'], 0)) {
+                            // log action
+                            $logAction = $_SESSION['user_name'] . ' deactivated Email Login for his account.';
+                            $logData = [
+                                'type' => 'Account',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->playerLog($logData);
+
                             unset($_SESSION['secure_code_check']);
                             $_POST = array();
                             flashMessage('success', 'Email login has been successfully deactivated.');
@@ -277,6 +321,14 @@ class UsersController extends Controller
                     if (count(array_filter($errors)) == 0) {
                         // enable google authenticator
                         if ($this->userModel->enableGAuth($_SESSION['user_id'], $_SESSION['dv_secret_code'])) {
+                            // log action
+                            $logAction = $_SESSION['user_name'] . ' activated Google Authenticator for his account.';
+                            $logData = [
+                                'type' => 'Account',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->playerLog($logData);
+
                             unset($_SESSION['dv_secret_code']);
                             unset($_SESSION['dv_qr_code']);
                             unset($_SESSION['dv_auth_code']);
@@ -315,6 +367,14 @@ class UsersController extends Controller
                     if (count(array_filter($errors)) == 0) {
                         // disable google authenticator
                         if ($this->userModel->disableGAuth($_SESSION['user_id'])) {
+                            // log action
+                            $logAction = $_SESSION['user_name'] . ' deactivated Google Authenticator for his account.';
+                            $logData = [
+                                'type' => 'Account',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->playerLog($logData);
+
                             unset($_SESSION['auth_code_check']);
                             $_POST = array();
                             flashMessage('success', 'Google Authenticator has been successfully disabled for your account.');

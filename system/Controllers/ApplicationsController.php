@@ -11,13 +11,15 @@ require_once ROOT_PATH . '/system/Validations/ValidateApplication.php';
 class ApplicationsController extends Controller
 {
     private $appModel;
+    private $logModel;
     private $privileges;
     use ValidateApplication;
 
     public function __construct()
     {
-        // load model
+        // load models
         $this->appModel = $this->loadModel('Application');
+        $this->logModel = $this->loadModel('Log');
 
         // store privileges
         $this->privileges = $this->checkPrivileges();
@@ -190,6 +192,16 @@ class ApplicationsController extends Controller
                     if (count(array_filter($errors)) == 0) {
                         // edit app
                         if ($this->appModel->editApplication($postData, $id)) {
+                            $logAction = $_SESSION['user_name'] . ' edited application (ID: ' . $id . ').';
+                            $logData = [
+                                'type' => 'Application',
+                                'action' => $logAction
+                            ];
+                            if ($_SESSION['user_id'] == $userApp['author_id']) {
+                                $this->logModel->playerLog($logData);
+                            } else {
+                                $this->logModel->adminLog($logData);
+                            }
                             flashMessage('success', 'Application has been successfully edited.');
                             redirect('/apps/view/' . $id);
                         } else {
@@ -242,6 +254,12 @@ class ApplicationsController extends Controller
                     if (isset($_POST['delete_application'])) {
                         // delete application
                         if ($this->appModel->deleteApplication($id)) {
+                            $logAction = $_SESSION['user_name'] . ' deleted application (ID: ' . $id . ').';
+                            $logData = [
+                                'type' => 'Application',
+                                'action' => $logAction
+                            ];
+                            $this->logModel->adminLog($logData);
                             flashMessage('success', 'Application has been deleted successfully.');
                             redirect('/apps');
                         } else {

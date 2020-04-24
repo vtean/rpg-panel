@@ -15,12 +15,223 @@ class Log
         $this->db = new Db();
     }
 
+    public function playerLog($data)
+    {
+        $sql = "INSERT INTO `panel_logs_player` (`user_id`, `type`, `action`, `ip_address`) VALUES (:user_id, :log_type, :log_action, :ip_address)";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':user_id', $_SESSION['user_id']);
+        $this->db->bind(':log_type', $data['type']);
+        $this->db->bind(':log_action', $data['action']);
+        $this->db->bind(':ip_address', getUserIp());
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function adminLog($data)
+    {
+        $sql = "INSERT INTO `panel_logs_admin` (`user_id`, `type`, `action`, `ip_address`) VALUES (:user_id, :log_type, :log_action, :ip_address)";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':user_id', $_SESSION['user_id']);
+        $this->db->bind(':log_type', $data['type']);
+        $this->db->bind(':log_action', $data['action']);
+        $this->db->bind(':ip_address', getUserIp());
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function leaderLog($data)
+    {
+        $sql = "INSERT INTO `panel_logs_leader` (`user_id`, `type`, `action`, `ip_address`) VALUES (:user_id, :log_type, :log_action, :ip_address)";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':user_id', $_SESSION['user_id']);
+        $this->db->bind(':log_type', $data['type']);
+        $this->db->bind(':log_action', $data['action']);
+        $this->db->bind(':ip_address', getUserIp());
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function loginLog($id)
+    {
+        $sql = "INSERT INTO `panel_logs_login` (`user_id`, `login_ip`, `location`) VALUES (:user_id, :login_ip, :location)";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':user_id', $id);
+        $this->db->bind(':login_ip', getUserIp());
+        $this->db->bind(':location', getUserLocation(getUserIp()));
+        $this->db->executeStmt();
+    }
+
     public function getUserName($id)
     {
         $sql = "SELECT `NickName` FROM `sv_accounts` WHERE `ID`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
         return $this->db->getResult();
+    }
+
+    public function panelAdminLogs()
+    {
+        $sql = "SELECT * FROM `panel_logs_admin`";
+        $this->db->prepareQuery($sql);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                if ($result['user_id'] == 0) {
+                    $result['user_name'] = 'Unknown';
+                } else {
+                    $result['user_name'] = $this->getUserName($result['user_id'])['NickName'];
+                }
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function panelLeaderLogs()
+    {
+        $sql = "SELECT * FROM `panel_logs_leader`";
+        $this->db->prepareQuery($sql);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                if ($result['user_id'] == 0) {
+                    $result['user_name'] = 'Unknown';
+                } else {
+                    $result['user_name'] = $this->getUserName($result['user_id'])['NickName'];
+                }
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function panelPlayerLogs()
+    {
+        $sql = "SELECT * FROM `panel_logs_player`";
+        $this->db->prepareQuery($sql);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                if ($result['user_id'] == 0) {
+                    $result['user_name'] = 'Unknown';
+                } else {
+                    $result['user_name'] = $this->getUserName($result['user_id'])['NickName'];
+                }
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function panelLoginLogs()
+    {
+        $sql = "SELECT * FROM `panel_logs_login`";
+        $this->db->prepareQuery($sql);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                if ($result['user_id'] == 0) {
+                    $result['user_name'] = 'Unknown';
+                } else {
+                    $result['user_name'] = $this->getUserName($result['user_id'])['NickName'];
+                }
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function pAdminLogs($id)
+    {
+        $sql = "SELECT * FROM `panel_logs_admin` WHERE `user_id`=:user_id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':user_id', $id);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                if ($result['user_id'] == 0) {
+                    $result['user_name'] = 'Unknown';
+                } else {
+                    $result['user_name'] = $this->getUserName($result['user_id'])['NickName'];
+                }
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function pLeaderLogs($id)
+    {
+        $sql = "SELECT * FROM `panel_logs_leader` WHERE `user_id`=:user_id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':user_id', $id);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                if ($result['user_id'] == 0) {
+                    $result['user_name'] = 'Unknown';
+                } else {
+                    $result['user_name'] = $this->getUserName($result['user_id'])['NickName'];
+                }
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function pPlayerLogs($id)
+    {
+        $sql = "SELECT * FROM `panel_logs_player` WHERE `user_id`=:user_id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':user_id', $id);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                if ($result['user_id'] == 0) {
+                    $result['user_name'] = 'Unknown';
+                } else {
+                    $result['user_name'] = $this->getUserName($result['user_id'])['NickName'];
+                }
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
+    }
+
+    public function pLoginLogs($id)
+    {
+        $sql = "SELECT * FROM `panel_logs_login` WHERE `user_id`=:user_id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':user_id', $id);
+        $results = $this->db->getResults();
+        $finalResults = array();
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                if ($result['user_id'] == 0) {
+                    $result['user_name'] = 'Unknown';
+                } else {
+                    $result['user_name'] = $this->getUserName($result['user_id'])['NickName'];
+                }
+                array_push($finalResults, $result);
+            }
+        }
+        return $finalResults;
     }
 
     public function allLogs()
@@ -31,7 +242,11 @@ class Log
         $finalResults = array();
         if (!empty($results)) {
             foreach ($results as $result) {
-                $result['player'] = $this->getUserName($result['player_id'])['NickName'];
+                if ($result['player_id'] == 0) {
+                    $result['player'] = 'Unknown';
+                } else {
+                    $result['player'] = $this->getUserName($result['player_id'])['NickName'];
+                }
                 array_push($finalResults, $result);
             }
         }

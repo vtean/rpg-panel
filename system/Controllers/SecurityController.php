@@ -12,12 +12,14 @@ class SecurityController extends Controller
 {
     use ValidateLogin;
     private $authModel;
+    private $logModel;
     private $privileges;
 
     public function __construct()
     {
-        // load the model
+        // load models
         $this->authModel = $this->loadModel('Auth');
+        $this->logModel = $this->loadModel('Log');
 
         // store user privileges
         $this->privileges = $this->checkPrivileges();
@@ -77,6 +79,8 @@ class SecurityController extends Controller
                     if ($verify) {
                         flashMessage('success', $lang['success_login_txt']);
                         $this->authModel->startSession($loggedInUser);
+                        $this->logModel->loginLog($loggedInUser['ID']);
+                        redirect('/');
                     } else {
                         die('Oops, something went wrong');
                     }

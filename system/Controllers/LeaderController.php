@@ -8,13 +8,17 @@
 
 class LeaderController extends Controller
 {
-    private $userModel;
+    private $generalModel;
+    private $secretModel;
+    private $logModel;
     private $privileges;
 
     public function __construct()
     {
-        // load user model
-        $this->userModel = $this->loadModel('User');
+        // load models
+        $this->generalModel = $this->loadModel('General');
+        $this->secretModel = $this->loadModel('Secret');
+        $this->logModel = $this->loadModel('Log');
 
         // store user privileges
         $this->privileges = $this->checkPrivileges();
@@ -25,30 +29,65 @@ class LeaderController extends Controller
             // redirect to main page
             redirect('/');
         }
-
     }
+
     public function index()
     {
         global $lang;
-
-        // get badges
         $badges = $this->badges();
-
-        if ($this->privileges['isLeader'] != 0 ) {
-            $factionName = $this->userModel->getFaction($this->privileges['isLeader']);
-        }
+        $faction = $this->secretModel->getLeaderFaction($this->privileges['isLeader']);
+        $openComplaints = $this->secretModel->countFactionComplaints($this->privileges['isLeader'], 'Open');
+        $openApplications = $this->secretModel->countFactionApplications($this->privileges['isLeader'], 'Open');
+        $openResignations = $this->secretModel->countFactionResignations($this->privileges['isLeader'], 'Open');
 
         $data = [
             'pageTitle' => 'Leader Panel',
-            'name' => $_SESSION['user_name'],
-            'faction' => $factionName,
             'fullAccess' => $this->privileges['fullAccess'],
             'isAdmin' => $this->privileges['isAdmin'],
             'isLeader' => $this->privileges['isLeader'],
             'lang' => $lang,
-            'badges' => $badges
+            'badges' => $badges,
+            'faction' => $faction,
+            'openComplaints' => $openComplaints,
+            'openApplications' => $openApplications,
+            'openResignations' => $openResignations
         ];
 
-        $this->loadView('leader', $data);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($data['isLeader'] > 0 && isset($_POST['close_applications'])) {
+                if ($this->secretModel->changeAppsStatus($data['isLeader'], 0)) {
+                    // log action
+                    $logAction = $_SESSION['user_name'] . ' closed applications for faction (ID: ' . $data['isLeader'] . ').';
+                    $logData = [
+                        'type' => 'Faction Application',
+                        'action' => $logAction
+                    ];
+                    $this->logModel->leaderLog($logData);
+
+                    flashMessage('success', 'Faction applications have been successfully closed.');
+                    redirect('/leader');
+                } else {
+                    die('Something went wrong.');
+                }
+            } else if ($data['isLeader'] > 0 && isset($_POST['open_applications'])) {
+                if ($this->secretModel->changeAppsStatus($data['isLeader'], 1)) {
+                    // log action
+                    $logAction = $_SESSION['user_name'] . ' opened applications for faction (ID: ' . $data['isLeader'] . ').';
+                    $logData = [
+                        'type' => 'Faction Application',
+                        'action' => $logAction
+                    ];
+                    $this->logModel->leaderLog($logData);
+
+                    flashMessage('success', 'Faction applications have been successfully opened.');
+                    redirect('/leader');
+                } else {
+                    die('Something went wrong.');
+                }
+            }
+        } else {
+            // load view
+            $this->loadView('leader', $data);
+        }
     }
 }

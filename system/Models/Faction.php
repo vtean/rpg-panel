@@ -37,7 +37,9 @@ class Faction
         $this->db->bind(':id', $id);
         $result = $this->db->getResult();
         if (!empty($result)) {
-            if ($result['Member'] != 0) {
+            if ($result['Member'] == 0) {
+                $result['faction_name'] = 'None';
+            } else {
                 $result['faction_name'] = $this->getFaction($result['Member'])['Name'];
             }
         }

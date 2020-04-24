@@ -109,6 +109,32 @@ function getUserIp()
     return $ip;
 }
 
+function getUserGeolocation($ip, $lang = "en", $fields = "*", $excludes = "") {
+    $url = "https://api.ipgeolocation.io/ipgeo?apiKey=fc8484f18cab407f83e3d242414f322b"."&ip=".$ip."&lang=".$lang."&fields=".$fields."&excludes=".$excludes;
+    $cURL = curl_init();
+
+    curl_setopt($cURL, CURLOPT_URL, $url);
+    curl_setopt($cURL, CURLOPT_HTTPGET, true);
+    curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'Accept: application/json'
+    ));
+    $location = curl_exec($cURL);
+    return json_decode($location, true);
+}
+
+function getUserLocation($ip)
+{
+    $userGeolocation = getUserGeolocation($ip);
+    if (!empty($userGeolocation['city']) && !empty($userGeolocation['country_name'])) {
+        $userLocation = $userGeolocation['city'] . ', ' . $userGeolocation['country_name'];
+    } else {
+        $userLocation = 'Localhost';
+    }
+    return $userLocation;
+}
+
 function strLimit($s, $length, $end = '...')
 {
     return substr($s, 0, $length) . $end;

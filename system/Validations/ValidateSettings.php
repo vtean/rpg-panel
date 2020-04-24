@@ -99,7 +99,7 @@ trait ValidateSettings
         if (empty($data['secret_code_check'])) {
             $errors['secret_code_check_error'] = "Please type the code.";
         } else if (strlen($data['secret_code_check']) != 6) {
-            $data['secret_code_check'] = "Code must have exactly 6 digits.";
+            $errors['secret_code_check_error'] = "Code must have exactly 6 digits.";
         } else if ($data['secret_code_check'] != $emailCode) {
             $errors['secret_code_check_error'] = "You entered a wrong code.";
         }

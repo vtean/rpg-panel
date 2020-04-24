@@ -33,6 +33,9 @@ require_once ROOT_PATH . '/system/Db/Db.php';
 // load two factor auth
 require_once ROOT_PATH . '/system/API/GoogleAuthenticator.php';
 
+// load samp query
+require_once ROOT_PATH . '/system/API/SampQuery.class.php';
+
 // load the URL handler
 require_once ROOT_PATH . '/system/Url/UrlHandler.php';
 

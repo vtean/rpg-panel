@@ -156,7 +156,7 @@
                     <h6 class="dv-nav-title"><?php echo $data['lang']['other_txt']; ?></h6>
                     <ul class="dv-nav">
                         <li class="dv-nav-item">
-                            <a class="dv-nav-link" href="<?php echo BASE_URL . '/shop'; ?>">
+                            <a class="dv-nav-link dv-disabled" href="#">
                                 <i class="dv-nav-icon fas fa-shopping-bag"></i>
                                 <span class="dv-nav-text"><?php echo $data['lang']['shop_txt']; ?> <span class="text-danger">(Unavailable)</span></span>
                             </a>

@@ -128,6 +128,17 @@ $author = $data['author'];
                                             </form>
                                         </div>
                                     <?php endif; ?>
+                                    <?php if ($data['canCloseTickets']): ?>
+                                        <div class="col">
+                                            <form action="" method="post">
+                                                <input type="hidden" name="csrfToken"
+                                                       value="<?php echo $_SESSION['csrfToken']; ?>">
+                                                <button name="needs_owner" class="dv-btn btn btn-danger"><i
+                                                            class="fas fa-shield-alt"></i> Needs Owner
+                                                </button>
+                                            </form>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

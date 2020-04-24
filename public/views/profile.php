@@ -24,7 +24,7 @@
             </div>
             <div class="dv-user-profile-controls m-auto">
                 <?php if (isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])): ?>
-                    <a class="dv-btn btn btn-primary" href="#" role="button"><i
+                    <a class="dv-btn btn btn-primary" href="<?php echo BASE_URL . '/users/settings'; ?>" role="button"><i
                                 class="fas fa-user-edit"></i> <?php echo $data['lang']['profile_settings_txt']; ?></a>
                 <?php endif; ?>
                 <?php if ((isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])) || (isLoggedIn() && ($data['isAdmin'] > 0))): ?>
@@ -33,12 +33,10 @@
                     </a>
                 <?php endif; ?>
                 <?php if (isLoggedIn() && ($data['fullAccess'] == true)): ?>
-                    <a class="dv-btn btn btn-info" href="#" role="button"><i
-                                class="fas fa-wrench"></i> <?php echo $data['lang']['edit_user_txt']; ?></a>
                     <a href="<?php echo BASE_URL . '/groups/assign/' . $data['user']['NickName']; ?>"
                        class="dv-btn btn btn-primary" role="button"><i class="fas fa-user-tag"></i> Assign Groups</a>
                 <?php endif; ?>
-                <?php if (isLoggedIn() && ($data['isAdmin']) > 2): ?>
+                <?php if (isLoggedIn() && ($data['isAdmin']) > 6): ?>
                     <a href="<?php echo BASE_URL . '/logs/player/' . $data['user']['ID']; ?>" class="dv-btn btn btn-warning" role="button"><i class="fas fa-history"></i> Player Logs</a>
                 <?php endif; ?>
             </div>
@@ -228,27 +226,21 @@
             <div class="dv-row">
                 <h4 class="dv-row-title"><?php echo $data['lang']['fh_txt']; ?></h4>
                 <div class="dv-user-fh">
-                    <div class="dv-user-fh-item">
-                        <div class="dv-user-fh-avatar">
-                            <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>"
-                                 alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
-                        </div>
-                        <div class="dv-user-fh-text">
-                            <p>Lust has joined the faction School Instructors (invited by Indigo).</p>
-                            <span><i class="far fa-clock"></i> 15/03/2020 05:25</span>
-                        </div>
-                    </div>
-                    <div class="dv-user-fh-item">
-                        <div class="dv-user-fh-avatar">
-                            <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>"
-                                 alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
-                        </div>
-                        <div class="dv-user-fh-text">
-                            <p>Lust was uninvited by Indigo from faction School Instructors (rank 9) after 69 days,
-                                without FP. Reason: Cerere de demisie!</p>
-                            <span><i class="far fa-clock"></i> 15/03/2020 02:25</span>
-                        </div>
-                    </div>
+                    <?php if (!empty($data['userFH'])): ?>
+                        <?php foreach ($data['userFH'] as $fh): ?>
+                            <div class="dv-user-fh-item">
+                                <div class="dv-user-fh-avatar">
+                                    <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $data['user']['Skin'] . '.png'; ?>" alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
+                                </div>
+                                <div class="dv-user-fh-text">
+                                    <p><?php echo $fh['action']; ?></p>
+                                    <span><i class="far fa-clock"></i> <?php echo $fh['date']; ?></span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span>There are currently no actions.</span>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="dv-row">

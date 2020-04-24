@@ -291,4 +291,13 @@ class User
             return false;
         }
     }
+
+    // get user fh
+    public function getUserFH($id)
+    {
+        $sql = "SELECT * FROM `sv_faction_history` WHERE `player_id`=:id ORDER BY `date` DESC";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        return $this->db->getResults();
+    }
 }

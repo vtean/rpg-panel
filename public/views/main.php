@@ -1,7 +1,7 @@
 <?php getHeader($data); ?>
 <?php flashMessage(); ?>
     <div class="dv-row">
-        <h4 class="dv-page-title"><?php echo $data['lang']['sv_stats_txt']; ?></h4>
+        <h4 class="dv-page-title"><i class="fas fa-chart-line"></i> <?php echo $data['lang']['sv_stats_txt']; ?></h4>
         <div class="dv-server-stats">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-12">
@@ -36,65 +36,39 @@
         </div>
     </div>
     <div class="dv-row">
-        <h4 class="dv-page-title"><?php echo $data['lang']['dont_miss_txt']; ?></h4>
-        <div class="dv-main-feed">
-            <ul class="nav nav-tabs" id="dvTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="latest-actions-tab" data-toggle="tab" href="#latest-actions"
-                       role="tab" aria-controls="latest-actions"
-                       aria-selected="true"><?php echo $data['lang']['latest_actions_txt']; ?></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="server-news-tab" data-toggle="tab" href="#server-news" role="tab"
-                       aria-controls="server-news" aria-selected="false"><?php echo $data['lang']['sv_news_txt']; ?></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="server-updates-tab" data-toggle="tab" href="#server-updates" role="tab"
-                       aria-controls="server-updates"
-                       aria-selected="false"><?php echo $data['lang']['sv_updates_txt']; ?></a>
-                </li>
-            </ul>
-            <div class="tab-content" id="dvTabContent">
-                <div class="tab-pane fade show active" id="latest-actions" role="tabpanel"
-                     aria-labelledby="latest-actions-tab">
-                    <div class="dv-user-fh">
+        <h4 class="dv-page-title"><i class="fas fa-exclamation-circle"></i> <?php echo $data['lang']['dont_miss_txt']; ?></h4>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 col-12">
+                <div class="dv-page-block">
+                    <h5 class="dv-block-title"><?php echo $data['lang']['sv_news_txt']; ?></h5>
+                    <p>Stay here for new updates.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12 col-12">
+                <div class="dv-page-block">
+                    <h5 class="dv-block-title"><?php echo $data['lang']['sv_updates_txt']; ?></h5>
+                    <p>New updates are incoming.</p>
+                </div>
+            </div>
+        </div>
+        <h4 class="dv-page-title"><i class="fas fa-history"></i> <?php echo $data['lang']['latest_actions_txt']; ?></h4>
+        <div class="dv-page-block">
+            <div class="dv-user-fh">
+                <?php if (!empty($data['latestFH'])): ?>
+                    <?php foreach ($data['latestFH'] as $fh): ?>
                         <div class="dv-user-fh-item">
                             <div class="dv-user-fh-avatar">
-                                <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-200.png'; ?>" alt="">
+                                <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-' . $fh['player_skin'] . '.png'; ?>" alt="User skin">
                             </div>
                             <div class="dv-user-fh-text">
-                                <p>Indigo was uninvited by Admin Lust from faction School Instructors (rank 10) after 69
-                                    days, without FP. Reason: Renuntare la functie!</p>
-                                <span><i class="far fa-clock"></i> 15/03/2020 03:19</span>
+                                <p><?php echo $fh['action']; ?></p>
+                                <span><i class="far fa-clock"></i> <?php echo $fh['date']; ?></span>
                             </div>
                         </div>
-                        <div class="dv-user-fh-item">
-                            <div class="dv-user-fh-avatar">
-                                <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-200.png'; ?>" alt="">
-                            </div>
-                            <div class="dv-user-fh-text">
-                                <p>Lust was uninvited by Indigo from faction School Instructors (rank 9) after 69 days,
-                                    without FP. Reason: Cerere de demisie!</p>
-                                <span><i class="far fa-clock"></i> 15/03/2020 02:25</span>
-                            </div>
-                        </div>
-                        <div class="dv-user-fh-item">
-                            <div class="dv-user-fh-avatar">
-                                <img src="<?php echo BASE_URL . '/public/resources/img/skins/id-200.png'; ?>" alt="">
-                            </div>
-                            <div class="dv-user-fh-text">
-                                <p>Lust has joined the faction School Instructors (invited by Indigo).</p>
-                                <span><i class="far fa-clock"></i> 15/03/2020 00:15</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="server-news" role="tabpanel" aria-labelledby="server-news-tab">
-                    Server news
-                </div>
-                <div class="tab-pane fade" id="server-updates" role="tabpanel" aria-labelledby="server-updates-tab">
-                    Server updates
-                </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <span>There are currently no actions.</span>
+                <?php endif; ?>
             </div>
         </div>
     </div>

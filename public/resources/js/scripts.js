@@ -149,6 +149,31 @@ $(document).ready( function () {
         "order": [[ 2, "desc" ]]
     });
 
+    $('#dvPanelAdminLogsTable').dataTable({
+        "pageLength": 100,
+        "order": [[ 3, "desc" ]]
+    });
+
+    $('#dvLeaderLogsTable').dataTable({
+        "pageLength": 100,
+        "order": [[ 3, "desc" ]]
+    });
+
+    $('#dvPlayerLogsTable').dataTable({
+        "pageLength": 100,
+        "order": [[ 3, "desc" ]]
+    });
+
+    $('#dvLoginLogsTable').dataTable({
+        "pageLength": 100,
+        "order": [[ 2, "desc" ]]
+    });
+
+    $('#dvStaffFactionsTable').dataTable({
+        "pageLength": 25,
+        "order": [[ 0, "asc" ]]
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });

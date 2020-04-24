@@ -11,13 +11,15 @@ require_once ROOT_PATH . '/system/Validations/ValidateUnban.php';
 class UnbansController extends Controller
 {
     private $unbanModel;
+    private $logModel;
     private $privileges;
     use ValidateUnban;
 
     public function __construct()
     {
-        // load unban model
+        // load models
         $this->unbanModel = $this->loadModel('Unban');
+        $this->logModel = $this->loadModel('Log');
 
         // store privileges
         $this->privileges = $this->checkPrivileges();
@@ -168,6 +170,18 @@ class UnbansController extends Controller
                         $closedBy = $_SESSION['user_id'];
 
                         if ($this->unbanModel->updateStatus($id, $status, $closedBy)) {
+                            // log action
+                            $logAction = $_SESSION['user_name'] . ' closed unban request (ID: ' . $id . ').';
+                            $logData = [
+                                'type' => 'Unban',
+                                'action' => $logAction
+                            ];
+                            if ($_SESSION['user_id'] == $data['unban']['author_id']) {
+                                $this->logModel->playerLog($logData);
+                            } else {
+                                $this->logModel->adminLog($logData);
+                            }
+
                             flashMessage('success', 'Unban request has been successfully closed.');
                             redirect('/unbans/view/' . $id);
                         } else {
@@ -180,6 +194,14 @@ class UnbansController extends Controller
                     $status = 'Open';
 
                     if ($this->unbanModel->updateStatus($id, $status)) {
+                        // log action
+                        $logAction = $_SESSION['user_name'] . ' opened unban request (ID: ' . $id . ').';
+                        $logData = [
+                            'type' => 'Unban',
+                            'action' => $logAction
+                        ];
+                        $this->logModel->adminLog($logData);
+
                         flashMessage('success', 'Unban request has been successfully opened.');
                         redirect('/unbans/view/' . $id);
                     } else {
@@ -191,6 +213,14 @@ class UnbansController extends Controller
                     $status = 'Needs Owner Involvement';
 
                     if ($this->unbanModel->updateStatus($id, $status)) {
+                        // log action
+                        $logAction = $_SESSION['user_name'] . ' changed unban request (ID: ' . $id . ') category to: Needs Owner Involvement.';
+                        $logData = [
+                            'type' => 'Unban',
+                            'action' => $logAction
+                        ];
+                        $this->logModel->adminLog($logData);
+
                         flashMessage('success', 'Request has been sent to an owner for moderation.');
                         redirect('/unbans/view/' . $id);
                     } else {
@@ -200,6 +230,14 @@ class UnbansController extends Controller
 
                 if ($data['canDeleteUnbans'] && isset($_POST['delete_unban'])) {
                     if ($this->unbanModel->deleteUnban($id)) {
+                        // log action
+                        $logAction = $_SESSION['user_name'] . ' deleted unban request (ID: ' . $id . ').';
+                        $logData = [
+                            'type' => 'Unban',
+                            'action' => $logAction
+                        ];
+                        $this->logModel->adminLog($logData);
+
                         flashMessage('success', 'Request has been successfully deleted.');
                         redirect('/unbans');
                     } else {
