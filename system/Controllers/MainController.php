@@ -22,10 +22,10 @@ class MainController extends Controller
 
     public function index()
     {
-        $houses = $this->mainModel->getHouses();
-        $business = $this->mainModel->getBusiness();
-        $vehicles = $this->mainModel->getVehicles();
-        $regUsers = $this->mainModel->getRegUsers();
+        $houses = $this->mainModel->countHouses();
+        $business = $this->mainModel->countBusiness();
+        $vehicles = $this->mainModel->countVehicles();
+        $regUsers = $this->mainModel->countRegUsers();
         $pageTitle = $_COOKIE["user_lang"] == "ro" ? 'Acasă' : 'Home';
         $latestFH = $this->mainModel->latestFactionHistory();
 

@@ -50,6 +50,12 @@ a:hover {
   padding: 60px;
 }
 
+@media screen and (max-width: 991px) {
+  .dv-maintenance .dv-block {
+    padding: 30px;
+  }
+}
+
 .dv-maintenance .dv-block .dv-first {
   color: #fff;
   font-weight: 600;

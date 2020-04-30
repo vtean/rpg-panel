@@ -175,7 +175,7 @@ $(document).ready( function () {
     });
 
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-tooltip="tooltip"]').tooltip()
     });
 
     tinymce.init({
@@ -187,5 +187,3 @@ $(document).ready( function () {
         toolbar: 'undo redo | bold italic underline | link blockquote removeformat'
     });
 });
-
-

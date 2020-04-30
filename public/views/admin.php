@@ -89,12 +89,12 @@
                                                        value="<?php echo $faction['ID']; ?>">
                                                 <?php if ($faction['Apps_Status'] == 0): ?>
                                                     <button class="btn btn-link" name="open_applications"
-                                                            data-toggle="tooltip" data-placement="left"
+                                                            data-tooltip="tooltip" data-placement="left"
                                                             title="Open Applications"><i class="fas fa-lock-open"></i>
                                                     </button>
                                                 <?php else: ?>
                                                     <button class="btn btn-link" name="close_applications"
-                                                            data-toggle="tooltip" data-placement="left"
+                                                            data-tooltip="tooltip" data-placement="left"
                                                             title="Close Applications"><i class="fas fa-lock"></i>
                                                     </button>
                                                 <?php endif; ?>
@@ -113,17 +113,29 @@
             <div class="dv-widget">
                 <h5 class="dv-widget-title"><i class="fas fa-tools"></i> Admin Tools</h5>
                 <div class="dv-widget-content">
-                    <button class="dv-btn btn btn-danger btn-block"><i class="fas fa-ban"></i> Ban Player</button>
-                    <button class="dv-btn btn btn-warning btn-block"><i class="fas fa-exclamation-triangle"></i>
-                        Warn Player
-                    </button>
-                    <button class="dv-btn btn btn-info btn-block"><i class="fas fa-align-justify"></i> Jail Player
-                    </button>
-                    <button class="dv-btn btn btn-secondary btn-block"><i class="fas fa-microphone-slash"></i> Mute
-                        Player
-                    </button>
-                    <button class="dv-btn btn btn-danger btn-block"><i class="fas fa-user-lock"></i> Suspend Player
-                    </button>
+                    <div class="row">
+                        <div class="col">
+                            <button class="dv-btn btn btn-danger btn-block" data-tooltip="tooltip" data-placement="top"
+                                    title="Ban Player"><i class="fas fa-ban"></i></button>
+                        </div>
+                        <div class="col">
+                            <button class="dv-btn btn btn-warning btn-block" data-tooltip="tooltip" data-placement="top"
+                                    title="Warn Player"><i class="fas fa-exclamation-triangle"></i></button>
+                        </div>
+                        <div class="col">
+                            <button class="dv-btn btn btn-info btn-block" data-tooltip="tooltip" data-placement="top"
+                                    title="Jail Player"><i class="fas fa-align-justify"></i></button>
+                        </div>
+                        <div class="col">
+                            <button class="dv-btn btn btn-secondary btn-block" data-tooltip="tooltip"
+                                    data-placement="top" title="Mute Player"><i class="fas fa-microphone-slash"></i>
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="dv-btn btn btn-danger btn-block" data-tooltip="tooltip" data-placement="top"
+                                    title="Suspend Player"><i class="fas fa-user-lock"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

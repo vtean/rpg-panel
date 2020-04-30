@@ -35,7 +35,7 @@ $replies = $data['replies'];
                         <?php endif; ?>
                     </ul>
                 </div>
-                <?php if ($_SESSION['user_id'] == $resignation['author_id'] || $data['privileges']['isLeader'] == $resignation['faction_id'] || $data['privileges']['fullAccess']): ?>
+                <?php if (($_SESSION['user_id'] == $resignation['author_id'] || $data['privileges']['isLeader'] == $resignation['faction_id'] || $data['privileges']['fullAccess']) && $resignation['status'] == 'Open'): ?>
                     <div class="dv-topic-widget dv-actions">
                         <h4 class="dv-row-title">Resignation Actions</h4>
                         <div class="dv-action-buttons">
@@ -45,8 +45,9 @@ $replies = $data['replies'];
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="close_resignation" class="dv-btn btn btn-warning"><i
-                                                        class="fas fa-lock"></i> Close
+                                            <button name="close_resignation" class="dv-btn btn btn-warning"
+                                                    data-tooltip="tooltip" data-placement="top"
+                                                    title="Close Resignation"><i class="fas fa-lock"></i>
                                             </button>
                                         </form>
                                     </div>

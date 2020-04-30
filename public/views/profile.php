@@ -4,7 +4,7 @@
             <div class="dv-user-profile-main">
                 <h3 class="dv-user-profile-name">
                     <span class="dv-online-status<?php if ($data['user']['Online_status'] == 0): ?> dv-offline<?php else: ?> dv-online<?php endif; ?>"
-                          data-toggle="tooltip" data-placement="left"
+                          data-tooltip="tooltip" data-placement="left"
                           title="<?php if ($data['user']['Online_status'] == 0): ?>Offline<?php else: ?>Online<?php endif; ?>"><i
                                 class="fas fa-dot-circle"></i></span>
                     <span> <?php echo $data['user']['NickName']; ?></span>
@@ -14,7 +14,7 @@
                          role="progressbar"
                          style="width: <?php echo $data['user']['HP']; ?>%"
                          aria-valuenow="<?php echo $data['user']['HP']; ?>" aria-valuemin="0" aria-valuemax="100"
-                         data-toggle="tooltip" data-placement="left"
+                         data-tooltip="tooltip" data-placement="left"
                          title="<?php echo $data['user']['HP']; ?> HP"></div>
                 </div>
                 <div class="dv-user-profile-skin">
@@ -23,27 +23,40 @@
                 </div>
             </div>
             <div class="dv-user-profile-controls m-auto">
-                <?php if (isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])): ?>
-                    <a class="dv-btn btn btn-primary" href="<?php echo BASE_URL . '/users/settings'; ?>"
-                       role="button"><i
-                                class="fas fa-user-edit"></i> <?php echo $data['lang']['profile_settings_txt']; ?></a>
-                <?php endif; ?>
-                <?php if ((isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])) || (isLoggedIn() && ($data['privileges']['isAdmin'] > 0))): ?>
-                    <a class="dv-btn btn btn-warning" href="#" role="button"><i
-                                class="fas fa-exclamation-triangle"></i> <?php echo $data['lang']['last_punish_txt']; ?>
-                    </a>
-                <?php endif; ?>
-                <?php if (isLoggedIn() && ($data['privileges']['fullAccess'] == 1)): ?>
-                    <a href="<?php echo BASE_URL . '/groups/assign/' . $data['user']['NickName']; ?>"
-                       class="dv-btn btn btn-primary" role="button"><i class="fas fa-user-tag"></i> Assign Groups</a>
-                <?php endif; ?>
-                <?php if (isLoggedIn() && ($data['privileges']['isAdmin']) > 6): ?>
-                    <a href="<?php echo BASE_URL . '/logs/player/' . $data['user']['ID']; ?>"
-                       class="dv-btn btn btn-info" role="button"><i class="fas fa-history"></i> Player Logs</a>
-                    <button class="dv-btn btn btn-danger btn-block" data-toggle="modal" data-target="#suspendModal"><i
-                                class="fas fa-ban"></i> Suspend
-                    </button>
-                <?php endif; ?>
+                <div class="row">
+                    <?php if (isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])): ?>
+                        <div class="col">
+                            <a class="dv-btn btn btn-primary" href="<?php echo BASE_URL . '/users/settings'; ?>"
+                               role="button" data-tooltip="tooltip" data-placement="top" title="Profile Settings">
+                                <i class="fas fa-user-edit"></i></a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])) || (isLoggedIn() && ($data['privileges']['isAdmin'] > 0))): ?>
+                        <div class="col">
+                            <a class="dv-btn btn btn-warning" href="#" role="button" data-tooltip="tooltip"
+                               data-placement="top" title="Last Punish"><i class="fas fa-exclamation-triangle"></i></a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (isLoggedIn() && ($data['privileges']['fullAccess'] == 1)): ?>
+                        <div class="col">
+                            <a href="<?php echo BASE_URL . '/groups/assign/' . $data['user']['NickName']; ?>"
+                               class="dv-btn btn btn-primary" role="button" data-tooltip="tooltip" data-placement="top"
+                               title="Assign Groups"><i class="fas fa-user-tag"></i></a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (isLoggedIn() && ($data['privileges']['isAdmin']) > 6): ?>
+                        <div class="col">
+                            <a href="<?php echo BASE_URL . '/logs/player/' . $data['user']['ID']; ?>"
+                               class="dv-btn btn btn-info" role="button" data-tooltip="tooltip" data-placement="top"
+                               title="Player Logs"><i class="fas fa-history"></i></a>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="dv-btn btn btn-danger btn-block" data-toggle="modal"
+                                    data-target="#suspendModal" data-tooltip="tooltip" data-placement="top"
+                                    title="Suspend Player"><i class="fas fa-ban"></i></button>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         <div class="col-lg-8 col-md-12 col-sm-12">

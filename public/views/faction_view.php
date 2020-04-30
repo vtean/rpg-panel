@@ -45,12 +45,23 @@
             <div class="dv-widget">
                 <h5 class="dv-widget-title"><i class="fas fa-file"></i> Pages</h5>
                 <div class="dv-widget-content">
-                    <a href="<?php echo BASE_URL . '/factions/applications/' . $faction['ID']; ?>"
-                       class="dv-btn btn btn-success btn-block"><i class="fas fa-graduation-cap"></i> Applications</a>
-                    <a href="<?php echo BASE_URL . '/factions/complaints/' . $faction['ID']; ?>"
-                       class="dv-btn btn btn-warning btn-block"><i class="fas fa-user-times"></i> Complaints</a>
-                    <a href="<?php echo BASE_URL . '/factions/resignations/' . $faction['ID']; ?>"
-                       class="dv-btn btn btn-danger btn-block"><i class="fas fa-sign-out-alt"></i> Resignations</a>
+                    <div class="row">
+                        <div class="col">
+                            <a href="<?php echo BASE_URL . '/factions/applications/' . $faction['ID']; ?>"
+                               class="dv-btn btn btn-success btn-block" data-toggle="tooltip" data-placement="top"
+                               title="Applications"><i class="fas fa-graduation-cap"></i></a>
+                        </div>
+                        <div class="col">
+                            <a href="<?php echo BASE_URL . '/factions/complaints/' . $faction['ID']; ?>"
+                               class="dv-btn btn btn-warning btn-block" data-toggle="tooltip" data-placement="top"
+                               title="Complaints"><i class="fas fa-user-times"></i></a>
+                        </div>
+                        <div class="col">
+                            <a href="<?php echo BASE_URL . '/factions/resignations/' . $faction['ID']; ?>"
+                               class="dv-btn btn btn-danger btn-block" data-toggle="tooltip" data-placement="top"
+                               title="Resignations"><i class="fas fa-sign-out-alt"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

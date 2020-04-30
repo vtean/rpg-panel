@@ -1256,15 +1256,6 @@ textarea {
   color: var(--text-color);
 }
 
-.dv-user-profile .dv-user-profile-controls {
-  width: fit-content;
-}
-
-.dv-user-profile .dv-btn {
-  display: block;
-  margin-bottom: 10px;
-}
-
 .dv-btn {
   font-weight: 600;
   text-transform: uppercase;
@@ -2133,6 +2124,17 @@ textarea {
   padding: 0.8rem 1rem;
 }
 
+@media screen and (max-width: 991px) {
+  .dv-staff-table .dv-user-groups {
+    min-width: 250px;
+    max-width: 1000px;
+  }
+
+  .dv-staff-table .dv-user-groups .dv-user-single-group .dv-user-group-title {
+    display: none;
+  }
+}
+
 /* Faction page */
 #dvFMembersTable img {
   width: 50px;
@@ -2180,6 +2182,21 @@ textarea {
 
 .dv-statistics .dv-statistic .dv-block .dv-second {
   margin: 0;
+}
+
+/* Tooltip */
+.tooltip {
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.tooltip-inner {
+  padding: 8px;
+  background: #15151e;
+}
+
+.tooltip .arrow {
+  display: none;
 }
 
 /* General responsive things */
@@ -2261,6 +2278,16 @@ textarea {
 
 @media screen and (max-width: 576px) {
   .dv-main-content {
-    padding: 30px 30px 140px 30px;
+    padding: 20px 20px 140px 20px;
+  }
+
+  .dv-page-block,
+  .dv-mb-30,
+  .dv-row,
+  .dv-topic-info .dv-topic-widget,
+  .dv-magic-block,
+  .dv-desc,
+  .dv-statistics .dv-statistic {
+    margin-bottom: 20px;
   }
 }

@@ -69,8 +69,9 @@ $replies = $data['cReplies'];
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
                                                 <button name="close_complaint"
-                                                        class="dv-btn btn btn-warning text-white"><i
-                                                            class="fas fa-lock"></i> Close
+                                                        class="dv-btn btn btn-warning text-white" data-tooltip="tooltip"
+                                                        data-placement="top" title="Close Complaint"><i
+                                                            class="fas fa-lock"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -81,8 +82,9 @@ $replies = $data['cReplies'];
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="open_complaint" class="dv-btn btn btn-success"><i
-                                                            class="fas fa-lock"></i> Open
+                                                <button name="open_complaint" class="dv-btn btn btn-success"
+                                                        data-tooltip="tooltip" data-placement="top"
+                                                        title="Open Complaint"><i class="fas fa-lock"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -94,7 +96,8 @@ $replies = $data['cReplies'];
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
                                             <a href="<?php echo BASE_URL . '/factions/complaints/' . $complaint['faction_id'] . '/edit/' . $complaint['id']; ?>"
-                                               class="dv-btn btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                                               class="dv-btn btn btn-primary" data-tooltip="tooltip" data-placement="top"
+                                               title="Edit Complaint"><i class="fas fa-edit"></i></a>
                                         </form>
                                     </div>
                                 <?php endif; ?>
@@ -103,8 +106,9 @@ $replies = $data['cReplies'];
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="delete_complaint" class="dv-btn btn btn-danger"><i
-                                                        class="fas fa-trash"></i> Delete
+                                            <button name="delete_complaint" class="dv-btn btn btn-danger"
+                                                    data-tooltip="tooltip" data-placement="top" title="Delete Complaint">
+                                                <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
                                     </div>

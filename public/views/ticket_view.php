@@ -59,9 +59,10 @@ $author = $data['author'];
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="close_ticket" class="dv-btn btn btn-warning"><i
-                                                            class="fas fa-lock"></i> Close
-                                                </button>
+                                                <button name="close_ticket" class="dv-btn btn btn-warning"
+                                                        data-tooltip="tooltip" data-placement="top"
+                                                        title="Close Ticket">
+                                                    <i class="fas fa-lock"></i></button>
                                             </form>
                                         </div>
                                     <?php endif; ?>
@@ -71,9 +72,9 @@ $author = $data['author'];
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="open_ticket" class="dv-btn btn btn-success"><i
-                                                            class="fas fa-lock"></i> Open
-                                                </button>
+                                                <button name="open_ticket" class="dv-btn btn btn-success"
+                                                        data-tooltip="tooltip" data-placement="top" title="Open Ticket">
+                                                    <i class="fas fa-unlock"></i></button>
                                             </form>
                                         </div>
                                     <?php endif; ?>
@@ -84,20 +85,49 @@ $author = $data['author'];
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
                                             <a href="<?php echo BASE_URL . '/tickets/edit/' . $ticket['id']; ?>"
-                                               class="dv-btn btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                                               class="dv-btn btn btn-primary" data-tooltip="tooltip"
+                                               data-placement="top"
+                                               title="Edit Ticket"><i class="fas fa-edit"></i></a>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($data['privileges']['canEditTickets']): ?>
+                                    <div class="col">
+                                        <button type="button" class="dv-btn btn btn-primary" data-toggle="collapse"
+                                                data-target="#collapseCat" aria-expanded="false"
+                                                aria-controls="collapseCat" data-tooltip="tooltip" data-placement="top"
+                                                title="Change Category"><i class="fas fa-tag"></i>
+                                        </button>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($data['privileges']['canDeleteTickets']): ?>
+                                    <div class="col">
+                                        <form action="" method="post">
+                                            <input type="hidden" name="csrfToken"
+                                                   value="<?php echo $_SESSION['csrfToken']; ?>">
+                                            <button name="delete_ticket" class="dv-btn btn btn-danger"
+                                                    data-tooltip="tooltip" data-placement="top" title="Delete Ticket"><i
+                                                        class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($data['privileges']['canCloseTickets']): ?>
+                                    <div class="col">
+                                        <form action="" method="post">
+                                            <input type="hidden" name="csrfToken"
+                                                   value="<?php echo $_SESSION['csrfToken']; ?>">
+                                            <button name="needs_owner" class="dv-btn btn btn-danger"
+                                                    data-tooltip="tooltip" data-placement="top"
+                                                    title="Needs Owner Involvement"><i class="fas fa-shield-alt"></i>
+                                            </button>
                                         </form>
                                     </div>
                                 <?php endif; ?>
                                 <?php if ($data['privileges']['canEditTickets']): ?>
                                     <div class="w-100"></div>
                                     <div class="col">
-                                        <button type="button" class="dv-btn btn btn-primary" data-toggle="collapse"
-                                                data-target="#collapseCat" aria-expanded="false"
-                                                aria-controls="collapseCat"><i
-                                                    class="fas fa-tag"></i> Category
-                                        </button>
                                         <div class="collapse dv-collapse-actions" id="collapseCat">
-                                            <div class="w-100"></div>
                                             <form action="" method="post" class="dv-form">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
@@ -108,33 +138,11 @@ $author = $data['author'];
                                                         <?php endforeach; ?>
                                                     </select>
                                                 </div>
-                                                <button name="change_category" class="btn btn-primary"><i
-                                                            class="fas fa-pencil-alt"></i> Change
+                                                <button name="change_category" class="btn btn-primary">
+                                                    <i class="fas fa-pencil-alt"></i> Change
                                                 </button>
                                             </form>
                                         </div>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if ($data['privileges']['canDeleteTickets']): ?>
-                                    <div class="col">
-                                        <form action="" method="post">
-                                            <input type="hidden" name="csrfToken"
-                                                   value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="delete_ticket" class="dv-btn btn btn-danger"><i
-                                                        class="fas fa-trash"></i> Delete
-                                            </button>
-                                        </form>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if ($data['privileges']['canCloseTickets']): ?>
-                                    <div class="col">
-                                        <form action="" method="post">
-                                            <input type="hidden" name="csrfToken"
-                                                   value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="needs_owner" class="dv-btn btn btn-danger"><i
-                                                        class="fas fa-shield-alt"></i> Needs Owner
-                                            </button>
-                                        </form>
                                     </div>
                                 <?php endif; ?>
                             </div>

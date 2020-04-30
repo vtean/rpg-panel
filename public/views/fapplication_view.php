@@ -39,8 +39,9 @@ $author = $data['application']['author'];
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="accept_application" class="dv-btn btn btn-success"><i
-                                                        class="fas fa-check"></i> Accept
+                                            <button name="accept_application" class="dv-btn btn btn-success"
+                                                    data-tooltip="tooltip" data-placement="top"
+                                                    title="Accept Application"><i class="fas fa-check"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -50,20 +51,21 @@ $author = $data['application']['author'];
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="reject_application" class="dv-btn btn btn-danger"><i
-                                                        class="fas fa-times"></i> Reject
+                                            <button name="reject_application" class="dv-btn btn btn-danger"
+                                                    data-tooltip="tooltip" data-placement="top"
+                                                    title="Reject Application"><i class="fas fa-times"></i>
                                             </button>
                                         </form>
                                     </div>
                                 <?php endif; ?>
                                 <?php if ($data['privileges']['fullAccess']): ?>
-                                    <div class="w-100"></div>
                                     <div class="col">
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="delete_application" class="dv-btn btn btn-danger"><i
-                                                        class="fas fa-times"></i> Delete
+                                            <button name="delete_application" class="dv-btn btn btn-danger"
+                                                    data-tooltip="tooltip" data-placement="top"
+                                                    title="Delete Application"><i class="fas fa-times"></i>
                                             </button>
                                         </form>
                                     </div>

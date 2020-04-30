@@ -42,8 +42,9 @@
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="close_unban" class="dv-btn btn btn-warning text-white"><i
-                                                            class="fas fa-lock"></i> Close
+                                                <button name="close_unban" class="dv-btn btn btn-warning text-white"
+                                                        data-tooltip="tooltip" data-placement="top"
+                                                        title="Close Request"><i class="fas fa-lock"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -54,8 +55,9 @@
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="open_unban" class="dv-btn btn btn-success text-white"><i
-                                                            class="fas fa-unlock"></i> Open
+                                                <button name="open_unban" class="dv-btn btn btn-success text-white"
+                                                        data-tooltip="tooltip" data-placement="top" title="Open Request">
+                                                    <i class="fas fa-unlock"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -67,18 +69,19 @@
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
                                             <a href="<?php echo BASE_URL . '/unbans/edit/' . $unban['id']; ?>"
-                                               class="dv-btn btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                                               class="dv-btn btn btn-primary" data-tooltip="tooltip" data-placement="top"
+                                               title="Edit Request"><i class="fas fa-edit"></i></a>
                                         </form>
                                     </div>
                                 <?php endif; ?>
                                 <?php if ($data['privileges']['canCloseUnbans']): ?>
-                                    <div class="w-100"></div>
                                     <div class="col">
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="needs_owner" class="dv-btn btn btn-danger"><i
-                                                        class="fas fa-shield-alt"></i> Needs Owner
+                                            <button name="needs_owner" class="dv-btn btn btn-danger"
+                                                    data-tooltip="tooltip" data-placement="top"
+                                                    title="Needs Owner Involvement"><i class="fas fa-shield-alt"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -88,8 +91,9 @@
                                         <form action="" method="post">
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="delete_unban" class="dv-btn btn btn-danger"><i
-                                                        class="fas fa-trash"></i> Delete
+                                            <button name="delete_unban" class="dv-btn btn btn-danger"
+                                                    data-tooltip="tooltip" data-placement="top" title="Delete Request">
+                                                <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
                                     </div>

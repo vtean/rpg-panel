@@ -23,43 +23,45 @@ class Main
         return $this->db->getResult();
     }
 
-    public function getHouses()
+    public function countHouses()
     {
         $sql = "SELECT `ID` FROM `sv_houses`";
         // prepare the query
         $this->db->prepareQuery($sql);
         // get the result
-        $this->db->getResult();
+        $this->db->executeStmt();
         return $this->db->countRows();
     }
 
-    public function getBusiness()
+    public function countBusiness()
     {
         $sql = "SELECT `ID` FROM `sv_businesses`";
         // prepare the query
         $this->db->prepareQuery($sql);
         // get the result
-        $this->db->getResult();
+        $this->db->executeStmt();
         return $this->db->countRows();
     }
 
-    public function getVehicles()
+    public function countVehicles()
     {
-        $sql = "SELECT `Owner` FROM `sv_vehicles` WHERE NOT `Owner`='The State'";
+        $sql = "SELECT `Owner` FROM `sv_vehicles` WHERE NOT `Owner`=:owner";
         // prepare the query
         $this->db->prepareQuery($sql);
+        // bind params
+        $this->db->bind(':owner', 'The State');
         // get the result
-        $this->db->getResult();
+        $this->db->executeStmt();
         return $this->db->countRows();
     }
 
-    public function getRegUsers()
+    public function countRegUsers()
     {
         $sql = "SELECT `ID` FROM `sv_accounts`";
         // prepare the query
         $this->db->prepareQuery($sql);
         // get the result
-        $this->db->getResult();
+        $this->db->executeStmt();
         return $this->db->countRows();
     }
 

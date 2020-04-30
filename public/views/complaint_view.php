@@ -75,8 +75,9 @@ $categories = $data['categories'];
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
                                                 <button name="close_complaint"
-                                                        class="dv-btn btn btn-warning text-white"><i
-                                                            class="fas fa-lock"></i> Close
+                                                        class="dv-btn btn btn-warning text-white" data-tooltip="tooltip"
+                                                        data-placement="top" title="Close Complaint"><i
+                                                            class="fas fa-lock"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -87,8 +88,9 @@ $categories = $data['categories'];
                                             <form action="" method="post">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="open_complaint" class="dv-btn btn btn-success"><i
-                                                            class="fas fa-lock"></i> Open
+                                                <button name="open_complaint" class="dv-btn btn btn-success"
+                                                        data-tooltip="tooltip" data-placement="top"
+                                                        title="Open Complaint"><i class="fas fa-unlock"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -100,20 +102,61 @@ $categories = $data['categories'];
                                             <input type="hidden" name="csrfToken"
                                                    value="<?php echo $_SESSION['csrfToken']; ?>">
                                             <a href="<?php echo BASE_URL . '/complaints/edit/' . $complaint['id']; ?>"
-                                               class="dv-btn btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                                               class="dv-btn btn btn-primary" data-tooltip="tooltip"
+                                               data-placement="top"
+                                               title="Edit Complaint"><i class="fas fa-edit"></i></a>
                                         </form>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($data['privileges']['canEditUComplaints'] && $complaint['category_id'] == 8 || $data['privileges']['canEditLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canEditAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canEditHComplaints'] && $complaint['category_id'] == 6): ?>
+                                    <div class="col">
+                                        <button type="button" class="dv-btn btn btn-primary" data-toggle="collapse"
+                                                data-target="#collapseCat" aria-expanded="false"
+                                                aria-controls="collapseCat" data-tooltip="tooltip" data-placement="top"
+                                                title="Change Category"><i class="fas fa-tag"></i>
+                                        </button>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($data['privileges']['canDeleteAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canDeleteHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canDeleteLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canDeleteUComplaints'] && $complaint['category_id'] == 8): ?>
+                                    <div class="col">
+                                        <form action="" method="post">
+                                            <input type="hidden" name="csrfToken"
+                                                   value="<?php echo $_SESSION['csrfToken']; ?>">
+                                            <button name="delete_complaint" class="dv-btn btn btn-danger"
+                                                    data-tooltip="tooltip" data-placement="top"
+                                                    title="Delete Complaint">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($data['privileges']['canHideAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canHideHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canHideLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canHideUComplaints'] && $complaint['category_id'] == 8): ?>
+                                    <div class="col">
+                                        <?php if ($complaint['is_hidden'] == 0): ?>
+                                            <form action="" method="post">
+                                                <input type="hidden" name="csrfToken"
+                                                       value="<?php echo $_SESSION['csrfToken']; ?>">
+                                                <button name="hide_complaint" class="dv-btn btn dv-btn-secondary"
+                                                        data-tooltip="tooltip" data-placement="top"
+                                                        title="Hide Complaint"><i class="fas fa-eye-slash"></i>
+                                                </button>
+                                            </form>
+                                        <?php else: ?>
+                                            <form action="" method="post">
+                                                <input type="hidden" name="csrfToken"
+                                                       value="<?php echo $_SESSION['csrfToken']; ?>">
+                                                <button name="unhide_complaint" class="dv-btn btn dv-btn-secondary"
+                                                        data-tooltip="tooltip" data-placement="top"
+                                                        title="Unhide Complaint"><i class="fas fa-eye"></i>
+                                                </button>
+                                            </form>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
                                 <?php if ($data['privileges']['canEditUComplaints'] && $complaint['category_id'] == 8 || $data['privileges']['canEditLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canEditAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canEditHComplaints'] && $complaint['category_id'] == 6): ?>
                                     <div class="w-100"></div>
                                     <div class="col">
-                                        <button type="button" class="dv-btn btn btn-primary" data-toggle="collapse"
-                                                data-target="#collapseCat" aria-expanded="false"
-                                                aria-controls="collapseCat"><i
-                                                    class="fas fa-tag"></i> Category
-                                        </button>
                                         <div class="collapse dv-collapse-actions" id="collapseCat">
-                                            <div class="w-100"></div>
                                             <form action="" method="post" class="dv-form">
                                                 <input type="hidden" name="csrfToken"
                                                        value="<?php echo $_SESSION['csrfToken']; ?>">
@@ -124,44 +167,11 @@ $categories = $data['categories'];
                                                         <?php endforeach; ?>
                                                     </select>
                                                 </div>
-                                                <button name="change_category" class="btn btn-primary"><i
-                                                            class="fas fa-pencil-alt"></i> Change
+                                                <button name="change_category" class="btn btn-primary">
+                                                    <i class="fas fa-pencil-alt"></i> Change
                                                 </button>
                                             </form>
                                         </div>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if ($data['privileges']['canDeleteAComplaints'] && $complaint['category_id'] == 5 || $data['privileges']['canDeleteHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canDeleteLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canDeleteUComplaints'] && $complaint['category_id'] == 8): ?>
-                                    <div class="col">
-                                        <form action="" method="post">
-                                            <input type="hidden" name="csrfToken"
-                                                   value="<?php echo $_SESSION['csrfToken']; ?>">
-                                            <button name="delete_complaint" class="dv-btn btn btn-danger"><i
-                                                        class="fas fa-trash"></i> Delete
-                                            </button>
-                                        </form>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if ($data['privileges']['canHideAComplaints']  && $complaint['category_id'] == 5 || $data['privileges']['canHideHComplaints'] && $complaint['category_id'] == 6 || $data['privileges']['canHideLComplaints'] && $complaint['category_id'] == 7 || $data['privileges']['canHideUComplaints'] && $complaint['category_id'] == 8): ?>
-                                    <div class="w-100"></div>
-                                    <div class="col">
-                                        <?php if ($complaint['is_hidden'] == 0): ?>
-                                            <form action="" method="post">
-                                                <input type="hidden" name="csrfToken"
-                                                       value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="hide_complaint" class="dv-btn btn dv-btn-secondary"><i
-                                                            class="fas fa-eye-slash"></i> Hide
-                                                </button>
-                                            </form>
-                                        <?php else: ?>
-                                            <form action="" method="post">
-                                                <input type="hidden" name="csrfToken"
-                                                       value="<?php echo $_SESSION['csrfToken']; ?>">
-                                                <button name="unhide_complaint" class="dv-btn btn dv-btn-secondary"><i
-                                                            class="fas fa-eye"></i> Unhide
-                                                </button>
-                                            </form>
-                                        <?php endif ?>
                                     </div>
                                 <?php endif; ?>
                             </div>

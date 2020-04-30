@@ -13,16 +13,16 @@
                                         <span class="dv-first"><a
                                                     href="<?php echo BASE_URL . '/tickets'; ?>">Tickets</a></span>
                                     <p class="dv-second">
-                                            <span class="text-warning" data-toggle="tooltip" data-placement="top"
+                                            <span class="text-warning" data-tooltip="tooltip" data-placement="top"
                                                   title="Total Tickets"><?php echo $data['allTickets']; ?></span>
                                         <span> / </span>
-                                        <span class="text-success" data-toggle="tooltip" data-placement="top"
+                                        <span class="text-success" data-tooltip="tooltip" data-placement="top"
                                               title="Open Tickets"><?php echo $data['openTickets']; ?></span>
                                         <span> / </span>
-                                        <span data-toggle="tooltip" data-placement="top"
+                                        <span data-tooltip="tooltip" data-placement="top"
                                               title="Closed Tickets"><?php echo $data['closedTickets']; ?></span>
                                         <span> / </span>
-                                        <span class="text-danger" data-toggle="tooltip" data-placement="top"
+                                        <span class="text-danger" data-tooltip="tooltip" data-placement="top"
                                               title="Need Owner Involvement"><?php echo $data['ownerTickets']; ?></span>
                                     </p>
                                 </div>
@@ -35,16 +35,16 @@
                                     <span class="dv-first"><a
                                                 href="<?php echo BASE_URL . '/complaints'; ?>">Complaints</a></span>
                                     <p class="dv-second">
-                                            <span class="text-warning" data-toggle="tooltip" data-placement="top"
+                                            <span class="text-warning" data-tooltip="tooltip" data-placement="top"
                                                   title="Total Complaints"><?php echo $data['allComplaints']; ?></span>
                                         <span> / </span>
-                                        <span class="text-success" data-toggle="tooltip" data-placement="top"
+                                        <span class="text-success" data-tooltip="tooltip" data-placement="top"
                                               title="Open Complaints"><?php echo $data['openComplaints']; ?></span>
                                         <span> / </span>
-                                        <span data-toggle="tooltip" data-placement="top"
+                                        <span data-tooltip="tooltip" data-placement="top"
                                               title="Closed Complaints"><?php echo $data['closedComplaints']; ?></span>
                                         <span> / </span>
-                                        <span class="text-danger" data-toggle="tooltip" data-placement="top"
+                                        <span class="text-danger" data-tooltip="tooltip" data-placement="top"
                                               title="Need Owner Involvement"><?php echo $data['ownerComplaints']; ?></span>
                                     </p>
                                 </div>
@@ -57,16 +57,16 @@
                                     <span class="dv-first"><a
                                                 href="<?php echo BASE_URL . '/unbans'; ?>">Unban Requests</a></span>
                                     <p class="dv-second">
-                                            <span class="text-warning" data-toggle="tooltip" data-placement="top"
+                                            <span class="text-warning" data-tooltip="tooltip" data-placement="top"
                                                   title="Total Unban Requests"><?php echo $data['allUnbans']; ?></span>
                                         <span> / </span>
-                                        <span class="text-success" data-toggle="tooltip" data-placement="top"
+                                        <span class="text-success" data-tooltip="tooltip" data-placement="top"
                                               title="Open Unban Requests"><?php echo $data['openUnbans']; ?></span>
                                         <span> / </span>
-                                        <span data-toggle="tooltip" data-placement="top"
+                                        <span data-tooltip="tooltip" data-placement="top"
                                               title="Closed Unban Requests"><?php echo $data['closedUnbans']; ?></span>
                                         <span> / </span>
-                                        <span class="text-danger" data-toggle="tooltip" data-placement="top"
+                                        <span class="text-danger" data-tooltip="tooltip" data-placement="top"
                                               title="Need Owner Involvement"><?php echo $data['ownerUnbans']; ?></span>
                                     </p>
                                 </div>
@@ -92,7 +92,8 @@
                     <div class="form-group">
                         <label for="panelMaintenance" class="inline-label">Maintenance Status</label>
                         <label class="dv-switch">
-                            <input type="checkbox" name="maintenance_status" id="panelMaintenance" value="<?php echo $data['maintenanceStatus']; ?>"<?php if ($data['maintenanceStatus'] == 1): ?> checked="checked"<?php endif;?>>
+                            <input type="checkbox" name="maintenance_status" id="panelMaintenance"
+                                   value="<?php echo $data['maintenanceStatus']; ?>"<?php if ($data['maintenanceStatus'] == 1): ?> checked="checked"<?php endif; ?>>
                             <span class="dv-switch-slider dv-round"></span>
                         </label>
                     </div>
@@ -116,21 +117,36 @@
             <div class="dv-widget">
                 <h5 class="dv-widget-title"><i class="fas fa-tools"></i> Quick Teleport</h5>
                 <div class="dv-widget-content">
-                    <a href="<?php echo BASE_URL . '/groups'; ?>" class="dv-btn btn btn-primary btn-block"><i
-                                class="fas fa-users"></i> Manage Groups</a>
-                    <a href="<?php echo BASE_URL . '/logs/panel'; ?>" class="dv-btn btn btn-info btn-block"><i
-                                class="fas fa-history"></i> Panel Logs</a>
-                    <a href="<?php echo BASE_URL . '/logs/server'; ?>" class="dv-btn btn btn-success btn-block"><i
-                                class="fas fa-history"></i> Server Logs</a>
+                    <div class="row">
+                        <div class="col">
+                            <a href="<?php echo BASE_URL . '/groups'; ?>" class="dv-btn btn btn-primary btn-block"
+                               data-tooltip="tooltip" data-placement="top" title="Manage Groups">
+                                <i class="fas fa-users"></i></a>
+                        </div>
+                        <div class="col">
+                            <a href="<?php echo BASE_URL . '/logs/panel'; ?>" class="dv-btn btn btn-info btn-block"
+                               data-tooltip="tooltip" data-placement="top" title="Panel Logs">
+                                <i class="fas fa-history"></i></a>
+                        </div>
+                        <div class="col">
+                            <a href="<?php echo BASE_URL . '/logs/server'; ?>" class="dv-btn btn btn-success btn-block"
+                               data-tooltip="tooltip" data-placement="top" title="Server Logs">
+                                <i class="fas fa-history"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="dv-widget dv-manage-sv">
                 <h5 class="dv-widget-title"><i class="fas fa-cogs"></i> Manage Server</h5>
                 <div class="dv-widget-content">
-                    <button class="dv-btn btn btn-info btn-block"><i class="fas fa-redo-alt"></i> Restart Server
-                    </button>
-                    <button class="dv-btn btn btn-success btn-block"><i class="fas fa-font"></i> Change Hostname
-                    </button>
+                    <div class="row">
+                        <div class="col">
+                            <button class="dv-btn btn btn-info btn-block"><i class="fas fa-redo-alt"></i> Restart Server</button>
+                        </div>
+                        <div class="col">
+                            <button class="dv-btn btn btn-success btn-block"><i class="fas fa-font"></i> Change Hostname</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
