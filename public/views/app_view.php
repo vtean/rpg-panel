@@ -35,7 +35,7 @@
                 </li>
                 <li class="dv-single">
                     <span class="dv-first">Played Time:</span>
-                    <span class="dv-second"><?php echo convertMinutes($userApp['account_details']['PlayedTime']); ?></span>
+                    <span class="dv-second"><?php echo convertMinutes($userApp['account_details']['TotalPlayed']); ?></span>
                 </li>
                 <li class="dv-single">
                     <span class="dv-first">Faction:</span>

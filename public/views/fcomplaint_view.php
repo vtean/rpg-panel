@@ -23,7 +23,7 @@ $replies = $data['cReplies'];
                         </li>
                         <li class="dv-single">
                             <span class="dv-first">Played Time:</span>
-                            <span class="dv-second"><?php echo convertMinutes($author['PlayedTime']); ?></span>
+                            <span class="dv-second"><?php echo convertMinutes($author['TotalPlayed']); ?></span>
                         </li>
                         <li class="dv-single">
                             <span class="dv-first">Faction:</span>

@@ -45,7 +45,7 @@ class Main
 
     public function countVehicles()
     {
-        $sql = "SELECT `Owner` FROM `sv_vehicles` WHERE NOT `Owner`=:owner";
+        $sql = "SELECT `Owner` FROM `sv_vehicles` WHERE `Owner`!=:owner";
         // prepare the query
         $this->db->prepareQuery($sql);
         // bind params

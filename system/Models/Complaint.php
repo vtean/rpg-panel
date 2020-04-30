@@ -17,7 +17,7 @@ class Complaint
 
     public function getUser($id)
     {
-        $sql = "SELECT `NickName`, `Level`, `Admin`, `PlayedTime`, `Member`, `Skin`, `Warns` FROM `sv_accounts` WHERE `ID`=:id";
+        $sql = "SELECT `NickName`, `Level`, `Admin`, `PlayedTime`, `Member`, `Skin`, `Warns`, `TotalPlayed` FROM `sv_accounts` WHERE `ID`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
         return $this->db->getResult();

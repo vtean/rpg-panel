@@ -17,7 +17,7 @@ class Application
 
     public function getUserInfo($id)
     {
-        $sql = "SELECT `NickName`, `Level`, `Member`, `Rank`, `Warns`, `Skin`, `BlackList`, `ZKP`, `PlayedTime` FROM `sv_accounts` WHERE `ID`=:id";
+        $sql = "SELECT `NickName`, `Level`, `Member`, `Rank`, `Warns`, `Skin`, `BlackList`, `ZKP`, `PlayedTime`, `TotalPlayed` FROM `sv_accounts` WHERE `ID`=:id";
         $this->db->prepareQuery($sql);
         $this->db->bind(':id', $id);
         $result = $this->db->getResult();

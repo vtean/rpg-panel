@@ -15,7 +15,7 @@
                 <tr>
                     <td>
                     <span class="dv-online-status<?php if ($admin['Online_status'] == 0): ?> dv-offline<?php else: ?> dv-online<?php endif; ?>"><i
-                                class="fas fa-dot-circle" data-toggle="tooltip" data-placement="left"
+                                class="fas fa-dot-circle" data-tooltip="tooltip" data-placement="top"
                                 title="<?php if ($admin['Online_status'] == 0): ?>Offline<?php else: ?>Online<?php endif; ?>"></i></span>
                         <a href="<?php echo BASE_URL . '/users/profile/' . $admin['NickName']; ?>"><?php echo $admin['NickName']; ?></a>
                     </td>
@@ -59,7 +59,7 @@
                     <tr>
                         <td>
                     <span class="dv-online-status<?php if ($leader['Online_status'] == 0): ?> dv-offline<?php else: ?> dv-online<?php endif; ?>"><i
-                                class="fas fa-dot-circle" data-toggle="tooltip" data-placement="left"
+                                class="fas fa-dot-circle" data-tooltip="tooltip" data-placement="top"
                                 title="<?php if ($leader['Online_status'] == 0): ?>Offline<?php else: ?>Online<?php endif; ?>"></i></span>
                             <a href="<?php echo BASE_URL . '/users/profile/' . $leader['NickName']; ?>"><?php echo $leader['NickName']; ?></a>
                         </td>

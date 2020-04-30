@@ -261,7 +261,7 @@ class Log
         $finalResults = array();
         if (!empty($results)) {
             foreach ($results as $result) {
-                $result['admin'] = $this->getUserName($result['admin_id'])['NickName'];
+                $result['player'] = $this->getUserName($result['admin_id'])['NickName'];
                 array_push($finalResults, $result);
             }
         }
@@ -383,7 +383,7 @@ class Log
         $finalResults = array();
         if (!empty($results)) {
             foreach ($results as $result) {
-                $result['admin'] = $this->getUserName($result['admin_id'])['NickName'];
+                $result['player'] = $this->getUserName($result['admin_id'])['NickName'];
                 array_push($finalResults, $result);
             }
         }

@@ -102,7 +102,7 @@
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['played_time_txt']; ?></span>
-                    <span class="dv-second"><?php echo convertMinutes($data['user']['PlayedTime']); ?></span>
+                    <span class="dv-second"><?php echo convertMinutes($data['user']['TotalPlayed']); ?></span>
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['warnings_txt']; ?></span>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="dv-user-info-group">
                     <span class="dv-first"><?php echo $data['lang']['forum_name_txt']; ?></span>
-                    <span class="dv-second">Lust</span>
+                    <span class="dv-second"><?php echo $data['user']['ForumName']; ?></span>
                 </div>
                 <?php if (isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])): ?>
                     <div class="dv-user-info-group">

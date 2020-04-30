@@ -109,64 +109,14 @@ $(document).ready( function () {
         "order": [[ 0, "asc" ]]
     });
 
-    $('#dvAllLogsTable').dataTable({
+    $('#dvLogsTable').dataTable({
         "pageLength": 100,
         "order": [[ 2, "desc" ]]
     });
 
-    $('#dvAdminLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 2, "desc" ]]
-    });
-
-    $('#dvAnticheatLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 2, "desc" ]]
-    });
-
-    $('#dvChatLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 2, "desc" ]]
-    });
-
-    $('#dvBusinessLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 2, "desc" ]]
-    });
-
-    $('#dvHouseLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 2, "desc" ]]
-    });
-
-    $('#dvCarLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 2, "desc" ]]
-    });
-
-    $('#dvMoneyLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 2, "desc" ]]
-    });
-
-    $('#dvPanelAdminLogsTable').dataTable({
+    $('#dvPanelLogsTable').dataTable({
         "pageLength": 100,
         "order": [[ 3, "desc" ]]
-    });
-
-    $('#dvLeaderLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 3, "desc" ]]
-    });
-
-    $('#dvPlayerLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 3, "desc" ]]
-    });
-
-    $('#dvLoginLogsTable').dataTable({
-        "pageLength": 100,
-        "order": [[ 2, "desc" ]]
     });
 
     $('#dvStaffFactionsTable').dataTable({
