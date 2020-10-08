@@ -79,4 +79,20 @@ class Main
         }
         return $finalResults;
     }
+
+    public function getForumTopic($id)
+    {
+        $communityUrl = 'https://forum.dreamvibe.ro/';
+        $apiKey = '0e0410311e8ffe2ffd2435937b48e989';
+        $endpoint = '/forums/topics/' . $id;
+
+        $curl = curl_init( $communityUrl . 'api' . $endpoint );
+        curl_setopt_array( $curl, array(
+            CURLOPT_RETURNTRANSFER	=> TRUE,
+            CURLOPT_HTTPAUTH	=> CURLAUTH_BASIC,
+            CURLOPT_USERPWD		=> "{$apiKey}:"
+        ) );
+        $result = curl_exec( $curl );
+        return json_decode($result);
+    }
 }

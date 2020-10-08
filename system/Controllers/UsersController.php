@@ -43,6 +43,7 @@ class UsersController extends Controller
                 $getBusiness = $this->userModel->getBusiness($userInfo['NickName']);
                 $getHouse = $this->userModel->getHouse($userInfo['NickName']);
                 $userFH = $this->userModel->getUserFH($userInfo['ID']);
+                $suspendedUser = $this->userModel->suspendedUser($userInfo['ID']);
 
                 $userGroups = implode($this->userModel->getUserGroups($nickname));
                 $userGroupsArr = unserialize($userGroups);
@@ -67,7 +68,8 @@ class UsersController extends Controller
                     'getModelName' => $getModelName,
                     'getBusiness' => $getBusiness,
                     'getHouse' => $getHouse,
-                    'userFH' => $userFH
+                    'userFH' => $userFH,
+                    'suspendedUser' => $suspendedUser
                 ];
 
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -115,6 +117,17 @@ class UsersController extends Controller
                                 } else {
                                     die('Something went wrong.');
                                 }
+                            }
+                        }
+                    }
+                    if ($this->privileges['fullAccess'] == true) {
+                        if (isset($_POST['unsuspend_player'])) {
+                            // unsuspend player
+                            if ($this->userModel->unsuspendUser($userInfo['ID'])) {
+                                flashMessage('success', 'Player has been successfully unsuspended.');
+                                redirect('/users/profile/' . $nickname);
+                            } else {
+                                die('Something went wrong.');
                             }
                         }
                     }

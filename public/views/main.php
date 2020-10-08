@@ -39,14 +39,40 @@
     <div class="row">
         <div class="col-lg-6 col-sm-12 col-12">
             <div class="dv-page-block">
-                <h5 class="dv-block-title"><?php echo $data['lang']['sv_news_txt']; ?></h5>
-                <p>Stay here for new updates.</p>
+                <h5 class="dv-block-title">
+                    <a href="#" target="_blank"><?php echo $data['lang']['sv_news_txt']; ?></a>
+                </h5>
+                <div class="dv-feed">
+                    <div class="dv-header clearfix">
+                        <a href="#" class="dv-author float-left" target="_blank">
+                            <img src="http://localhost/panel/public/resources/img/skins/id-299.png" alt="Avatar">
+                            Author
+                        </a>
+                        <span class="float-right"><i class="far fa-clock"></i> 0000-00-00 00:00</span>
+                    </div>
+                    <div class="dv-body">
+                        Server news go here.
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-lg-6 col-sm-12 col-12">
             <div class="dv-page-block">
-                <h5 class="dv-block-title"><?php echo $data['lang']['sv_updates_txt']; ?></h5>
-                <p>New updates are incoming.</p>
+                <h5 class="dv-block-title">
+                    <a href="#" target="_blank"><?php echo $data['lang']['sv_updates_txt']; ?></a>
+                </h5>
+                <div class="dv-feed">
+                    <div class="dv-header clearfix">
+                        <a href="#" class="dv-author float-left" target="_blank">
+                            <img src="http://localhost/panel/public/resources/img/skins/id-299.png" alt="Avatar">
+                            Author
+                        </a>
+                        <span class="float-right"><i class="far fa-clock"></i> 0000-00-00 00:00</span>
+                    </div>
+                    <div class="dv-body">
+                        Server updates go here.
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@ class MainController extends Controller
             'business' => $business,
             'vehicles' => $vehicles,
             'regUsers' => $regUsers,
-            'latestFH' => $latestFH
+            'latestFH' => $latestFH,
         ];
 
         $this->loadView('main', $data);

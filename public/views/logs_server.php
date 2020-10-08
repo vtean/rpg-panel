@@ -25,7 +25,7 @@
             <div class="tab-content" id="dv-pills-tabContent">
                 <div class="tab-pane fade show active">
                     <div class="dvTable">
-                        <table id="dvAllLogsTable">
+                        <table id="dvLogsTable">
                             <thead>
                             <tr>
                                 <th>User</th>

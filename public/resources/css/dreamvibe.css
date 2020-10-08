@@ -214,7 +214,7 @@ blockquote {
   color: var(--text-hover-color);
 }
 
-/* MainController menu */
+/* Main menu */
 .dv-main-menu {
   background-color: var(--menu-bg);
   width: 270px;
@@ -445,7 +445,7 @@ blockquote {
   padding: 3px 7px;
 }
 
-/* MainController content */
+/* Main content */
 .dv-main {
   min-height: 100%;
 }
@@ -464,6 +464,36 @@ blockquote {
 
 .dv-page-title {
   margin-bottom: 10px;
+}
+
+.dv-feed {
+  background: #2c2e43;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.dv-feed .dv-header {
+  margin-bottom: 10px;
+}
+
+.dv-feed .dv-header .dv-author {
+  color: var(--text-color);
+}
+
+.dv-feed .dv-header .dv-author:hover {
+  color: var(--text-hover-color);
+}
+
+.dv-feed .dv-header .dv-author img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 3px;
+}
+
+.dv-feed .dv-body p {
+  margin-bottom: 0;
 }
 
 /* DV Content */
@@ -1069,6 +1099,10 @@ textarea {
   transform: scale(2.4);
   position: relative;
   top: 125px;
+}
+
+.dv-user-profile-controls {
+  margin-bottom: 20px;
 }
 
 .dv-user-profile .dv-user-profile-info {
@@ -2272,7 +2306,11 @@ textarea {
   }
 
   .dv-statistics .dv-statistic {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+  }
+
+  .nav-pills {
+    margin-bottom: 20px;
   }
 }
 
@@ -2289,5 +2327,9 @@ textarea {
   .dv-desc,
   .dv-statistics .dv-statistic {
     margin-bottom: 20px;
+  }
+
+  .dv-widget {
+    margin-top: 20px;
   }
 }

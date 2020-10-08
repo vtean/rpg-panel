@@ -316,4 +316,31 @@ class User
             return false;
         }
     }
+
+    // unsuspend user
+    public function unsuspendUser($id)
+    {
+        $sql = "DELETE FROM `panel_suspended_users` WHERE `user_id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        if ($this->db->executeStmt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // check if user is suspended
+    public function suspendedUser($id)
+    {
+        $sql = "SELECT * FROM `panel_suspended_users` WHERE `user_id`=:id";
+        $this->db->prepareQuery($sql);
+        $this->db->bind(':id', $id);
+        $result = $this->db->getResult();
+        if ($this->db->countRows() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
 }

@@ -22,7 +22,7 @@
                          alt="<?php echo $data['user']['NickName'] . "'s Skin"; ?>">
                 </div>
             </div>
-            <div class="dv-user-profile-controls m-auto">
+            <div class="dv-user-profile-controls">
                 <div class="row">
                     <?php if (isLoggedIn() && ($_SESSION['user_id'] == $data['user']['ID'])): ?>
                         <div class="col">
@@ -51,9 +51,19 @@
                                title="Player Logs"><i class="fas fa-history"></i></a>
                         </div>
                         <div class="col">
-                            <button type="button" class="dv-btn btn btn-danger btn-block" data-toggle="modal"
-                                    data-target="#suspendModal" data-tooltip="tooltip" data-placement="top"
-                                    title="Suspend Player"><i class="fas fa-ban"></i></button>
+                            <?php if ($data['suspendedUser'] == false): ?>
+                                <button type="button" class="dv-btn btn btn-danger btn-block" data-toggle="modal"
+                                        data-target="#suspendModal" data-tooltip="tooltip" data-placement="top"
+                                        title="Suspend Player"><i class="fas fa-ban"></i></button>
+                            <?php else: ?>
+                                <form method="post">
+                                    <input type="hidden" name="csrfToken"
+                                           value="<?php echo $_SESSION['csrfToken']; ?>"/>
+                                    <button type="submit" class="dv-btn btn btn-success btn-block" name="unsuspend_player"
+                                            data-tooltip="tooltip" data-placement="top" title="Unsuspend Player"><i
+                                                class="fas fa-user-check"></i></button>
+                                </form>
+                            <?php endif; ?>
                         </div>
                     <?php endif; ?>
                 </div>
